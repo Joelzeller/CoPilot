@@ -3,7 +3,7 @@ Raspberry Pi powered in-car infotainment system
 
 Check out my website for more info: http://joelzeller.wixsite.com/copilot
 
-**Setup:
+**Setup:**
 -	Get Kivy: https://kivy.org/docs/installation/installation-rpi.html
 -	Get Kivy Garden: https://kivy.org/docs/api-kivy.garden.html 
 		 	 https://kivy-garden.github.io/
