@@ -16,11 +16,11 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 
 -	Python Version 2.7.0 is recommended
 
-**You will need clock.kv, main.kv, main.py, and the data folder placed in a directory on your pi - mine are located at /home/pi/CoPilot
+**You will need clock.kv, main.kv, main.py, and the data folder placed in a directory on your pi - mine are located at /home/pi/CoPilot**
 
 -	Setup to autorun on boot like I do or just run main.py
 
-**Recommended Hardware - 
+**Recommended Hardware:**
 
 - Raspberry Pi 2 or 3 – increase the GPU memory to its max setting using raspi-config 
 - Set up a RTC to keep time since Pi won’t be connected to the internet at all times
@@ -31,7 +31,7 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 - Two push buttons for Hotkeys (Look in code for which GPIO is used)
 
 
-**How to use:
+**How to use:**
  
 To use developer mode:
 - This turns off things like GPIO, temp probe, and OBD stuff as it doesn’t place nice on a computer other than the Pi.
