@@ -1,0 +1,79 @@
+CoPilot V2.0
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+DONE IN THIS VERSION:
+
+HUGE UPDATE
+cleaned up folders and code!
+utilize KivyGarden
+labels are finally in the kv file - better animations and looks more clean when changing screens
+utilize KivyMD for a more "Androidy" feel
+new appbars - now toolbars
+new Shortcut Drawer - press icon or slide in from left to open
+Updated Shortcut Drawer and settings page to not use KivyMD lists - they dont play well with RPi for some reason
+progress bar added for seconds in stopwatch
+new photos app - scrollable list
+Brightness Bar! - user will be able to change the brightness of the display - requries the newest verison of the RPi display
+new settings page - cleaner and more intuitve
+user can select system theme - colors
+User can now selects wallpapers in the theme tab in settings
+radar icon now visable on main screen when enabled - tap status bar icon to turn off icon
+light "glows" when on - controls
+new OBD pages
+Lock Screen - tap the time or the middle of the the main screen to go to the new lock screen
+new kill screen - uses card design
+added invisible buttons for dock buttons - better tap animations
+
+
+altered some KivyMD files to suit my needs
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NEXT TO COME:
+
+tap time to go into a very dim "lock screen"
+invisible button for radar button
+
+OBDII-
+add reset max speed
+make sure reset buttons work
+add set button for redline and speeding warning
+save button - save to log
+OBD Graphical Tach - take old measurements and shift them over to make a graph over time - maybe show last minute?
+
+
+Settings-
+info on toggles and push button bellow the screen
+design tutorial - time is always 3:14 - describe what toggle switches and buttons do
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+POSSIBLE ADDITIONS:
+passcode to get into settings page
+be able to save values so they will load on launch - colors - hotkey settings - switch settings - wallpapers (PICKLE)
+other info on infoclockscreen
+Calender app? Google calender integration??
+startup animation??
+Auto Brightness - display brightness based on time of day
+click main app icon to go back to main
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ISSUES:
+
+Hot keys interfereing with one another..fixed for now by disabling the second key - possible fix - add physical pulldown-up resistors - look at tutorial
+Mausberry broke!
+
+Figure out better power supply..need 3 amps to run pi 3 and screen..
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LINKS:
+
+Design - 
+http://stackoverflow.com/questions/22827317/changing-background-of-a-button-to-a-different-shape-and-styles-like-shadow-effe
+http://hex.colorrrs.com/
+https://material.google.com/style/color.html#color-color-palette
+http://bitdroid.de/Android-Material-Icon-Generator/
+flaticon.com
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+REMINDERS:
+
+to screenshot: cd raspi2png -> raspi2png ----- file will be placed in raspi2png directory

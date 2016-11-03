@@ -1,0 +1,3171 @@
+#: import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#: import Animation kivy.animation.Animation
+
+#:import Toolbar kivymd.toolbar.Toolbar
+#:import ThemeManager kivymd.theming.ThemeManager
+#:import NavigationDrawer kivymd.navigationdrawer.NavigationDrawer
+#:import MDCheckbox kivymd.selectioncontrols.MDCheckbox
+#:import MDSwitch kivymd.selectioncontrols.MDSwitch
+#:import MDList kivymd.list.MDList
+#:import OneLineListItem kivymd.list.OneLineListItem
+#:import TwoLineListItem kivymd.list.TwoLineListItem
+#:import ThreeLineListItem kivymd.list.ThreeLineListItem
+#:import OneLineAvatarListItem kivymd.list.OneLineAvatarListItem
+#:import OneLineIconListItem kivymd.list.OneLineIconListItem
+#:import OneLineAvatarIconListItem kivymd.list.OneLineAvatarIconListItem
+#:import SingleLineTextField kivymd.textfields.SingleLineTextField
+#:import MDSpinner kivymd.spinner.MDSpinner
+#:import MDCard kivymd.card.MDCard
+#:import MDSeparator kivymd.card.MDSeparator
+#:import MDDropdownMenu kivymd.menu.MDDropdownMenu
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import colors kivymd.color_definitions.colors
+#:import SmartTile kivymd.grid.SmartTile
+#:import MDSlider kivymd.slider.MDSlider
+#:import MDTabbedPanel kivymd.tabs.MDTabbedPanel
+#:import MDTab kivymd.tabs.MDTab
+#:import MDProgressBar kivymd.progressbar.MDProgressBar
+#:import MDAccordion kivymd.accordion.MDAccordion
+#:import MDAccordionItem kivymd.accordion.MDAccordionItem
+#:import MDThemePicker kivymd.theme_picker.MDThemePicker
+
+#on_press: Animation(x=newposition or y=newposition).start(id) #to animate things
+
+#V2
+
+AnchorLayout:
+		anchor_x: 'center'
+		anchor_y: 'top'
+		
+		ScreenManager:
+				id: sm
+				size_hint: 1, 1
+
+				MainScreen:
+						name: "main"
+						FloatLayout: #Main Elements
+								size_hint: 1, 1
+								Image:
+										id: mainwallpaper
+										source: app.wallpapernow
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								Image:
+										source: 'data/elements/AppBar_menu_KivyMD.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										opacity: .3
+
+								Image:
+										source: 'data/elements/AppBar_menu_button_KivyMD.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								Image:
+										id: blackwallpaper
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										pos: -800, 0
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+
+						FloatLayout: #Radar Elements
+								size_hint: 1, 1
+								Image: #image to display if radar is on or off
+										source: app.radariconsource
+										center_x: self.center_x
+										center_y: self.center_y
+
+								Button: #Button to turn off radar from main screen
+										on_press: app.radar_callback_schedge()
+										pos: 609, 415
+										size_hint: .09, .15
+										background_color:(0.9, 0.9, 0.9, 0)
+
+						FloatLayout: #Temp Bubble Stuff
+								size_hint: 1, 1
+								Image:
+										id: TempBubble
+										source: 'data/elements/red_circle_temperature.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										background_color: app.theme_cls.primary_color
+										pos: 1000, -20
+
+								Label:
+										id: Temp
+										text: app.tempnow
+										pos: 1354, 120
+										font_size: 30
+
+								Button:
+										#text: Button to call temp
+										#stays put
+										id: tempbutt
+										on_press: app.addtemp()
+										on_press: Animation(x=0, duration=.4).start(TempBubble) #moves button back to screen
+										on_press: Animation(x=354, duration=.4).start(Temp) #moves temp label to screen
+										on_press: Animation(x=700, duration=.1).start(movingtempbutt) #moves moving button to screen
+										pos: 700, 300
+										size_hint: .3, .3
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+								Button:
+										#text: Hidden Button at first
+										#this toggles temp on and off - also moves bubble
+										id: movingtempbutt
+										on_press: app.killtemp()
+										on_press: Animation(x=1000, duration=.4).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.4).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										pos: 1200, 300
+										size_hint: .3, .3
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+						FloatLayout: #LockscreenButton - placed over top right time - used to call lockscreen
+						        size_hint: 1, 1
+								Button:
+										on_press: Animation(y=0, duration=.1).start(lockscreenwallpaper)
+										on_press: Animation(y=0, duration=.1).start(lockscreentime)
+										on_press: Animation(y=0, duration=.1).start(lockscreenbutton)
+										pos: 680, 415
+										size_hint: .3, .2
+										opacity: 0
+								Button:
+								        on_press: Animation(y=0, duration=.1).start(lockscreenwallpaper)
+										on_press: Animation(y=0, duration=.1).start(lockscreentime)
+										on_press: Animation(y=0, duration=.1).start(lockscreenbutton)
+										pos: 230, 30
+										size_hint: .425, .8
+										opacity: 0
+
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										id: ShortcutDrawerBG
+										source: 'data/elements/ShortcutDrawer.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: -340, 0
+								Button:
+										id: ShortcutDrawerButton
+										on_press: Animation(x=0, duration=.2).start(ShortcutDrawerBG)
+										on_press: Animation(x=0, duration=.2).start(SCD_DateButton)
+										on_press: Animation(x=0, duration=.2).start(SCD_SettingsButton)
+										on_press: Animation(x=0, duration=.2).start(SCD_GarageButton)
+										on_press: Animation(x=0, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=0, duration=.2).start(SCD_StopwatchButton)
+										on_press: Animation(x=-223, duration=.2).start(SCD_Date)
+										on_press: Animation(x=320, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.4).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.4).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: app.killtemp()
+										pos: -10, 0
+										size_hint: .1, 1.1
+										background_color:(0.9, 0.9, 0.9, 0.0)
+						FloatLayout: #ShortCutDrawer Pieces
+								size_hint: 1, 1
+								Label:
+										id: SCD_Date
+										text: app.daynow + ", " + app.datenow
+										pos: -535, 205
+										font_size: 20
+
+								Button:
+										id: SCD_DateButton
+										text: app.daynow + ", " + app.datenow
+										pos: -320, 408
+										size_hint: .4, .15
+										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+										opacity: 0
+
+								MDFlatButton:
+										id: SCD_SettingsButton
+										text: "Settings                      "
+										theme_text_color: 'Secondary'
+										pos: -340, 335
+										size_hint: .4, .15
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'left'
+										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+								MDFlatButton:
+										id: SCD_GarageButton
+										text: "Garage Door              "
+										theme_text_color: 'Secondary'
+										pos: -340, 262
+										size_hint: .4, .15
+										on_press: app.garage_callback_schedge()
+										on_release: app.garage_callback_schedge() #only on when button is pressed
+
+								MDFlatButton:
+										id: SCD_OBDButton
+										text: "OBDII Gauges              "
+										theme_text_color: 'Secondary'
+										pos: -340, 189
+										size_hint: .4, .15
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'left'
+										on_press: app.setup_OBD() #set up obd stuff
+										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+								MDFlatButton:
+										id: SCD_StopwatchButton
+										text: "Stopwatch                "
+										theme_text_color: 'Secondary'
+										pos: -340, 116
+										size_hint: .4, .15
+										on_press: sm.current = 'stopwatch'
+										on_press: sm.transition.direction = 'left'
+										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+						FloatLayout:
+								size_hint: 1, 1
+								Button:
+										id: ShortcutDrawerReturnButton
+										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+										pos: 820, 0
+										size_hint: 1, 1.1
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+				AudioScreen:
+						name: "audio"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/greymaterial.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: 'Audio'
+										font_size: 30
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to main"
+										#on_press: sm.current = 'main'
+										on_press: sm.current = sm.previous()
+
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								MDRaisedButton:
+										#text: "Seek Up"
+										on_press: app.seekup_callback_schedge()
+										elevation_normal: 3
+										opposite_colors: True
+										size_hint: None, None
+										size: 3 * dp(70), dp(120)
+										pos_hint: {'center_x': 0.175, 'center_y': .675}
+										Image:
+												source: 'data/icons/arrow_up.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								MDRaisedButton:
+										#text: "Seek Down"
+										on_press: app.seekdown_callback_schedge()
+										elevation_normal: 3
+										opposite_colors: True
+										size_hint: None, None
+										size: 3 * dp(70), dp(120)
+										pos_hint: {'center_x': 0.175, 'center_y': .325}
+										Image:
+												source: 'data/icons/arrow_down.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								MDRaisedButton:
+										#text: "AUX"
+										on_press: app.aux_callback_schedge()
+										elevation_normal: 3
+										opposite_colors: True
+										size_hint: None, None
+										size: 3 * dp(70), dp(120)
+										pos_hint: {'center_x': 0.825, 'center_y': .675}
+										Image:
+												source: 'data/icons/auxin.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								MDRaisedButton:
+										#text: "AM/FM"
+										on_press: app.amfm_callback_schedge()
+										elevation_normal: 3
+										opposite_colors: True
+										size_hint: None, None
+										size: 3 * dp(70), dp(120)
+										pos_hint: {'center_x': 0.825, 'center_y': .325}
+										Image:
+												source: 'data/icons/amfm.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button:
+										#text: "return" #middle of screen button
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: 270, 30
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+				PerfScreen:
+						name: "performance"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/redmaterial.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: (.714 ,.109, .109, 1)
+										opacity: 1.0
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Performance[/size]'
+										pos: 0, 210
+
+						FloatLayout:
+								size_hint: 1, 1
+
+
+
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button:
+										text: "\n\n\n\n\nStopwatch"
+										font_size: 25
+										on_press: sm.current = 'stopwatch'
+										on_press: sm.transition.direction = 'left'
+										pos: 32, 167
+										size_hint: None, None
+										height: 176
+										width: 176
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/stopwatch_icon.png'
+										background_down: 'data/icons/app_icons/stopwatch_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\n\nLaunch Control"
+										font_size: 25
+										on_press: sm.current = 'launchcontrolsetup'
+										on_press: sm.transition.direction = 'left'
+										pos: 300, 155
+										size_hint: None, None
+										height: 200
+										width: 200
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/launch_icon.png'
+										background_down: 'data/icons/app_icons/launch_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\n\nOBDII Gauges"
+										font_size: 25
+										on_release: sm.current = 'gaugeselect'
+										on_release: sm.transition.direction = 'left'
+										on_release: app.setup_OBD() #set up obd stuff
+										pos: 580, 155
+										size_hint: None, None
+										height: 200
+										width: 200
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/obdII_icon.png'
+										background_down: 'data/icons/app_icons/obdII_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+
+				AppsScreen:
+						name: "apps"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/darkgreymaterial2.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: (.33 ,.43 ,.48, 1)
+										opacity: 1.0
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+						FloatLayout:
+								size_hint: 1, 1
+
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+						GridLayout:
+								cols: 5
+								rows: 3
+								padding: 30
+								spacing: 50, 30
+								size_hint: 1, .9
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'paint'
+										on_press: sm.transition.direction = 'left'
+										text: "\n\n\n\nPaint"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/paint_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'logo'
+										on_press: sm.transition.direction = 'left'
+										text: "\n\n\n\nCoPilot Logo"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/raspberry_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'left'
+										text: "\n\n\n\nClocks"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/clocks_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'gps'
+										on_press: sm.transition.direction = 'left'
+										text: "\n\n\n\nGPS"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/gps_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'stopwatch'
+										on_press: sm.transition.direction = 'left'
+										text: "\n\n\n\nStopwatch"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/stopwatch_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'files'
+										on_press: sm.transition.direction = 'left'
+										on_press: app.kill_clock()
+										text: "\n\n\n\nFiles"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/files_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'launchcontrolsetup'
+										on_press: sm.transition.direction = 'left'
+										text: "\n\n\n\nLaunch Control"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/launch_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 85, 85
+												allow_stretch: True
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'photos'
+										on_press: sm.transition.direction = 'left'
+										on_press: app.kill_clock()
+										text: "\n\n\n\nPhotos"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/photos_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'testapp'
+										on_press: sm.transition.direction = 'left'
+										on_press: app.kill_clock()
+										text: "\n\n\n\nTest"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/test_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										#text: "Not Used"
+										font_size: 30
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										#text: "Not Used"
+										font_size: 30
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										#text: "Not Used"
+										font_size: 30
+
+
+
+
+
+
+				ControlsScreen:
+						name: "controls"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/darkgreymaterial.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: (.90, .32, 0, 1)
+										opacity: 1.0
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Controls[/size]'
+										pos: 0, 210
+
+						FloatLayout:
+								size_hint: 1, 1
+
+
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button:
+										text: "\n\n\n\nGarage"
+										font_size: 25
+										on_press: app.garage_callback_schedge()
+										on_release: app.garage_callback_schedge() #only on when button is pressed
+										pos: 60, 280
+										size_hint: None, None
+										height: 160
+										width: 150
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/garage_icon.png'
+										background_down: 'data/icons/app_icons/garage_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\nRadar"
+										font_size: 25
+										on_press: app.radar_callback_schedge()
+										pos: 68, 110
+										size_hint: None, None
+										height: 140
+										width: 135
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/radar_icon.png'
+										background_down: 'data/icons/app_icons/radar_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\nScreen Off"
+										font_size: 25
+										on_press: app.TurnScreenOff()
+										on_press: sm.current = 'offscreen'
+										on_press: sm.transition.direction = 'left'
+										pos: 332, 290
+										size_hint: None, None
+										height: 140
+										width: 135
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/brightness_icon.png'
+										background_down: 'data/icons/app_icons/brightness_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\nCup Lights"
+										font_size: 25
+										on_press: app.leds_callback_schedge()
+										pos: 332, 110
+										size_hint: None, None
+										height: 140
+										width: 135
+										background_color:(1, 1, 1, 1)
+										background_normal: app.lightsiconsource
+										background_down: 'data/icons/app_icons/lights_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\nWindows Up"
+										font_size: 25
+										on_press: app.windowsup_callback_schedge()
+										pos: 590, 280
+										size_hint: None, None
+										height: 160
+										width: 150
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/windowsup_icon.png'
+										background_down: 'data/icons/app_icons/windowsup_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+								Button:
+										text: "\n\n\n\nWindows Down"
+										font_size: 25
+										on_press: app.windowsdown_callback_schedge()
+										pos: 590, 100
+										size_hint: None, None
+										height: 160
+										width: 150
+										background_color:(1, 1, 1, 1)
+										background_normal: 'data/icons/app_icons/windowsdown_icon.png'
+										background_down: 'data/icons/app_icons/windowsdown_icon_pressed.png' #blow up to 290 (scaled in gimp)
+
+
+				SettingsScreen:
+						name: "settings"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/greyplain.png'
+										center_x: self.center_x
+										center_y: self.center_y
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Settings[/size]'
+										pos: 0, 210
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+						FloatLayout:
+								size_hint: 1, .88
+								MDTabbedPanel:
+										id: tab_panel
+										tab_display_mode:'text'
+										font_size: 30
+
+										MDTab:
+												name: 'system'
+												text: "System"
+												FloatLayout:
+														Button:
+																size_hint: 1, .19
+																pos: 0, 304
+																background_normal: 'data/buttons/settingslines/SL_SysDiag.png'
+																background_down: 'data/buttons/settingslines/SL_SysDiag_pressed.png'
+																on_press: sm.current = 'sysdiagnostics'
+																on_press: app.add_message_temp()
+																on_press: sm.transition.direction = 'left'
+														Button:
+																size_hint: 1, .19
+																pos: 0, 232
+																background_normal: 'data/buttons/settingslines/SL_SysDebug.png'
+																background_down: 'data/buttons/settingslines/SL_SysDebug_pressed.png'
+																on_press: sm.current = 'sysdebug'
+																on_press: sm.transition.direction = 'left'
+														Button:
+																size_hint: 1, .19
+																pos: 0, 160
+																background_normal: 'data/buttons/settingslines/SL_SysReset.png'
+																background_down: 'data/buttons/settingslines/SL_SysReset_pressed.png'
+																on_release: app.show_indev_dialog()
+										MDTab:
+												name: 'GPIO'
+												text: "GPIO"
+												FloatLayout:
+														Button:
+																size_hint: 1, .19
+																pos: 0, 304
+																background_normal: 'data/buttons/settingslines/SL_HK1.png'
+																background_down: 'data/buttons/settingslines/SL_HK1_pressed.png'
+																on_press: sm.current = 'hotkey1chooser'
+																on_press: sm.transition.direction = 'left'
+																text: "                                                                                                                                                                " + app.HKonenow
+														Button:
+																size_hint: 1, .19
+																pos: 0, 232
+																background_normal: 'data/buttons/settingslines/SL_HK2.png'
+																background_down: 'data/buttons/settingslines/SL_HK2_pressed.png'
+																on_press: sm.current = 'hotkey2chooser'
+																on_press: sm.transition.direction = 'left'
+																text: "                                                                                                                                                                " + app.HKtwonow
+														Button:
+																size_hint: 1, .19
+																pos: 0, 160
+																background_normal: 'data/buttons/settingslines/SL_HKdefault.png'
+																background_down: 'data/buttons/settingslines/SL_HKdefault_pressed.png'
+																on_press: app.sethotkeydefaults()
+
+										MDTab:
+												name: 'theme'
+												text: "Theme"
+												FloatLayout:
+														Button:
+																size_hint: 1, .19
+																pos: 0, 304
+																background_normal: 'data/buttons/settingslines/SL_theme.png'
+																background_down: 'data/buttons/settingslines/SL_theme_pressed.png'
+																on_release: MDThemePicker().open()
+																text: "                                                                                                                                                                " + app.theme_cls.primary_palette
+
+														Button:
+																size_hint: 1, .19
+																pos: 0, 232
+																background_normal: 'data/buttons/settingslines/SL_wallpaper.png'
+																background_down: 'data/buttons/settingslines/SL_wallpaper_pressed.png'
+																on_press: sm.current = 'wallpaperselect'
+																on_press: sm.transition.direction = 'left'
+
+										MDTab:
+												name: 'Info'
+												text: "Info"
+												FloatLayout:
+														Button:
+																size_hint: 1, .19
+																pos: 0, 304
+																background_normal: 'data/buttons/settingslines/SL_version.png'
+																background_down: 'data/buttons/settingslines/SL_version_pressed.png'
+																on_release: app.show_version_dialog()
+																text: "                                                                                                                                                                " + app.version
+
+														Button:
+																size_hint: 1, .19
+																pos: 0, 232
+																background_normal: 'data/buttons/settingslines/SL_controls.png'
+																background_down: 'data/buttons/settingslines/SL_controls_pressed.png'
+																on_release: app.show_indev_dialog()
+														Button:
+																size_hint: 1, .19
+																pos: 0, 160
+																background_normal: 'data/buttons/settingslines/SL_tutorial.png'
+																background_down: 'data/buttons/settingslines/SL_tutorial_pressed.png'
+																on_release: app.show_indev_dialog()
+										MDTab:
+												name: 'power'
+												text: "Power"
+												FloatLayout:
+														Button:
+																size_hint: 1, .19
+																pos: 0, 304
+																background_normal: 'data/buttons/settingslines/SL_kill.png'
+																background_down: 'data/buttons/settingslines/SL_kill_pressed.png'
+																on_release: sm.current = 'kill'
+																on_press: sm.transition.direction = 'down'
+														Button:
+																size_hint: 1, .19
+																pos: 0, 232
+																background_normal: 'data/buttons/settingslines/SL_reboot.png'
+																background_down: 'data/buttons/settingslines/SL_reboot_pressed.png'
+																on_release: app.reboot()
+														Button:
+																size_hint: 1, .19
+																pos: 0, 160
+																background_normal: 'data/buttons/settingslines/SL_power.png'
+																background_down: 'data/buttons/settingslines/SL_power_pressed.png'
+																on_release: app.shutdown()
+
+				PaintScreen:
+						name: "paint"
+						FloatLayout:
+								Painter
+
+				FilesScreen:
+						name: "files"
+						BoxLayout:
+								orientation: 'vertical'
+
+								BoxLayout:
+										size_hint_y: None
+										height: sp(30)
+
+										MDRaisedButton:
+												text: 'Icon View'
+												on_press: fc.view_mode = 'icon'
+										MDRaisedButton:
+												text: 'List View'
+												on_press: fc.view_mode = 'list'
+								FileChooser:
+										id: fc
+										FileChooserIconLayout
+										FileChooserListLayout
+
+				LogoScreen:
+						name: "logo"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/CoPilot.jpg'
+										center_x: self.center_x
+										center_y: self.center_y
+										size: 60, 60
+										allow_stretch: True
+								Image:
+										source: 'data/icons/engineeredby.png'
+										center_x: -55
+										center_y: 0
+										allow_stretch: True
+										size_hint_x: .5
+										size_hint_y: .5
+										#size: 20, 20
+										pos: -45, 20
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]CoPilot[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: 270, 30
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+				ClockChooserScreen:
+						name: "clockchooser"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/darkgreymaterial2.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Clocks[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+						GridLayout:
+								cols: 4
+								rows: 3
+								padding: 30
+								spacing: 5
+								size_hint: 1, .85
+								pos: 0, -20
+
+								JZLargeButton:
+										text: "Classic"
+										on_press: sm.current = 'classicclock'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.kill_clock()
+										on_press: app.add_classicanalog()
+										font_size: 30
+
+								JZLargeButton:
+										text: "Sport"
+										on_press: sm.current = 'sportclock'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.kill_clock()
+										on_press: app.add_sportanalog()
+										font_size: 30
+								JZLargeButton:
+										text: "Executive"
+										on_press: sm.current = 'executiveclock'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.kill_clock()
+										on_press: app.add_executiveanalog()
+										font_size: 30
+								JZLargeButton:
+										text: "Worms"
+										on_press: sm.current = 'wormclock'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.add_wormanalog()
+										font_size: 30
+								JZLargeButton:
+										text: "Day Gauge"
+										on_press: sm.current = 'daygaugeclock'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.kill_clock()
+										on_press: app.add_daygaugeanalog()
+										font_size: 30
+								JZLargeButton:
+										text: "Night Gauge"
+										on_press: sm.current = 'nightgaugeclock'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.kill_clock()
+										on_press: app.add_nightgaugeanalog()
+										font_size: 30
+
+								JZLargeButton:
+										text: "Info"
+										on_press: sm.current = 'infoclock'
+										on_press: sm.transition.direction = 'down'
+										font_size: 30
+								JZLargeButton:
+										text: "Photo Clock"
+										on_press: sm.current = 'photoclock'
+										on_press: sm.transition.direction = 'down'
+										#on_press: app.kill_clock()
+										#on_press: app.add_executiveanalog()
+										font_size: 30
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+
+
+						#Classic Clock
+				ClassicClockScreen:
+						name: "classicclock"
+						FloatLayout
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'bottom'
+
+								Image:
+										source: 'data/watchfaces/classic.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, 72
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										on_press: app.kill_analog()
+										pos: 270, 100
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+					#Sport Clock
+				SportClockScreen:
+						name: "sportclock"
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'top'
+								Image:
+										source: 'data/watchfaces/sport.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, 72
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										on_press: app.kill_analog()
+										pos: 270, 100
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+					#Exec Clock
+				ExecutiveClockScreen:
+						name: "executiveclock"
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'top'
+								Image:
+										source: 'data/watchfaces/executive.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, 72
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										on_press: app.kill_analog()
+										pos: 270, 100
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+					#Worms Clock
+				WormsClockScreen:
+						name: "wormclock"
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'top'
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										on_press: app.kill_analog()
+										pos: 270, 100
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 60
+										pos: 0, 65
+					#Day Gauge Clock
+				DayGaugeClockScreen:
+						name: "daygaugeclock"
+						FloatLayout
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'top'
+								Image:
+										source: 'data/watchfaces/daygaugejz_grey.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, 72
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										on_press: app.kill_analog()
+										pos: 270, 100
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+					#Night Gauge Clock
+				NightGaugeClockScreen:
+						name: "nightgaugeclock"
+						FloatLayout
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'top'
+								Image:
+										source: 'data/watchfaces/nightgaugejz.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, 72
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										on_press: app.kill_analog()
+										pos: 270, 100
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+					#Info Clock
+				InfoClockScreen:
+						name: "infoclock"
+						FloatLayout:
+								size_hint: 1, .85
+								anchor_y: 'top'
+
+								Button: #whole screen is return button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										pos: 270, 100
+										#size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 80
+										pos: 0, 65
+								Label: #label to display current date
+										markup: True
+										text: app.daynow + ", " + app.datenow
+										font_size: 60
+										pos: 0, 0
+
+					#Photo Clock
+				PhotoClockScreen:
+						name: "photoclock"
+						FloatLayout:
+								id: layout
+								size_hint: 1, 1
+								anchor_y: 'top'
+								Image:
+										id: image
+										source: 'data/wallpapers/polymountain.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								Button: #whole screen is return button
+										#text: "return"
+										on_press: sm.current = 'clockchooser'
+										on_press: sm.transition.direction = 'up'
+										pos: 270, 100
+										#size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 60
+										pos: -300, 180
+
+
+				GPSScreen:
+						name: "gps"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+								Label:
+										markup: True
+										text: '[size=24]Connect to Raspberry Pi through AirPlay to view iPhone Screen[/size]'
+										#pos: -258, 2
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]GPS[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+				StopwatchScreen:
+						name: "stopwatch"
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										id: mainwallpaper
+										source: 'data/wallpapers/stopwatchblue.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: (.25, .32, .71, 1)
+										opacity: 1.0
+
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+						BoxLayout:
+								orientation:'vertical'
+								padding: '130dp'
+								MDProgressBar:
+										value: app.stopwatchsecnow
+										min:0
+										max:60
+
+
+						FloatLayout:
+								size_hint: 1, 1
+								orientation: 'horizontal'
+								Label: #label to display stopwatch
+										markup: True
+										text: app.stopwatchnow
+										font_size: 140
+										pos: 0, 70
+								Button:
+										size_hint: .2, .34
+										pos: 110, 75
+										on_press: app.stopwatch_start()
+										background_color:(1.0, 1.0, 1.0, 1.0)
+										background_normal: 'data/icons/stopwatch/play.png'
+										background_down: 'data/icons/stopwatch/play_pressed.png'
+								Button:
+										size_hint: .2, .34
+										pos: 320, 75
+										on_press: app.stopwatch_stop()
+										background_color:(1.0, 1.0, 1.0, 1.0)
+										background_normal: 'data/icons/stopwatch/pause.png'
+										background_down: 'data/icons/stopwatch/pause_pressed.png'
+
+								Button:
+										size_hint: .2, .34
+										pos: 530, 75
+										on_press: app.stopwatch_reset()
+										background_color:(1.0, 1.0, 1.0, 1.0)
+										background_normal: 'data/icons/stopwatch/reset.png'
+										background_down: 'data/icons/stopwatch/reset_pressed.png'
+
+				KillScreen:
+						name: "kill"
+						FloatLayout:
+								size_hint: 1, 1
+								orientation: 'vertical'
+								Image:
+										source: 'data/wallpapers/greyplain.png'
+										center_x: self.center_x
+										center_y: self.center_y
+								Image:
+										source: 'data/elements/card.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										pos: 0, 32
+								MDLabel:
+                                        font_style: 'Title'
+                                        theme_text_color: 'Custom'
+                                        text_color: (0,0,0,1)
+                                        text: "Kill CoPilot"
+                                        halign: 'center'
+                                        pos: -130, 120
+                                MDLabel:
+                                        font_style: 'Subhead'
+                                        theme_text_color: 'Custom'
+                                        text_color: (0,0,0,.5)
+                                        text: "Press confirm to kill Copilot."
+                                        halign: 'center'
+                                        pos: -80, 80
+
+								MDFlatButton:
+										text: "Confirm"
+										on_release: exit()
+										pos: 430, 158
+										opposite_colors: True
+										size_hint: None, None
+								MDFlatButton:
+										text: "Dismiss"
+										on_release: sm.current = 'main'
+										on_release: sm.transition.direction = 'up'
+										pos: 519, 158
+										opposite_colors: True
+										size_hint: None, None
+
+
+
+				DiagnosticsScreen:
+						name: "sysdiagnostics"
+
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]System Diagnostics[/size]'
+										halign: 'center'
+										pos: 0, 210
+
+								Label: #label to display system diagnostic data
+										markup: True
+										text: "CPU Temperature = " + app.CPUtempnow
+										font_size: 40
+										pos: 0, 30
+								Label: #label to display system diagnostic data
+										markup: True
+										text: "Core Voltage = " + app.corevoltagenow
+										font_size: 40
+										pos: 0, -30
+
+								Button: #return button
+										#text: "return to settings"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_message()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button: #middle of screen button
+										#text: "return"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_message()
+										pos: 270, 30
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+				SystemDebugScreen:
+						name: "sysdebug"
+
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]System Debug[/size]'
+										halign: 'center'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to settings"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button: #return button
+										#text: "return"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										pos: 270, 30
+										size_hint: .325, .8
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+								MDRaisedButton:
+										text: "Window Debug"
+										font_size: 25
+										on_release: sm.current = 'windowdebug'
+										on_press: sm.transition.direction = 'left'
+										pos: 20, 255
+										size_hint: .3, .3
+
+				WindowDebugScreen:
+						name: "windowdebug"
+
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Window Debug[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to sysdebug"
+										on_press: sm.current = 'sysdebug'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								MDRaisedButton: #Emergency Windows stop button
+										text: "STOP"
+										font_size: 50
+										on_press: app.allwindowsstop_callback_schedge()
+										pos: 270, 120
+										size_hint: .325, .5
+										background_color:(.714 ,.109, .109, 1)
+
+								MDFlatButton:
+										text: "Driver Up"
+										font_size: 25
+										on_press: app.driverup_callback_schedge()
+										on_release: app.driverup_callback_schedge() #only on when button is pressed
+										pos: 20, 312
+										size_hint: .3, .2
+
+
+								MDFlatButton:
+										text: "Driver Stop"
+										font_size: 25
+										on_press: app.driverstop_callback_schedge()
+										pos: 20, 202
+										size_hint: .3, .2
+
+
+								MDFlatButton:
+										text: "Driver Down"
+										font_size: 25
+										on_press: app.driverdown_callback_schedge()
+										on_release: app.driverdown_callback_schedge() #only on when button is pressed
+										pos: 20, 92
+										size_hint: .3, .2
+
+
+								MDFlatButton:
+										text: "Passenger Up"
+										font_size: 25
+										on_press: app.passengerup_callback_schedge()
+										on_release: app.passengerup_callback_schedge() #only on when button is pressed
+										pos: 540, 312
+										size_hint: .3, .2
+
+
+								MDFlatButton:
+										text: "Passenger Stop"
+										font_size: 25
+										on_press: app.passengerstop_callback_schedge()
+										pos: 540, 202
+										size_hint: .3, .2
+
+
+								MDFlatButton:
+										text: "Passenger Down"
+										font_size: 25
+										on_press: app.passengerdown_callback_schedge()
+										on_release: app.passengerdown_callback_schedge() #only on when button is pressed
+										pos: 540, 92
+										size_hint: .3, .2
+
+				LaunchControlSetupScreen:
+						name: "launchcontrolsetup"
+
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Button: #return button
+										#text: "return to performance"
+										on_press: sm.current = 'performance'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								MDRaisedButton:
+										text: "Start\nLaunch\nSequence"
+										font_size: 30
+										halign: 'center'
+										on_press: sm.current = 'launchcontrol'
+										on_press: app.kill_clock()
+										on_press: app.add_launchanalog()
+										on_press: sm.transition.direction = 'left'
+										pos: 270, 120
+										size_hint: .325, .5
+
+				LaunchControlScreen:
+						name: "launchcontrol"
+
+						FloatLayout:
+								size_hint: 1, 1
+								Image:
+										id: image
+										source: 'data/wallpapers/xmas_blank.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
+								MDFlatButton: #return to main - used after launch is complete
+										text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_analog()
+										pos: 14, 72
+										size_hint: .2, .2
+
+				PhotosScreen:
+						name: "photos"
+
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Photos[/size]'
+										pos: 0, 210
+
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+						FloatLayout:
+								size_hint: 1, .865
+								ScrollView:
+										do_scroll_x: False
+										GridLayout:
+												cols: 4
+												row_default_height: (self.width - self.cols*self.spacing[0])/self.cols
+												row_force_default: True
+												size_hint_y: None
+												height: 20 * dp(100) # /1 * self.row_default_height
+												padding: dp(4), dp(4)
+												spacing: dp(4)
+												SmartTile:
+														mipmap: True
+														source: './data/icons/CoPilotIcon.png'
+														on_release: app.show_easter_dialog()
+												Image:
+														source: 'data/wallpapers/Gold_Stratus.png'
+												Image:
+														source: 'data/wallpapers/Stratus_rear.png'
+												Image:
+														source: 'data/wallpapers/RT.png'
+
+				TestAppScreen:
+						name: "testapp"
+
+						FloatLayout:
+								size_hint: 1, 1
+
+								Label:
+										text: "Nothing Here"
+
+
+
+				GaugeSelectScreen:
+						name: "gaugeselect"
+
+						FloatLayout:
+								size_hint: 1, 1
+
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]OBDII Gauges[/size]'
+										pos: 0, 210
+
+
+								JZLargeButton:
+										text: "Digital Speedometer"
+										font_size: 25
+										on_press: sm.current = 'digitalspeedo'
+										on_press: app.add_OBDVAR_SPEED()
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 20, 310
+										size_hint: .3, .2
+
+
+								JZLargeButton:
+										text: "Digital Tach"
+										font_size: 25
+										on_press: sm.current = 'digitaltach'
+										on_press: app.add_OBDVAR_RPM()
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 20, 200
+										size_hint: .3, .2
+
+
+								JZLargeButton:
+										text: "Race Tach"
+										font_size: 25
+										on_press: sm.current = 'racetach'
+										on_press: app.add_OBDVAR_GRAPHICAL_RPM()
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 20, 90
+										size_hint: .3, .2
+
+
+								JZLargeButton:
+										text: "Coolant Temp"
+										font_size: 25
+										on_press: sm.current = 'coolanttemp'
+										on_press: app.add_OBDVAR_COOLANT_TEMP()
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 540, 310
+										size_hint: .3, .2
+
+
+								JZLargeButton:
+										text: "Intake Temp"
+										font_size: 25
+										on_press: sm.current = 'intaketemp'
+										on_press: app.add_OBDVAR_INTAKE_TEMP()
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 540, 200
+										size_hint: .3, .2
+
+
+								JZLargeButton:
+										text: "Engine Load"
+										font_size: 25
+										on_press: sm.current = 'engload'
+										on_press: app.add_OBDVAR_LOAD()
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 540, 90
+										size_hint: .3, .2
+
+
+								Button: #return button
+										#text: "return to main"
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+				OBDDigitalSpeedoScreen:
+						name: "digitalspeedo"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Speedometer[/size]'
+										pos: 0, 210
+
+								Label: #Label to display vehicle speed
+										markup: True
+										text: app.obdspeed
+										font_size: 100
+										pos: 0, 50
+
+								Label: #Label to display units
+										markup: True
+										text: "mph"
+										font_size: 20
+										pos: 110, 15
+
+								MDRaisedButton:
+										text: "Reset Max"
+										elevation_normal: 3
+										size_hint: None, None
+										size: 3 * dp(70), dp(70)
+										pos_hint: {'center_x': 0.15, 'center_y': .250}
+								MDRaisedButton:
+										text: "Log Max"
+										elevation_normal: 3
+										size_hint: None, None
+										size: 3 * dp(70), dp(70)
+										pos_hint: {'center_x': 0.85, 'center_y': .250}
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_OBDVAR()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+				OBDDigitalTachScreen:
+						name: "digitaltach"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Tachometer[/size]'
+										pos: 0, 210
+
+								Label: #Label to display vehicle speed
+										markup: True
+										text: app.obdRPM
+										font_size: 100
+										pos: 0, 50
+								Label: #Label to display vehicle max RPM
+										markup: True
+										text: app.obdRPMmax
+										font_size: 35
+										pos: 0, -120
+
+								Label: #Label to display units
+										markup: True
+										text: "rpm"
+										font_size: 20
+										pos: 140, 15
+
+								MDRaisedButton:
+										text: "Reset Max"
+										elevation_normal: 3
+										size_hint: None, None
+										size: 3 * dp(70), dp(70)
+										pos_hint: {'center_x': 0.15, 'center_y': .250}
+										on_press: app.zero_RPMmax()
+
+								MDRaisedButton:
+										text: "Log Max"
+										elevation_normal: 3
+										size_hint: None, None
+										size: 3 * dp(70), dp(70)
+										pos_hint: {'center_x': 0.85, 'center_y': .250}
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_OBDVAR()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+				OBDGraphicTachScreen:
+						name: "racetach"
+						FloatLayout:
+								size_hint: 1, 1
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+				OBDCoolantScreen:
+						name: "coolanttemp"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Coolant Temp[/size]'
+										pos: 0, 210
+
+								Label: #Label to display coolant temp
+										markup: True
+										text: app.obdcoolanttemp
+										font_size: 100
+										pos: 0, 0
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_OBDVAR()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+				OBDIntakeTempScreen:
+						name: "intaketemp"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Intake Temp[/size]'
+										pos: 0, 210
+
+								Label: #Label to display intake temp
+										markup: True
+										text: app.obdintaketemp
+										font_size: 100
+										pos: 0, 0
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_OBDVAR()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+				OBDLoadScreen:
+						name: "engload"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Engine Load[/size]'
+										pos: 0, 210
+
+								Label: #Label to display engine load
+										markup: True
+										text: app.obdengineload
+										font_size: 100
+										pos: 0, 0
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.kill_OBDVAR()
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+								FloatLayout:
+										size_hint: 1, .5
+										orientation:'vertical'
+										padding: '130dp'
+										JZWideProgressBar:
+												pos: -300, 120
+												value: app.obdengineloadval
+												orientation:"vertical"
+												min: 0
+												max: 100
+
+				WallpaperSelectScreen:
+						name: "wallpaperselect"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Wallpapers[/size]'
+										pos: 0, 210
+
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+						FloatLayout:
+								size_hint: 1, .865
+								ScrollView:
+										do_scroll_x: False
+										GridLayout:
+												cols: 2
+												row_default_height: dp(234)
+												row_force_default: True
+												size_hint_y: None
+												height: 14 * dp(100) # /1 * self.row_default_height
+												padding: dp(4), dp(4)
+												spacing: dp(4)
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/greenmaterial.png'
+														on_release: app.setwallpaper0()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/blackgreenmaterial.png'
+														on_release: app.setwallpaper1()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/darkgreymaterial2.png'
+														on_release: app.setwallpaper2()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/polymountain.png'
+														on_release: app.setwallpaper3()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/trianglematerial.png'
+														on_release: app.setwallpaper4()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/blackredmaterial.png'
+														on_release: app.setwallpaper5()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/greybluematerial.png'
+														on_release: app.setwallpaper6()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/lightblueblackmaterial.png'
+														on_release: app.setwallpaper7()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/greyplain.png'
+														on_release: app.setwallpaper8()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/stopwatchblue.png'
+														on_release: app.setwallpaper9()
+
+
+
+
+#Hotkey1 Chooser
+				HotKey1ChooserScreen:
+						name: "hotkey1chooser"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Select an action for the HotKey located on top.[/size]'
+										pos: 0, 210
+
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+						GridLayout:
+								cols: 5
+								rows: 4
+								padding: 30
+								spacing: 5
+								size_hint: 1, .85
+								pos: 0, 30
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_SeekUp()
+										text: "Seek Up"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_SeekDown()
+										text: "Seek Down"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_Garage()
+										text: "Garage"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_Radar()
+										text: "Radar"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_CupLights()
+										text: "Cup Lights"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_WindowsUp()
+										text: "Windows Up"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_WindowsDown()
+										text: "Windows Down"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_ScreenToggle()
+										text: "Screen\nToggle"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey1_None()
+										text: "None"
+										font_size: 20
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+	#Hotkey2 Chooser
+				HotKey2ChooserScreen:
+						name: "hotkey2chooser"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Select an action for the HotKey located on bottom.[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+						GridLayout:
+								cols: 5
+								rows: 4
+								padding: 30
+								spacing: 5
+								pos: 0, 30
+								size_hint: 1, .85
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_SeekUp()
+										text: "Seek Up"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_SeekDown()
+										text: "Seek Down"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_Garage()
+										text: "Garage"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_Radar()
+										text: "Radar"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_CupLights()
+										text: "Cup Lights"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_WindowsUp()
+										text: "Windows Up"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_WindowsDown()
+										text: "Windows Down"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_ScreenToggle()
+										text: "Screen\nToggle"
+										font_size: 20
+								MDRaisedButton:
+										background_color:(0.9, 0.9, 0.9, 0.5)
+										on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.sethotkey2_None()
+										text: "None"
+										font_size: 20
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+				OffScreen:
+						name: "offscreen"
+						FloatLayout:
+								Button: #full screen button to turn screen back on
+										on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'down'
+										on_press: app.TurnScreenOn()
+
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+
+
+		QUICKEYSLayout:
+				AnchorLayout: #define the QUICKEYS area
+						anchor_x: 'center'
+						anchor_y: 'bottom'
+						FloatLayout:
+								size_hint: 1, 1
+								#Image:
+										#source: 'data/elements/dock_shadow.png'
+										#opacity: .5
+									    #center_x: self.center_x
+										#center_y: self.center_y
+									    #pos: 0, -200
+										#allow_stretch: True
+										##if this is used - make quickkeys size .165
+								Image: #pixel style dock - test
+									    source: 'data/elements/pixeldock.png'
+									    opacity: .3
+									    center_x: self.center_x
+										center_y: self.center_y
+										pos: 0, -10
+										allow_stretch: True
+
+
+						FloatLayout:                                #Brightnessbar stuff
+								size_hint: 1, 1
+								Image:
+										id: brightnessbar
+										source: 'data/elements/brightnessbar.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										pos: 0, 150
+										opacity: .9
+										allow_stretch: True
+								Button:                             #cancel button
+										id: brightnessbarreturnbutton
+										pos: 0, -300
+										size_hint: 1, .6
+										background_color:(0.9, 0.9, 0.9, 0.0) #transparent
+										on_press: Animation(y=150, duration=.2).start(brightnessbar)
+										on_press: Animation(y=-300, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=530, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_2_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+
+						FloatLayout:                                 #Brightnessbar buttons
+								id: brightnessbarbuttons
+								orientation: 'horizontal'
+								size_hint: 1, 1 #define percentage of screen for brightness bar buttons
+
+								Button: #Brightness 1
+
+										id: brightness_1_button
+										size_hint: .125, .2
+										pos: 150, 530
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: Animation(y=150, duration=.2).start(brightnessbar)
+										on_press: Animation(y=-300, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=530, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_2_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+
+										Image:
+
+												source: 'data/icons/brightness1.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button: #Brightness 2
+
+										id: brightness_2_button
+										size_hint: .125, .2
+										pos: 250, 530
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: Animation(y=150, duration=.2).start(brightnessbar)
+										on_press: Animation(y=-300, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=530, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_2_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+										Image:
+
+												source: 'data/icons/brightness2.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button: #Brightness 3
+
+										id: brightness_3_button
+										size_hint: .125, .2
+										pos: 350, 530
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: Animation(y=150, duration=.2).start(brightnessbar)
+										on_press: Animation(y=-300, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=530, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_2_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+										Image:
+
+												source: 'data/icons/brightness3.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button: #Brightness 4
+
+										id: brightness_4_button
+										size_hint: .125, .2
+										pos: 450, 530
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: Animation(y=150, duration=.2).start(brightnessbar)
+										on_press: Animation(y=-300, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=530, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_2_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+										Image:
+
+												source: 'data/icons/brightness4.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button: #Brightness 5
+
+										id: brightness_5_button
+										size_hint: .125, .2
+										pos: 550, 530
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: Animation(y=150, duration=.2).start(brightnessbar)
+										on_press: Animation(y=-300, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=530, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_2_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
+										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+										Image:
+
+												source: 'data/icons/brightness5.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+						BoxLayout:
+								orientation: 'horizontal'
+								size_hint: 1, 1 #define percentage of screen for quickeys width,height
+								Button:
+										size_hint_y: .13
+										on_press: sm.current = 'audio'
+
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Audio\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+
+										Image:
+												id: audioimage
+												source: 'data/icons/audio.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+
+								Button:
+										size_hint_y: .13
+										on_press: sm.current = 'performance'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Performance\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												id: perfimage
+												source: 'data/icons/perf.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										size_hint_y: .13
+										on_press: sm.current = 'clockchooser'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Clocks\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												id: clocksimage
+												source: 'data/icons/clocks.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+								Button:
+										size_hint_y: .13
+										on_press: sm.current = 'apps'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Apps\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												id: appsimage
+												source: 'data/icons/apps.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 80, 80
+												allow_stretch: True
+								Button:
+										size_hint_y: .13
+										on_press: sm.current = 'controls'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Controls\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												id: controlsimage
+												source: 'data/icons/controls.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button:
+										size_hint_y: .13
+
+										on_press: Animation(y=0, duration=.2).start(brightnessbar)
+										on_press: Animation(y=90, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=380, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=380, duration=.25).start(brightness_2_button)
+										on_press: Animation(y=380, duration=.3).start(brightness_3_button)
+										on_press: Animation(y=380, duration=.35).start(brightness_4_button)
+										on_press: Animation(y=380, duration=.4).start(brightness_5_button)
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Brightness\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												id: brightnessimage
+												source: 'data/icons/brightness.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 65, 65
+												allow_stretch: True
+
+								Button:
+										size_hint_y: .13
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_release: app.shutdown() #only until new power supply is installed
+
+										#turns screen off and goes to "off" screen to wait for touch
+										on_press: app.TurnScreenOff()
+
+										on_press: sm.transition.direction = 'left'
+
+										#dynamic labels
+										#font_size: 20
+										#text: " "
+										#on_press: self.text = "Display\n\n\n"
+										#on_release: self.text = " "
+
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												id: displayimage
+												source: 'data/icons/display.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+						BoxLayout: #Invisible buttons to show cool material design touch animation
+								orientation: 'horizontal'
+								size_hint: 1.043799, 1
+								spacing: 50.286
+								padding: 44, 0
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+										on_press: sm.current = 'audio'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+										on_press: sm.current = 'performance'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+										on_press: sm.current = 'clockchooser'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+										on_press: sm.current = 'apps'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+										on_press: sm.current = 'controls'
+
+										on_press: app.kill_message()
+										on_press: app.killtemp()
+										on_press: app.kill_OBDVAR()
+										on_press: app.kill_analog()
+
+										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
+										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
+										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
+										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+
+										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
+										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
+										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+
+										on_press: sm.transition.direction = 'left'
+
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+
+										on_press: Animation(y=0, duration=.2).start(brightnessbar)
+										on_press: Animation(y=90, duration=.2).start(brightnessbarreturnbutton)
+										on_press: Animation(y=380, duration=.2).start(brightness_1_button)
+										on_press: Animation(y=380, duration=.25).start(brightness_2_button)
+										on_press: Animation(y=380, duration=.3).start(brightness_3_button)
+										on_press: Animation(y=380, duration=.35).start(brightness_4_button)
+										on_press: Animation(y=380, duration=.4).start(brightness_5_button)
+
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+
+										on_release: app.shutdown() #only until new power supply is installed
+										on_release: app.TurnScreenOff()
+
+						FloatLayout: #LockScreenStuff
+								Image:
+										id: lockscreenwallpaper
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, -480
+								MDLabel:
+										id: lockscreentime
+										font_style: 'Display4'
+										theme_text_color: 'Primary'
+										text: app.timenow
+										halign: 'center'
+										pos: 0, -480
+										opacity: .5
+								Button:
+										id: lockscreenbutton
+										on_press: Animation(y=-480, duration=.1).start(lockscreenwallpaper)
+										on_press: Animation(y=-480, duration=.1).start(lockscreentime)
+										on_press: Animation(y=-480, duration=.1).start(lockscreenbutton)
+										opacity: 0
+										pos: 0, -480
+
