@@ -33,7 +33,8 @@ How to use:
 To use developer mode:
 - This turns off things like GPIO, temp probe, and OBD stuff as it doesn’t place nice on a computer other than the Pi.
 -  Change the “developermode” var to 1.  Change this to 0 if you’d like to use all of CoPilot’s features.
- To view current temp:
+
+To view current temp:
 - Make sure "TempProbePresent" variable in code is set to 1 - if not, temp will be "--"
 - Tap under time on home screen and bubble will float unto screen showing temp - tap again to hide
  
