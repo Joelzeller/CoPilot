@@ -10,9 +10,9 @@ Setup:
 -	Get KivyMD: https://gitlab.com/kivymd/KivyMD
 -	This should install garden and then recycleview, and that should be enough to get it working
 	
-	-pip install kivy-garden
+	pip install kivy-garden
 	
-	-garden install recycleview
+	garden install recycleview
 
 -	Python Version 2.7.0 is recommended
 ***You will need clock.kv, main.kv, main.py, and the data folder placed in a directory on your pi - mine are located at /home/pi/CoPilot***
