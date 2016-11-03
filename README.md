@@ -11,6 +11,7 @@ Setup:
 -	This should install garden and then recycleview, and that should be enough to get it working
 	
 	-pip install kivy-garden
+	
 	-garden install recycleview
 
 -	Python Version 2.7.0 is recommended
