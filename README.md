@@ -8,6 +8,8 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 -	Get Kivy Garden: https://kivy.org/docs/api-kivy.garden.html 
 		 	 https://kivy-garden.github.io/
 -	Get KivyMD: https://gitlab.com/kivymd/KivyMD
+-	Get python-OBD: https://github.com/brendan-w/python-OBD
+
 -	This should install garden and then recycleview, and that should be enough to get it working
 	
 	pip install kivy-garden
