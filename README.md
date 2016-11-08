@@ -25,6 +25,7 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 **Recommended Hardware:**
 
 - Raspberry Pi 2 or 3 – increase the GPU memory to its max setting using raspi-config 
+- Official Raspberry Pi 7 inch touchscreen
 - Set up a RTC to keep time since Pi won’t be connected to the internet at all times
 - Temperature Probe – place probe wherever desired, mine is inside the car
 - Bluetooth OBDII dongle for car (for use with performance pages)
