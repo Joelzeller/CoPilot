@@ -31,7 +31,7 @@
 
 #on_press: Animation(x=newposition or y=newposition).start(id) #to animate things
 
-#V2
+#V2.0.1
 
 AnchorLayout:
 		anchor_x: 'center'
@@ -86,11 +86,12 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 
-								Button: #Button to turn off radar from main screen
-										on_press: app.radar_callback_schedge()
-										pos: 609, 415
-										size_hint: .09, .15
-										background_color:(0.9, 0.9, 0.9, 0)
+								JZInvisiButton:
+										elevation_normal: 3
+										size_hint: None, None
+										size: dp(64), dp(64)
+										pos: 613, 415
+										on_release: app.radar_callback_schedge()
 
 						FloatLayout: #Temp Bubble Stuff
 								size_hint: 1, 1
@@ -177,19 +178,15 @@ AnchorLayout:
 										pos: -10, 0
 										size_hint: .1, 1.1
 										background_color:(0.9, 0.9, 0.9, 0.0)
+
 						FloatLayout: #ShortCutDrawer Pieces
 								size_hint: 1, 1
-								Label:
-										id: SCD_Date
-										text: app.daynow + ", " + app.datenow
-										pos: -535, 205
-										font_size: 20
-
 								Button:
 										id: SCD_DateButton
-										text: app.daynow + ", " + app.datenow
-										pos: -320, 408
+										pos: -340, 408
 										size_hint: .4, .15
+										background_normal: 'data/buttons/shortcutdrawer/SD_date.png'
+                                        background_down: 'data/buttons/shortcutdrawer/SD_date_pressed.png'
 										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
@@ -198,14 +195,13 @@ AnchorLayout:
 										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
-										opacity: 0
 
-								MDFlatButton:
+								Button:
 										id: SCD_SettingsButton
-										text: "Settings                      "
-										theme_text_color: 'Secondary'
-										pos: -340, 335
+										pos: -340, 336
 										size_hint: .4, .15
+										background_normal: 'data/buttons/shortcutdrawer/SD_settings.png'
+                                        background_down: 'data/buttons/shortcutdrawer/SD_settings_pressed.png'
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'left'
 										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
@@ -217,21 +213,21 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-								MDFlatButton:
+								Button:
 										id: SCD_GarageButton
-										text: "Garage Door              "
-										theme_text_color: 'Secondary'
-										pos: -340, 262
-										size_hint: .4, .15
+										pos: -340, 264
+									    size_hint: .4, .15
+										background_normal: 'data/buttons/shortcutdrawer/SD_garage.png'
+                                        background_down: 'data/buttons/shortcutdrawer/SD_garage_pressed.png'
 										on_press: app.garage_callback_schedge()
 										on_release: app.garage_callback_schedge() #only on when button is pressed
 
-								MDFlatButton:
-										id: SCD_OBDButton
-										text: "OBDII Gauges              "
-										theme_text_color: 'Secondary'
-										pos: -340, 189
+								Button:
+									    id: SCD_OBDButton
+									    pos: -340, 192
 										size_hint: .4, .15
+										background_normal: 'data/buttons/shortcutdrawer/SD_gauges.png'
+                                        background_down: 'data/buttons/shortcutdrawer/SD_gauges_pressed.png'
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'left'
 										on_press: app.setup_OBD() #set up obd stuff
@@ -244,12 +240,12 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-								MDFlatButton:
+								Button:
 										id: SCD_StopwatchButton
-										text: "Stopwatch                "
-										theme_text_color: 'Secondary'
-										pos: -340, 116
+										pos: -340, 120
 										size_hint: .4, .15
+										background_normal: 'data/buttons/shortcutdrawer/SD_stopwatch.png'
+                                        background_down: 'data/buttons/shortcutdrawer/SD_stopwatch_pressed.png'
 										on_press: sm.current = 'stopwatch'
 										on_press: sm.transition.direction = 'left'
 										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
@@ -260,6 +256,11 @@ AnchorLayout:
 										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+								Label:
+										id: SCD_Date
+										text: app.daynow + ", " + app.datenow
+										pos: -535, 205
+										font_size: 20
 
 						FloatLayout:
 								size_hint: 1, 1
@@ -322,73 +323,106 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
-								MDRaisedButton:
-										#text: "Seek Up"
-										on_press: app.seekup_callback_schedge()
-										elevation_normal: 3
-										opposite_colors: True
-										size_hint: None, None
-										size: 3 * dp(70), dp(120)
-										pos_hint: {'center_x': 0.175, 'center_y': .675}
-										Image:
-												source: 'data/icons/arrow_up.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 50, 50
-												allow_stretch: True
-
-								MDRaisedButton:
-										#text: "Seek Down"
-										on_press: app.seekdown_callback_schedge()
-										elevation_normal: 3
-										opposite_colors: True
-										size_hint: None, None
-										size: 3 * dp(70), dp(120)
-										pos_hint: {'center_x': 0.175, 'center_y': .325}
-										Image:
-												source: 'data/icons/arrow_down.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 70, 70
-												allow_stretch: True
-
-								MDRaisedButton:
-										#text: "AUX"
+								Button:
+										id: audio_aux
 										on_press: app.aux_callback_schedge()
-										elevation_normal: 3
-										opposite_colors: True
-										size_hint: None, None
-										size: 3 * dp(70), dp(120)
-										pos_hint: {'center_x': 0.825, 'center_y': .675}
+										on_press: Animation(y = 120, duration=.2).start(audio_aux)
+										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
+										on_press: Animation(x = 1000, duration=0).start(audio_sourcereturn)
+										background_normal: 'data/icons/audio/audiocontrol.png'
+                                        background_down: 'data/icons/audio/audiocontrol_pressed.png'
+                                        background_color: app.theme_cls.primary_color
+										size_hint: .21, .2
+										pos: 486, 120
 										Image:
 												source: 'data/icons/auxin.png'
 												center_x: self.parent.center_x
 												center_y: self.parent.center_y
-												size: 70, 70
+												size: 100, 100
 												allow_stretch: True
 
-								MDRaisedButton:
-										#text: "AM/FM"
+								Button:
+										id: audio_amfm
 										on_press: app.amfm_callback_schedge()
-										elevation_normal: 3
-										opposite_colors: True
-										size_hint: None, None
-										size: 3 * dp(70), dp(120)
-										pos_hint: {'center_x': 0.825, 'center_y': .325}
+										on_press: Animation(y = 120, duration=.2).start(audio_aux)
+										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
+										on_press: Animation(x = 1000, duration=0).start(audio_sourcereturn)
+										background_normal: 'data/icons/audio/audiocontrol.png'
+                                        background_down: 'data/icons/audio/audiocontrol_pressed.png'
+                                        background_color: app.theme_cls.primary_color
+										size_hint: .21, .2
+										pos: 146, 120
 										Image:
 												source: 'data/icons/amfm.png'
 												center_x: self.parent.center_x
 												center_y: self.parent.center_y
-												size: 70, 70
+												size: 100, 100
 												allow_stretch: True
 
+								Image:
+										source: 'data/elements/audiobar.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
 								Button:
-										#text: "return" #middle of screen button
-										on_press: sm.current = 'main'
-										on_press: sm.transition.direction = 'right'
-										pos: 270, 30
-										size_hint: .325, .8
-										background_color:(0.9, 0.9, 0.9, 0.0)
+								        id: audio_source
+										elevation_normal: 3
+										size_hint: .125, .2083333 #100x100
+										background_normal: 'data/elements/more/more.png'
+                                        background_down: 'data/elements/more/more_pressed.png'
+										pos: 654, 104
+										on_press: Animation(y = 250, duration=.2).start(audio_aux)
+										on_press: Animation(y = 250, duration=.2).start(audio_amfm)
+										on_press: Animation(x = 654, duration=0).start(audio_sourcereturn)
+
+								Button:
+								        id: audio_sourcereturn
+										elevation_normal: 3
+										size_hint: .125, .2083333 #100x100
+										background_normal: 'data/elements/more/more.png'
+                                        background_down: 'data/elements/more/more_pressed.png'
+										pos: 1000, 104
+										on_press: Animation(y = 120, duration=.2).start(audio_aux)
+										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
+										on_release: Animation(x = 1000, duration=0).start(audio_sourcereturn)
+
+                                Button: #play
+                                        id: audio_play
+										pos: 337, 92
+										size_hint: .1575, .2625 #126x126
+										background_normal: 'data/icons/audio/play.png'
+                                        background_down: 'data/icons/audio/play_pressed.png'
+                                        on_press: Animation(y = -200, duration=0).start(audio_play)
+                                        on_press: Animation(y = 92, duration=0).start(audio_pause)
+                                        background_color: app.theme_cls.primary_color
+                                Button: #pause
+                                        id: audio_pause
+										pos: 337, -200
+										size_hint: .1575, .2625 #126x126
+										background_normal: 'data/icons/audio/pause.png'
+                                        background_down: 'data/icons/audio/pause_pressed.png'
+                                        on_press: Animation(y = -200, duration=0).start(audio_pause)
+                                        on_press: Animation(y = 92, duration=0).start(audio_play)
+                                        background_color: app.theme_cls.primary_color
+
+                                Button: #prev
+										pos: 180, 105
+										size_hint: .125, .2083333 #100x100
+										background_normal: 'data/icons/audio/prev.png'
+                                        background_down: 'data/icons/audio/prev_pressed.png'
+                                        on_press: app.seekdown_callback_schedge()
+
+                                Button: #next
+										pos: 520, 105
+										size_hint: .125, .2083333 #100x100
+										background_normal: 'data/icons/audio/next.png'
+                                        background_down: 'data/icons/audio/next_pressed.png'
+                                        on_press: app.seekup_callback_schedge()
+
+
+
+
 
 				PerfScreen:
 						name: "performance"
@@ -561,6 +595,21 @@ AnchorLayout:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'gps'
 										on_press: sm.transition.direction = 'left'
+										on_press: Animation(y=-100, duration=.2).start(dock)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=.2).start(dock_invisi_power)
 										text: "\n\n\n\nGPS"
 										font_size: 20
 										Image:
@@ -622,6 +671,20 @@ AnchorLayout:
 
 								Button:
 										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: sm.current = 'maintenance'
+										on_press: sm.transition.direction = 'left'
+										on_press: app.kill_clock()
+										text: "\n\n\n\nMaintenance"
+										font_size: 20
+										Image:
+												source: 'data/icons/app_icons/maintenance_icon.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 70, 70
+												allow_stretch: True
+
+								Button:
+										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'testapp'
 										on_press: sm.transition.direction = 'left'
 										on_press: app.kill_clock()
@@ -634,10 +697,6 @@ AnchorLayout:
 												size: 70, 70
 												allow_stretch: True
 
-								Button:
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										#text: "Not Used"
-										font_size: 30
 								Button:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										#text: "Not Used"
@@ -1334,38 +1393,47 @@ AnchorLayout:
 						name: "gps"
 						FloatLayout:
 								size_hint: 1, 1
+								#MapView:
+								        #lat: 39.135481
+								        #lon: -84.529143
+								        #zoom: 17 #maybe 18 for a little larger print
+								Label:
+										markup: True
+										text: '[size=25]Nothing here yet...[/size]'
+										pos: 0, 0
 								Image:
-										source: 'data/wallpapers/black.png'
+										source: 'data/elements/GPS_Toolbar.png'
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
+										opacity: .2
 
-								Toolbar:
-										id: toolbar
-										pos_hint: {"right": 1, 'top':1}
-										#title: ''
-										background_color: app.theme_cls.primary_color
-										opacity: 1.0
 								Label: #label to display current time
 										markup: True
 										text: app.timenow
 										font_size: 40
 										pos: 340, 210
-								Label:
-										markup: True
-										text: '[size=24]Connect to Raspberry Pi through AirPlay to view iPhone Screen[/size]'
-										#pos: -258, 2
-
-								Label: #label to display screen name
-										markup: True
-										text: '[size=30]GPS[/size]'
-										pos: 0, 210
 
 								Button: #return button
 										#text: "return to apps"
 										on_press: sm.current = 'apps'
 										on_press: sm.transition.direction = 'right'
-										pos: -365, 399
+										on_press: Animation(y=-10, duration=.2).start(dock)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=.2).start(dock_normal_power)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=.2).start(dock_invisi_power)
+										pos: -369, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
@@ -1380,7 +1448,6 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								Image:
-										id: mainwallpaper
 										source: 'data/wallpapers/stopwatchblue.png'
 										center_x: self.center_x
 										center_y: self.center_y
@@ -1468,35 +1535,25 @@ AnchorLayout:
 										center_y: self.center_y
 										pos: 0, 32
 								MDLabel:
-                                        font_style: 'Title'
+                                        font_style: 'Headline'
                                         theme_text_color: 'Custom'
                                         text_color: (0,0,0,1)
-                                        text: "Kill CoPilot"
+                                        text: "Would you like to kill CoPilot?"
                                         halign: 'center'
-                                        pos: -130, 120
-                                MDLabel:
-                                        font_style: 'Subhead'
-                                        theme_text_color: 'Custom'
-                                        text_color: (0,0,0,.5)
-                                        text: "Press confirm to kill Copilot."
-                                        halign: 'center'
-                                        pos: -80, 80
-
-								MDFlatButton:
-										text: "Confirm"
-										on_release: exit()
-										pos: 430, 158
-										opposite_colors: True
-										size_hint: None, None
-								MDFlatButton:
-										text: "Dismiss"
-										on_release: sm.current = 'main'
+                                        pos: 0, 100
+                                Button: #dismiss
+										pos: 257, 170
+										size_hint: .1575, .2625 #126x126
+										background_normal: 'data/buttons/confirm_dismiss/dismiss.png'
+                                        background_down: 'data/buttons/confirm_dismiss/dismiss_pressed.png'
+                                        on_release: sm.current = 'main'
 										on_release: sm.transition.direction = 'up'
-										pos: 519, 158
-										opposite_colors: True
-										size_hint: None, None
-
-
+                                Button: #confirm
+										pos: 417, 170
+										size_hint: .1575, .2625 #126x126
+										background_normal: 'data/buttons/confirm_dismiss/confirm.png'
+                                        background_down: 'data/buttons/confirm_dismiss/confirm_pressed.png'
+                                        on_release: exit()
 
 				DiagnosticsScreen:
 						name: "sysdiagnostics"
@@ -1788,7 +1845,6 @@ AnchorLayout:
 										text: '[size=25]Photos[/size]'
 										pos: 0, 210
 
-
 								Button: #return button
 										#text: "return to apps"
 										on_press: sm.current = 'apps'
@@ -1826,14 +1882,57 @@ AnchorLayout:
 												Image:
 														source: 'data/wallpapers/RT.png'
 
+                MaintenanceScreen:
+						name: "maintenance"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Maintenance[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+						FloatLayout:
+								size_hint: 1, 1
+                                Label:
+										markup: True
+										text: '[size=25]Nothing here yet...[/size]'
+										pos: 0, 0
+
+
 				TestAppScreen:
 						name: "testapp"
-
 						FloatLayout:
 								size_hint: 1, 1
 
 								Label:
 										text: "Nothing Here"
+
+
 
 
 
@@ -2072,6 +2171,12 @@ AnchorLayout:
 						name: "racetach"
 						FloatLayout:
 								size_hint: 1, 1
+								Image:
+										source: 'data/gauges/tach.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+
 								Label: #label to display current time
 										markup: True
 										text: app.timenow
@@ -2268,6 +2373,7 @@ AnchorLayout:
 										GridLayout:
 												cols: 2
 												row_default_height: dp(234)
+												row_default_width: dp(390)
 												row_force_default: True
 												size_hint_y: None
 												height: 14 * dp(100) # /1 * self.row_default_height
@@ -2579,7 +2685,8 @@ AnchorLayout:
 									    #pos: 0, -200
 										#allow_stretch: True
 										##if this is used - make quickkeys size .165
-								Image: #pixel style dock - test
+								Image: #pixel style dock - test ## on_press: Animation(y=-100, duration=.2).start(dock)
+								        id: dock
 									    source: 'data/elements/pixeldock.png'
 									    opacity: .3
 									    center_x: self.center_x
@@ -2726,6 +2833,7 @@ AnchorLayout:
 								orientation: 'horizontal'
 								size_hint: 1, 1 #define percentage of screen for quickeys width,height
 								Button:
+								        id: dock_normal_audio
 										size_hint_y: .13
 										on_press: sm.current = 'audio'
 
@@ -2750,12 +2858,6 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Audio\n\n\n"
-										#on_release: self.text = " "
-
 										background_color:(0.9, 0.9, 0.9, 0.0)
 
 										Image:
@@ -2768,6 +2870,7 @@ AnchorLayout:
 
 
 								Button:
+								        id: dock_normal_perf
 										size_hint_y: .13
 										on_press: sm.current = 'performance'
 
@@ -2791,12 +2894,6 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Performance\n\n\n"
-										#on_release: self.text = " "
-
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
 												id: perfimage
@@ -2806,6 +2903,7 @@ AnchorLayout:
 												size: 70, 70
 												allow_stretch: True
 								Button:
+								        id: dock_normal_clock
 										size_hint_y: .13
 										on_press: sm.current = 'clockchooser'
 
@@ -2829,12 +2927,6 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Clocks\n\n\n"
-										#on_release: self.text = " "
-
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
 												id: clocksimage
@@ -2844,6 +2936,7 @@ AnchorLayout:
 												size: 70, 70
 												allow_stretch: True
 								Button:
+								        id: dock_normal_apps
 										size_hint_y: .13
 										on_press: sm.current = 'apps'
 
@@ -2867,12 +2960,6 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Apps\n\n\n"
-										#on_release: self.text = " "
-
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
 												id: appsimage
@@ -2882,6 +2969,7 @@ AnchorLayout:
 												size: 80, 80
 												allow_stretch: True
 								Button:
+								        id: dock_normal_controls
 										size_hint_y: .13
 										on_press: sm.current = 'controls'
 
@@ -2905,12 +2993,6 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Controls\n\n\n"
-										#on_release: self.text = " "
-
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
 												id: controlsimage
@@ -2921,6 +3003,7 @@ AnchorLayout:
 												allow_stretch: True
 
 								Button:
+								        id: dock_normal_brightness
 										size_hint_y: .13
 
 										on_press: Animation(y=0, duration=.2).start(brightnessbar)
@@ -2930,12 +3013,6 @@ AnchorLayout:
 										on_press: Animation(y=380, duration=.3).start(brightness_3_button)
 										on_press: Animation(y=380, duration=.35).start(brightness_4_button)
 										on_press: Animation(y=380, duration=.4).start(brightness_5_button)
-
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Brightness\n\n\n"
-										#on_release: self.text = " "
 
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
@@ -2947,6 +3024,7 @@ AnchorLayout:
 												allow_stretch: True
 
 								Button:
+								        id: dock_normal_power
 										size_hint_y: .13
 
 										on_press: app.kill_message()
@@ -2974,12 +3052,6 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										#dynamic labels
-										#font_size: 20
-										#text: " "
-										#on_press: self.text = "Display\n\n\n"
-										#on_release: self.text = " "
-
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										Image:
 												id: displayimage
@@ -2991,10 +3063,11 @@ AnchorLayout:
 
 						BoxLayout: #Invisible buttons to show cool material design touch animation
 								orientation: 'horizontal'
-								size_hint: 1.043799, 1
+								size_hint: 1.0459, 1
 								spacing: 50.286
 								padding: 44, 0
 								JZInvisiButton:
+								        id: dock_invisi_audio
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3021,6 +3094,7 @@ AnchorLayout:
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
+								        id: dock_invisi_perf
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3047,6 +3121,7 @@ AnchorLayout:
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
+								        id: dock_invisi_clock
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3073,6 +3148,7 @@ AnchorLayout:
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
+								        id: dock_invisi_apps
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3099,6 +3175,7 @@ AnchorLayout:
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
+								        id: dock_invisi_controls
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3125,6 +3202,7 @@ AnchorLayout:
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
+								        id: dock_invisi_brightness
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3138,6 +3216,7 @@ AnchorLayout:
 										on_press: Animation(y=380, duration=.4).start(brightness_5_button)
 
 								JZInvisiButton:
+								        id: dock_invisi_power
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)

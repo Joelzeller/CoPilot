@@ -2,36 +2,21 @@ CoPilot V2.0
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 DONE IN THIS VERSION:
 
-HUGE UPDATE
-cleaned up folders and code!
-utilize KivyGarden
-labels are finally in the kv file - better animations and looks more clean when changing screens
-utilize KivyMD for a more "Androidy" feel
-new appbars - now toolbars
-new Shortcut Drawer - press icon or slide in from left to open
-Updated Shortcut Drawer and settings page to not use KivyMD lists - they dont play well with RPi for some reason
-progress bar added for seconds in stopwatch
-new photos app - scrollable list
-Brightness Bar! - user will be able to change the brightness of the display - requries the newest verison of the RPi display
-new settings page - cleaner and more intuitve
-user can select system theme - colors
-User can now selects wallpapers in the theme tab in settings
-radar icon now visable on main screen when enabled - tap status bar icon to turn off icon
-light "glows" when on - controls
-new OBD pages
-Lock Screen - tap the time or the middle of the the main screen to go to the new lock screen
-new kill screen - uses card design
-added invisible buttons for dock buttons - better tap animations
+Started work on Maintenance App
+Started work on GPS app - need to test further on actual raspberry pi
+Started working on redesigned audio screen
 
-
-altered some KivyMD files to suit my needs
+Dimmed lockscreen time a little 
+New kill screen
+darken dock and mainscreen toolbar
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 NEXT TO COME:
 
-tap time to go into a very dim "lock screen"
-invisible button for radar button
+implement dimming functions - need screen v1.1
+- look at kivymd card for how to use a line in canvas in KV
+
 
 OBDII-
 add reset max speed
@@ -47,13 +32,23 @@ design tutorial - time is always 3:14 - describe what toggle switches and button
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 POSSIBLE ADDITIONS:
-passcode to get into settings page
 be able to save values so they will load on launch - colors - hotkey settings - switch settings - wallpapers (PICKLE)
 other info on infoclockscreen
 Calender app? Google calender integration??
 startup animation??
 Auto Brightness - display brightness based on time of day
 click main app icon to go back to main
+hotkey functionality to go to specific screen? maybe a scollable menu if selecting a screen
+
+interface with in-line remote for android
+- use optocouplers to control play/pause/next/prev/googlenow
+- add hotkey functionality
+- test with iphone? maybe siri?
+- need to mount mic in better place to use voice?
+- add controls to audio screen - use android auto as inspiration
+- add voice control button to main screen? lockscreen? - microphone icon..not G or Siri logo...
+
+maybe get rid of invisibuttons on dock - slower feel, but better animations - will know if its worth it over time..
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ISSUES:
@@ -72,6 +67,9 @@ http://hex.colorrrs.com/
 https://material.google.com/style/color.html#color-color-palette
 http://bitdroid.de/Android-Material-Icon-Generator/
 flaticon.com
+
+icon creator
+https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.5&foreColor=fff%2C100&crop=0&backgroundShape=circle&backColor=009688%2C100&effects=none
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 REMINDERS:

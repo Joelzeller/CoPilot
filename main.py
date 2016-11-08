@@ -47,16 +47,17 @@ from kivymd.theming import ThemeManager
 from kivymd.dialog import MDDialog
 from kivymd.time_picker import MDTimePicker
 from kivymd.date_picker import MDDatePicker
+#from kivy.garden.mapview import MapView
+#import pygame
 
 #I know global variables are the devil....but they are so easy
 
 #set to 1 to disable all GPIO, temp probe, and obd stuff
 global developermode
 developermode = 1
-
 global version
-version = "V2.0"
-#10/30/2016
+version = "V2.0.1"
+#11/8/2016
 #Created by Joel Zeller
 
 # For PC dev work -----------------------
@@ -281,7 +282,7 @@ global time_second_mod
 time_second_mod = 0
 
 global wallpaper
-wallpaper = 0
+wallpaper = 3
 
 #OBD Global vars
 global OBDconnection
@@ -466,6 +467,8 @@ class PhotoClockScreen(Screen):
     pass
 class TestAppScreen(Screen):
     pass
+class MaintenanceScreen(Screen):
+    pass
 class GPSScreen(Screen):
     pass
 class StopwatchScreen(Screen):
@@ -517,6 +520,7 @@ class Painter(Widget): #Paint App
         touch.ud["line"].points += [touch.x, touch.y]
 
 
+
 #Analog Clock Stuffs
 
 class Ticks(Widget):
@@ -530,6 +534,7 @@ class Ticks(Widget):
         global launch_time_start
         global time_second
         global response_RPM_int_adjusted
+        global devobd
         
         self.canvas.clear()
         with self.canvas:
@@ -688,12 +693,22 @@ class Ticks(Widget):
 
                     RPM_CUR = response_RPM_int_adjusted
                     Color(0.8, 0.0, 0.0)
-                    Line(points=[self.center_x, y, self.center_x+0.95*(self.r*sin((pi/5000*RPM_CUR)+pi)), y+0.95*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=3, cap="round")
+                    Line(points=[self.center_x, y, self.center_x+0.75*(self.r*sin((pi/5000*RPM_CUR)+pi)), y+0.75*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=3, cap="round")
                     Color(0.0, 0.0, 0.0)
                     Line(points=[self.center_x, y, self.center_x+0.15*(self.r*sin((pi/5000*RPM_CUR)+pi)), y+0.15*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=6, cap="round")
                     Line(points=[self.center_x, y, self.center_x-0.15*(self.r*sin((pi/5000*RPM_CUR)+pi)), y-0.15*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=6, cap="round")
                     if response_RPM_int_adjusted > 3500: #REDLINE SET - to be changed into changable variable
-                    #if 5000 > 4000:
+                        Color(0.8, 0.0, 0.0)
+                        Line(circle=[x-300, y, 0, 0, 0], width=50)
+
+                if developermode == 1: #to simulate the car revving in dev mode
+                    RPM_CUR = devobd
+                    Color(0.8, 0.0, 0.0)
+                    Line(points=[self.center_x, y, self.center_x+0.75*(self.r*sin((pi/5000*RPM_CUR)+pi)), y+0.75*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=3, cap="round")
+                    Color(0.0, 0.0, 0.0)
+                    Line(points=[self.center_x, y, self.center_x+0.15*(self.r*sin((pi/5000*RPM_CUR)+pi)), y+0.15*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=6, cap="round")
+                    Line(points=[self.center_x, y, self.center_x-0.15*(self.r*sin((pi/5000*RPM_CUR)+pi)), y-0.15*(self.r*cos((pi/5000*RPM_CUR)+pi))], width=6, cap="round")
+                    if RPM_CUR > 6500: #REDLINE SET - to be changed into changable variable
                         Color(0.8, 0.0, 0.0)
                         Line(circle=[x-300, y, 0, 0, 0], width=50)
 
@@ -739,9 +754,10 @@ class MainApp(App):
     obdintaketemp = StringProperty()
     obdengineload = StringProperty()
     obdengineloadval = ObjectProperty()
+    oildate = StringProperty()
 
     theme_cls.theme_style = "Dark"
-    theme_cls.primary_palette = "Blue"
+    theme_cls.primary_palette = "DeepOrange"
 
     def updatetime(self, *args):
         time_hour = time.strftime("%I")  # time_hour
@@ -823,6 +839,7 @@ class MainApp(App):
             self.lightsiconsource = 'data/icons/app_icons/lights_icon_on.png'
         if LEDSON == 0:
             self.lightsiconsource = 'data/icons/app_icons/lights_icon.png'
+
         if wallpaper == 0:
             self.wallpapernow = 'data/wallpapers/greenmaterial.png'
         if wallpaper == 1:
@@ -882,7 +899,7 @@ class MainApp(App):
                         devobd = devobd + 1
                     else:
                         devobd = devobd - 1
-                    if devobd > 120:
+                    if devobd > 125:
                         incobd = 0
                     if devobd < 1:
                         incobd = 1
@@ -916,10 +933,10 @@ class MainApp(App):
             if OBDVAR == 2:  # code for OBD Digital Tach
                 if developermode == 1: #code to simulate 0 to 6750 and back down - for testing purposes
                     if incobd == 1:
-                        devobd = devobd + 100
+                        devobd = devobd + 10
                     else:
-                        devobd = devobd - 100
-                    if devobd > 6750:
+                        devobd = devobd - 10
+                    if devobd > 6900:
                         incobd = 0
                     if devobd < 100:
                         incobd = 1
@@ -955,14 +972,22 @@ class MainApp(App):
                 self.obdengineload = "0"
                 global analog
                 analog = 8
+                if incobd == 1:
+                    devobd = devobd + 10
+                else:
+                    devobd = devobd - 10
+                if devobd > 6900:
+                    incobd = 0
+                if devobd < 100:
+                    incobd = 1
 
             if OBDVAR == 4:  # code for OBD Coolant Temp
                 if developermode == 1:
                     if incobd == 1:
-                        devobd = devobd + 5
+                        devobd = devobd + 1
                     else:
-                        devobd = devobd - 5
-                    if devobd > 212:
+                        devobd = devobd - 1
+                    if devobd > 220:
                         incobd = 0
                     if devobd < 1:
                         incobd = 1
@@ -983,9 +1008,9 @@ class MainApp(App):
             if OBDVAR == 5:  # code for OBD Intake Temp
                 if developermode == 1:
                     if incobd == 1:
-                        devobd = devobd + 5
+                        devobd = devobd + 1
                     else:
-                        devobd = devobd - 5
+                        devobd = devobd - 1
                     if devobd > 120:
                         incobd = 0
                     if devobd < 1:
@@ -1032,6 +1057,7 @@ class MainApp(App):
 
 
     def build(self):
+        global developermode
         KVFILE = Builder.load_file("main.kv")
         CLOCKKVFILE = Builder.load_file("clock.kv")
         global root
@@ -1046,7 +1072,10 @@ class MainApp(App):
         Clock.schedule_interval(self.updatetemp, 1)
         Clock.schedule_interval(self.updatevariables, .104556) #weird number to get RPi stopwatch as close as possible - found through testing
         Clock.schedule_interval(self.updatemessage, 1)
-        Clock.schedule_interval(self.updateOBDdata, .1)
+        if developermode == 1:
+            Clock.schedule_interval(self.updateOBDdata, .01)
+        else:
+            Clock.schedule_interval(self.updateOBDdata, .1)
 
         #add the widgets
         
@@ -1312,6 +1341,7 @@ class MainApp(App):
         hotkey1string = "None"
         hotkey2string = "None"
 
+
     def setwallpaper0(obj):
         global wallpaper
         wallpaper = 0
@@ -1370,6 +1400,21 @@ class MainApp(App):
         screenon = 0
         os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #turns screen off
 
+
+    #brightness control functions
+    # def BrightnessSet1(obj): #only for lockscreen
+    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 1%
+    # def BrightnessSet10(obj):
+    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 10%
+    # def BrightnessSet25(obj):
+    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 25%
+    # def BrightnessSet50(obj):
+    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 50%
+    # def BrightnessSet75(obj):
+    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 75%
+    # def BrightnessSet100(obj):
+    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 100%
+
     def killtemp(obj): #used to kill the temp label when on screens other than main
         global TEMPON
         TEMPON = 0
@@ -1387,6 +1432,8 @@ class MainApp(App):
 
     def kill_OBDVAR(obj): #used to kill the OBD label when on screens other than main
         global OBDVAR
+        global devobd
+        devobd = 0
         OBDVAR = 0
 
     def add_OBDVAR_SPEED(obj): #used to change the OBD label to other types of data
