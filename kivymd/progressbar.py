@@ -48,6 +48,26 @@ Builder.load_string('''
                 if self.orientation == 'horizontal' else \
                 (self.center_x - dp(30),self.height*(1-self.value_normalized)+self.y if self.reversed else self.y)
 
+<JZWideRedProgressBar>:
+    canvas:
+        Clear
+        Color:
+            rgba:  self.theme_cls.divider_color
+        Rectangle:
+            size:    (self.width , dp(30)) if self.orientation == 'horizontal' else (dp(30),self.height)
+            pos:   (self.x, self.center_y - dp(30)) if self.orientation == 'horizontal' \
+                else (self.center_x - dp(30),self.y)
+
+
+        Color:
+            rgba: ((1, 0, 0, 1) if app.obdRPMval > app.obdRPMredline else self.theme_cls.primary_color)
+        Rectangle:
+            size:     (self.width*self.value_normalized, sp(30)) if self.orientation == 'horizontal' else (sp(30), \
+                self.height*self.value_normalized)
+            pos:    (self.width*(1-self.value_normalized)+self.x if self.reversed else self.x, self.center_y - dp(30)) \
+                if self.orientation == 'horizontal' else \
+                (self.center_x - dp(30),self.height*(1-self.value_normalized)+self.y if self.reversed else self.y)
+
         
 ''')
 
@@ -61,6 +81,13 @@ class MDProgressBar(ThemableBehavior, ProgressBar):
 
 
 class JZWideProgressBar(ThemableBehavior, ProgressBar):
+    reversed = BooleanProperty(False)
+    ''' Reverse the direction the progressbar moves. '''
+
+    orientation = OptionProperty('horizontal', options=['horizontal', 'vertical'])
+    ''' Orientation of progressbar'''
+
+class JZWideRedProgressBar(ThemableBehavior, ProgressBar):
     reversed = BooleanProperty(False)
     ''' Reverse the direction the progressbar moves. '''
 

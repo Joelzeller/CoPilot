@@ -17,7 +17,7 @@
 #:import MDSpinner kivymd.spinner.MDSpinner
 #:import MDCard kivymd.card.MDCard
 #:import MDSeparator kivymd.card.MDSeparator
-#:import MDDropdownMenu kivymd.menu.MDDropdownMenu
+# #:import MDDropdownMenu kivymd.menu.MDDropdownMenu
 #:import get_color_from_hex kivy.utils.get_color_from_hex
 #:import colors kivymd.color_definitions.colors
 #:import SmartTile kivymd.grid.SmartTile
@@ -29,9 +29,13 @@
 #:import MDAccordionItem kivymd.accordion.MDAccordionItem
 #:import MDThemePicker kivymd.theme_picker.MDThemePicker
 
+#:import math math
+
 #on_press: Animation(x=newposition or y=newposition).start(id) #to animate things
 
-#V2.0.1
+
+
+#V2.0.2
 
 AnchorLayout:
 		anchor_x: 'center'
@@ -47,6 +51,7 @@ AnchorLayout:
 								size_hint: 1, 1
 								Image:
 										id: mainwallpaper
+										#source: 'data/wallpapers/blackredmaterial2.png'
 										source: app.wallpapernow
 										center_x: self.center_x
 										center_y: self.center_y
@@ -64,13 +69,6 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-
-								Image:
-										id: blackwallpaper
-										source: 'data/wallpapers/black.png'
-										center_x: self.center_x
-										center_y: self.center_y
-										pos: -800, 0
 
 								Label: #label to display current time
 										markup: True
@@ -95,47 +93,25 @@ AnchorLayout:
 
 						FloatLayout: #Temp Bubble Stuff
 								size_hint: 1, 1
-								Image:
-										id: TempBubble
-										source: 'data/elements/red_circle_temperature.png'
-										center_x: self.center_x
-										center_y: self.center_y
-										allow_stretch: True
-										background_color: app.theme_cls.primary_color
-										pos: 1000, -20
-
-								Label:
-										id: Temp
-										text: app.tempnow
-										pos: 1354, 120
-										font_size: 30
-
 								Button:
 										#text: Button to call temp
 										#stays put
 										id: tempbutt
 										on_press: app.addtemp()
-										on_press: Animation(x=0, duration=.4).start(TempBubble) #moves button back to screen
-										on_press: Animation(x=354, duration=.4).start(Temp) #moves temp label to screen
-										on_press: Animation(x=700, duration=.1).start(movingtempbutt) #moves moving button to screen
+										on_press: Animation(x=680, duration=.4).start(TempBubble) #moves button back to screen
 										pos: 700, 300
 										size_hint: .3, .3
 										background_color:(0.9, 0.9, 0.9, 0.0)
-
-								Button:
-										#text: Hidden Button at first
-										#this toggles temp on and off - also moves bubble
-										id: movingtempbutt
-										on_press: app.killtemp()
-										on_press: Animation(x=1000, duration=.4).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.4).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+								MDFloatingTempActionButton:
+										id: TempBubble
+										elevation_normal: 0
+										size_hint: .12, .2 #96x96
 										pos: 1200, 300
-										size_hint: .3, .3
-										background_color:(0.9, 0.9, 0.9, 0.0)
+										on_press: Animation(x=1800, duration=.4).start(TempBubble) #moves button off screen
+										on_press: app.killtemp()
 
 						FloatLayout: #LockscreenButton - placed over top right time - used to call lockscreen
-						        size_hint: 1, 1
+								size_hint: 1, 1
 								Button:
 										on_press: Animation(y=0, duration=.1).start(lockscreenwallpaper)
 										on_press: Animation(y=0, duration=.1).start(lockscreentime)
@@ -144,7 +120,7 @@ AnchorLayout:
 										size_hint: .3, .2
 										opacity: 0
 								Button:
-								        on_press: Animation(y=0, duration=.1).start(lockscreenwallpaper)
+										on_press: Animation(y=0, duration=.1).start(lockscreenwallpaper)
 										on_press: Animation(y=0, duration=.1).start(lockscreentime)
 										on_press: Animation(y=0, duration=.1).start(lockscreenbutton)
 										pos: 230, 30
@@ -171,9 +147,7 @@ AnchorLayout:
 										on_press: Animation(x=-223, duration=.2).start(SCD_Date)
 										on_press: Animation(x=320, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.4).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.4).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.4).start(TempBubble) #moves button off screen
 										on_press: app.killtemp()
 										pos: -10, 0
 										size_hint: .1, 1.1
@@ -186,7 +160,7 @@ AnchorLayout:
 										pos: -340, 408
 										size_hint: .4, .15
 										background_normal: 'data/buttons/shortcutdrawer/SD_date.png'
-                                        background_down: 'data/buttons/shortcutdrawer/SD_date_pressed.png'
+										background_down: 'data/buttons/shortcutdrawer/SD_date_pressed.png'
 										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
@@ -201,7 +175,7 @@ AnchorLayout:
 										pos: -340, 336
 										size_hint: .4, .15
 										background_normal: 'data/buttons/shortcutdrawer/SD_settings.png'
-                                        background_down: 'data/buttons/shortcutdrawer/SD_settings_pressed.png'
+										background_down: 'data/buttons/shortcutdrawer/SD_settings_pressed.png'
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'left'
 										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
@@ -216,18 +190,18 @@ AnchorLayout:
 								Button:
 										id: SCD_GarageButton
 										pos: -340, 264
-									    size_hint: .4, .15
+										size_hint: .4, .15
 										background_normal: 'data/buttons/shortcutdrawer/SD_garage.png'
-                                        background_down: 'data/buttons/shortcutdrawer/SD_garage_pressed.png'
+										background_down: 'data/buttons/shortcutdrawer/SD_garage_pressed.png'
 										on_press: app.garage_callback_schedge()
 										on_release: app.garage_callback_schedge() #only on when button is pressed
 
 								Button:
-									    id: SCD_OBDButton
-									    pos: -340, 192
+										id: SCD_OBDButton
+										pos: -340, 192
 										size_hint: .4, .15
 										background_normal: 'data/buttons/shortcutdrawer/SD_gauges.png'
-                                        background_down: 'data/buttons/shortcutdrawer/SD_gauges_pressed.png'
+										background_down: 'data/buttons/shortcutdrawer/SD_gauges_pressed.png'
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'left'
 										on_press: app.setup_OBD() #set up obd stuff
@@ -245,7 +219,7 @@ AnchorLayout:
 										pos: -340, 120
 										size_hint: .4, .15
 										background_normal: 'data/buttons/shortcutdrawer/SD_stopwatch.png'
-                                        background_down: 'data/buttons/shortcutdrawer/SD_stopwatch_pressed.png'
+										background_down: 'data/buttons/shortcutdrawer/SD_stopwatch_pressed.png'
 										on_press: sm.current = 'stopwatch'
 										on_press: sm.transition.direction = 'left'
 										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
@@ -330,8 +304,8 @@ AnchorLayout:
 										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
 										on_press: Animation(x = 1000, duration=0).start(audio_sourcereturn)
 										background_normal: 'data/icons/audio/audiocontrol.png'
-                                        background_down: 'data/icons/audio/audiocontrol_pressed.png'
-                                        background_color: app.theme_cls.primary_color
+										background_down: 'data/icons/audio/audiocontrol_pressed.png'
+										background_color: app.theme_cls.primary_color
 										size_hint: .21, .2
 										pos: 486, 120
 										Image:
@@ -348,8 +322,8 @@ AnchorLayout:
 										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
 										on_press: Animation(x = 1000, duration=0).start(audio_sourcereturn)
 										background_normal: 'data/icons/audio/audiocontrol.png'
-                                        background_down: 'data/icons/audio/audiocontrol_pressed.png'
-                                        background_color: app.theme_cls.primary_color
+										background_down: 'data/icons/audio/audiocontrol_pressed.png'
+										background_color: app.theme_cls.primary_color
 										size_hint: .21, .2
 										pos: 146, 120
 										Image:
@@ -366,59 +340,59 @@ AnchorLayout:
 										allow_stretch: True
 
 								Button:
-								        id: audio_source
+										id: audio_source
 										elevation_normal: 3
 										size_hint: .125, .2083333 #100x100
 										background_normal: 'data/elements/more/more.png'
-                                        background_down: 'data/elements/more/more_pressed.png'
+										background_down: 'data/elements/more/more_pressed.png'
 										pos: 654, 104
 										on_press: Animation(y = 250, duration=.2).start(audio_aux)
 										on_press: Animation(y = 250, duration=.2).start(audio_amfm)
 										on_press: Animation(x = 654, duration=0).start(audio_sourcereturn)
 
 								Button:
-								        id: audio_sourcereturn
+										id: audio_sourcereturn
 										elevation_normal: 3
 										size_hint: .125, .2083333 #100x100
 										background_normal: 'data/elements/more/more.png'
-                                        background_down: 'data/elements/more/more_pressed.png'
+										background_down: 'data/elements/more/more_pressed.png'
 										pos: 1000, 104
 										on_press: Animation(y = 120, duration=.2).start(audio_aux)
 										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
 										on_release: Animation(x = 1000, duration=0).start(audio_sourcereturn)
 
-                                Button: #play
-                                        id: audio_play
+								Button: #play
+										id: audio_play
 										pos: 337, 92
 										size_hint: .1575, .2625 #126x126
 										background_normal: 'data/icons/audio/play.png'
-                                        background_down: 'data/icons/audio/play_pressed.png'
-                                        on_press: Animation(y = -200, duration=0).start(audio_play)
-                                        on_press: Animation(y = 92, duration=0).start(audio_pause)
-                                        background_color: app.theme_cls.primary_color
-                                Button: #pause
-                                        id: audio_pause
+										background_down: 'data/icons/audio/play_pressed.png'
+										on_press: Animation(y = -200, duration=0).start(audio_play)
+										on_press: Animation(y = 92, duration=0).start(audio_pause)
+										background_color: app.theme_cls.primary_color
+								Button: #pause
+										id: audio_pause
 										pos: 337, -200
 										size_hint: .1575, .2625 #126x126
 										background_normal: 'data/icons/audio/pause.png'
-                                        background_down: 'data/icons/audio/pause_pressed.png'
-                                        on_press: Animation(y = -200, duration=0).start(audio_pause)
-                                        on_press: Animation(y = 92, duration=0).start(audio_play)
-                                        background_color: app.theme_cls.primary_color
+										background_down: 'data/icons/audio/pause_pressed.png'
+										on_press: Animation(y = -200, duration=0).start(audio_pause)
+										on_press: Animation(y = 92, duration=0).start(audio_play)
+										background_color: app.theme_cls.primary_color
 
-                                Button: #prev
+								Button: #prev
 										pos: 180, 105
 										size_hint: .125, .2083333 #100x100
 										background_normal: 'data/icons/audio/prev.png'
-                                        background_down: 'data/icons/audio/prev_pressed.png'
-                                        on_press: app.seekdown_callback_schedge()
+										background_down: 'data/icons/audio/prev_pressed.png'
+										on_press: app.seekdown_callback_schedge()
 
-                                Button: #next
+								Button: #next
 										pos: 520, 105
 										size_hint: .125, .2083333 #100x100
 										background_normal: 'data/icons/audio/next.png'
-                                        background_down: 'data/icons/audio/next_pressed.png'
-                                        on_press: app.seekup_callback_schedge()
+										background_down: 'data/icons/audio/next_pressed.png'
+										on_press: app.seekup_callback_schedge()
 
 
 
@@ -532,6 +506,11 @@ AnchorLayout:
 										text: app.timenow
 										font_size: 40
 										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Apps[/size]'
+										pos: 0, 210
 						FloatLayout:
 								size_hint: 1, 1
 
@@ -574,7 +553,7 @@ AnchorLayout:
 										text: "\n\n\n\nCoPilot Logo"
 										font_size: 20
 										Image:
-												source: 'data/icons/app_icons/raspberry_icon.png'
+												source: 'data/icons/app_icons/CoPilot_icon.png'
 												center_x: self.parent.center_x
 												center_y: self.parent.center_y
 												size: 70, 70
@@ -625,7 +604,7 @@ AnchorLayout:
 										text: "\n\n\n\nStopwatch"
 										font_size: 20
 										Image:
-												source: 'data/icons/app_icons/stopwatch_icon.png'
+												source: 'data/icons/app_icons/stopwatch_color_icon.png'
 												center_x: self.parent.center_x
 												center_y: self.parent.center_y
 												size: 70, 70
@@ -634,7 +613,6 @@ AnchorLayout:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'files'
 										on_press: sm.transition.direction = 'left'
-										on_press: app.kill_clock()
 										text: "\n\n\n\nFiles"
 										font_size: 20
 										Image:
@@ -650,16 +628,15 @@ AnchorLayout:
 										text: "\n\n\n\nLaunch Control"
 										font_size: 20
 										Image:
-												source: 'data/icons/app_icons/launch_icon.png'
+												source: 'data/icons/app_icons/launch_color_icon.png'
 												center_x: self.parent.center_x
 												center_y: self.parent.center_y
-												size: 85, 85
+												size: 70, 70
 												allow_stretch: True
 								Button:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'photos'
 										on_press: sm.transition.direction = 'left'
-										on_press: app.kill_clock()
 										text: "\n\n\n\nPhotos"
 										font_size: 20
 										Image:
@@ -673,7 +650,6 @@ AnchorLayout:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'maintenance'
 										on_press: sm.transition.direction = 'left'
-										on_press: app.kill_clock()
 										text: "\n\n\n\nMaintenance"
 										font_size: 20
 										Image:
@@ -687,7 +663,6 @@ AnchorLayout:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'testapp'
 										on_press: sm.transition.direction = 'left'
-										on_press: app.kill_clock()
 										text: "\n\n\n\nTest"
 										font_size: 20
 										Image:
@@ -724,8 +699,7 @@ AnchorLayout:
 										id: toolbar
 										pos_hint: {"right": 1, 'top':1}
 										#title: ''
-										background_color: (.90, .32, 0, 1)
-										opacity: 1.0
+										background_color: (1, .34, .13, 1)
 
 								Label: #label to display current time
 										markup: True
@@ -858,6 +832,7 @@ AnchorLayout:
 										#text: "return to main"
 										on_press: sm.current = 'main'
 										on_press: sm.transition.direction = 'right'
+										on_press: app.save()
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -867,6 +842,14 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #enable dev button - tap 5 times to enable - will see snackbar on success
+								        on_press: app.devtap()
+								        on_press: app.show_example_snackbar('enabledev')
+								        on_press: Animation(x=0, duration=.2).start(killdevbutton) if app.devtaps == 4 else Animation(x=1600, duration=0).start(killdevbutton)
+								        size_hint: .2, .15
+								        pos: 320, 400
+								        opacity: 0
+
 						FloatLayout:
 								size_hint: 1, .88
 								MDTabbedPanel:
@@ -884,7 +867,7 @@ AnchorLayout:
 																background_normal: 'data/buttons/settingslines/SL_SysDiag.png'
 																background_down: 'data/buttons/settingslines/SL_SysDiag_pressed.png'
 																on_press: sm.current = 'sysdiagnostics'
-																on_press: app.add_message_temp()
+																on_press: app.add_message()
 																on_press: sm.transition.direction = 'left'
 														Button:
 																size_hint: 1, .19
@@ -899,6 +882,14 @@ AnchorLayout:
 																background_normal: 'data/buttons/settingslines/SL_SysReset.png'
 																background_down: 'data/buttons/settingslines/SL_SysReset_pressed.png'
 																on_release: app.show_indev_dialog()
+														Button:
+														        id: killdevbutton
+																size_hint: 1, .19
+																pos: 1600, 88
+																background_normal: 'data/buttons/settingslines/SL_killdev.png'
+																background_down: 'data/buttons/settingslines/SL_killdev_pressed.png'
+																on_press: app.killdev()
+																on_press: Animation(x=1600, duration=.2).start(killdevbutton)
 										MDTab:
 												name: 'GPIO'
 												text: "GPIO"
@@ -997,7 +988,22 @@ AnchorLayout:
 				PaintScreen:
 						name: "paint"
 						FloatLayout:
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: -45, 399
+										size_hint: .2, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
 								Painter
+
 
 				FilesScreen:
 						name: "files"
@@ -1024,26 +1030,28 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								Image:
-										source: 'data/wallpapers/CoPilot.jpg'
+										source: 'data/wallpapers/CoPilot_Wallpaper_2.png'
 										center_x: self.center_x
 										center_y: self.center_y
-										size: 60, 60
-										allow_stretch: True
-								Image:
-										source: 'data/icons/engineeredby.png'
-										center_x: -55
-										center_y: 0
-										allow_stretch: True
-										size_hint_x: .5
-										size_hint_y: .5
-										#size: 20, 20
-										pos: -45, 20
+
+								MDLabel: #label to display version number
+										text: app.version
+										font_style: 'Headline'
+										theme_text_color: 'Primary'
+										pos: 705, -150
+
+								MDLabel: #label to display my name
+										text: 'Engineered by:\nJoel Zeller'
+										font_style: 'Headline'
+										theme_text_color: 'Primary'
+										pos: 30, -135
+
 								Toolbar:
 										id: toolbar
 										pos_hint: {"right": 1, 'top':1}
 										#title: ''
-										background_color: app.theme_cls.primary_color
-										opacity: 1.0
+										background_color: (.54, .76, .29, 1)
+
 								Label: #label to display current time
 										markup: True
 										text: app.timenow
@@ -1129,55 +1137,140 @@ AnchorLayout:
 										text: "Classic"
 										on_press: sm.current = 'classicclock'
 										on_press: sm.transition.direction = 'down'
-										on_press: app.kill_clock()
 										on_press: app.add_classicanalog()
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
 										font_size: 30
 
 								JZLargeButton:
 										text: "Sport"
 										on_press: sm.current = 'sportclock'
 										on_press: sm.transition.direction = 'down'
-										on_press: app.kill_clock()
 										on_press: app.add_sportanalog()
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
 										font_size: 30
 								JZLargeButton:
 										text: "Executive"
 										on_press: sm.current = 'executiveclock'
 										on_press: sm.transition.direction = 'down'
-										on_press: app.kill_clock()
 										on_press: app.add_executiveanalog()
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
 										font_size: 30
 								JZLargeButton:
 										text: "Worms"
 										on_press: sm.current = 'wormclock'
 										on_press: sm.transition.direction = 'down'
 										on_press: app.add_wormanalog()
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
 										font_size: 30
 								JZLargeButton:
 										text: "Day Gauge"
 										on_press: sm.current = 'daygaugeclock'
 										on_press: sm.transition.direction = 'down'
-										on_press: app.kill_clock()
 										on_press: app.add_daygaugeanalog()
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
 										font_size: 30
 								JZLargeButton:
 										text: "Night Gauge"
 										on_press: sm.current = 'nightgaugeclock'
 										on_press: sm.transition.direction = 'down'
-										on_press: app.kill_clock()
 										on_press: app.add_nightgaugeanalog()
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
 										font_size: 30
 
 								JZLargeButton:
 										text: "Info"
 										on_press: sm.current = 'infoclock'
+										on_press: app.add_leftanalog()
 										on_press: sm.transition.direction = 'down'
 										font_size: 30
 								JZLargeButton:
 										text: "Photo Clock"
 										on_press: sm.current = 'photoclock'
 										on_press: sm.transition.direction = 'down'
-										#on_press: app.kill_clock()
 										#on_press: app.add_executiveanalog()
 										font_size: 30
 								Button:
@@ -1209,19 +1302,39 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-										pos: 0, 72
+										pos: 0, 36
 
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_analog()
-										pos: 270, 100
-										size_hint: .325, .8
+										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Sport Clock
 				SportClockScreen:
 						name: "sportclock"
+						FloatLayout
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
 						FloatLayout:
 								size_hint: 1, .85
 								anchor_y: 'top'
@@ -1230,19 +1343,39 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-										pos: 0, 72
+										pos: 0, 36
 
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_analog()
-										pos: 270, 100
-										size_hint: .325, .8
+										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Exec Clock
 				ExecutiveClockScreen:
 						name: "executiveclock"
+						FloatLayout
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
 						FloatLayout:
 								size_hint: 1, .85
 								anchor_y: 'top'
@@ -1251,36 +1384,66 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-										pos: 0, 72
+										pos: 0, 36
 
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_analog()
-										pos: 270, 100
-										size_hint: .325, .8
+										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Worms Clock
 				WormsClockScreen:
 						name: "wormclock"
-						FloatLayout:
-								size_hint: 1, .85
-								anchor_y: 'top'
+						FloatLayout
+								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
 
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_analog()
-										pos: 270, 100
-										size_hint: .325, .8
 										background_color:(0.9, 0.9, 0.9, 0.0)
 								Label: #label to display current time
 										markup: True
 										text: app.timenow
 										font_size: 60
-										pos: 0, 65
+										pos: 0, 0
 					#Day Gauge Clock
 				DayGaugeClockScreen:
 						name: "daygaugeclock"
@@ -1298,15 +1461,29 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-										pos: 0, 72
+										pos: 0, 36
 
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_analog()
-										pos: 270, 100
-										size_hint: .325, .8
+										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Night Gauge Clock
 				NightGaugeClockScreen:
@@ -1325,40 +1502,59 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-										pos: 0, 72
+										pos: 0, 36
 
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_analog()
-										pos: 270, 100
-										size_hint: .325, .8
+										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Info Clock
 				InfoClockScreen:
 						name: "infoclock"
 						FloatLayout:
-								size_hint: 1, .85
+								size_hint: 1, 1
 								anchor_y: 'top'
-
+								Image:
+										source: 'data/wallpapers/black.png'
+										center_x: self.center_x
+										center_y: self.center_y
 								Button: #whole screen is return button
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										pos: 270, 100
-										#size_hint: .325, .8
+										on_press: app.kill_analog()
 										background_color:(0.9, 0.9, 0.9, 0.0)
-								Label: #label to display current time
+								MDLabel: #label to display current time
 										markup: True
-										text: app.timenow
-										font_size: 80
-										pos: 0, 65
-								Label: #label to display current date
-										markup: True
-										text: app.daynow + ", " + app.datenow
+										text: app.timenow + " " + app.ampm
 										font_size: 60
-										pos: 0, 0
+										pos: 400, 65
+										halign: 'left'
+								MDLabel: #label to display current date
+										markup: True
+										text: " " + app.datenow + ", " + app.yearnow
+										font_size: 40
+										pos: 400, 0
+										halign: 'left'
+										opacity: .75
 
 					#Photo Clock
 				PhotoClockScreen:
@@ -1378,9 +1574,7 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										pos: 270, 100
-										#size_hint: .325, .8
-										background_color:(0.9, 0.9, 0.9, 0.0)
+										background_color:(0.9, 0.9, 0.9, 0)
 
 								Label: #label to display current time
 										markup: True
@@ -1394,9 +1588,9 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								#MapView:
-								        #lat: 39.135481
-								        #lon: -84.529143
-								        #zoom: 17 #maybe 18 for a little larger print
+										#lat: 39.135481
+										#lon: -84.529143
+										#zoom: 17 #maybe 18 for a little larger print
 								Label:
 										markup: True
 										text: '[size=25]Nothing here yet...[/size]'
@@ -1498,27 +1692,30 @@ AnchorLayout:
 										font_size: 140
 										pos: 0, 70
 								Button:
-										size_hint: .2, .34
-										pos: 110, 75
+										size_hint: None, None
+										size: dp(144), dp(144)
+										pos: 128, 85
 										on_press: app.stopwatch_start()
 										background_color:(1.0, 1.0, 1.0, 1.0)
-										background_normal: 'data/icons/stopwatch/play.png'
-										background_down: 'data/icons/stopwatch/play_pressed.png'
+										background_normal: 'data/buttons/stopwatch/play.png'
+										background_down: 'data/buttons/stopwatch/play_pressed.png'
 								Button:
-										size_hint: .2, .34
-										pos: 320, 75
+										size_hint: None, None
+										size: dp(144), dp(144)
+										pos: 328, 85
 										on_press: app.stopwatch_stop()
 										background_color:(1.0, 1.0, 1.0, 1.0)
-										background_normal: 'data/icons/stopwatch/pause.png'
-										background_down: 'data/icons/stopwatch/pause_pressed.png'
+										background_normal: 'data/buttons/stopwatch/pause.png'
+										background_down: 'data/buttons/stopwatch/pause_pressed.png'
 
 								Button:
-										size_hint: .2, .34
-										pos: 530, 75
+										size_hint: None, None
+										size: dp(144), dp(144)
+										pos: 528, 85
 										on_press: app.stopwatch_reset()
 										background_color:(1.0, 1.0, 1.0, 1.0)
-										background_normal: 'data/icons/stopwatch/reset.png'
-										background_down: 'data/icons/stopwatch/reset_pressed.png'
+										background_normal: 'data/buttons/stopwatch/reset.png'
+										background_down: 'data/buttons/stopwatch/reset_pressed.png'
 
 				KillScreen:
 						name: "kill"
@@ -1530,36 +1727,40 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 								Image:
-										source: 'data/elements/card.png'
+										source: 'data/elements/bluecard.png'
 										center_x: self.center_x
 										center_y: self.center_y
 										pos: 0, 32
 								MDLabel:
-                                        font_style: 'Headline'
-                                        theme_text_color: 'Custom'
-                                        text_color: (0,0,0,1)
-                                        text: "Would you like to kill CoPilot?"
-                                        halign: 'center'
-                                        pos: 0, 100
-                                Button: #dismiss
+										font_style: 'Headline'
+										theme_text_color: 'Custom'
+										text_color: (1,1,1,1)
+										text: "Would you like to kill CoPilot?"
+										halign: 'center'
+										pos: 0, 100
+								Button: #dismiss
 										pos: 257, 170
 										size_hint: .1575, .2625 #126x126
 										background_normal: 'data/buttons/confirm_dismiss/dismiss.png'
-                                        background_down: 'data/buttons/confirm_dismiss/dismiss_pressed.png'
-                                        on_release: sm.current = 'main'
+										background_down: 'data/buttons/confirm_dismiss/dismiss_pressed.png'
+										on_release: sm.current = 'settings'
 										on_release: sm.transition.direction = 'up'
-                                Button: #confirm
+								Button: #confirm
 										pos: 417, 170
 										size_hint: .1575, .2625 #126x126
 										background_normal: 'data/buttons/confirm_dismiss/confirm.png'
-                                        background_down: 'data/buttons/confirm_dismiss/confirm_pressed.png'
-                                        on_release: exit()
+										background_down: 'data/buttons/confirm_dismiss/confirm_pressed.png'
+										on_release: exit()
 
 				DiagnosticsScreen:
 						name: "sysdiagnostics"
 
 						FloatLayout:
 								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/greyplain.png'
+										center_x: self.center_x
+										center_y: self.center_y
 								Toolbar:
 										id: toolbar
 										pos_hint: {"right": 1, 'top':1}
@@ -1578,17 +1779,6 @@ AnchorLayout:
 										halign: 'center'
 										pos: 0, 210
 
-								Label: #label to display system diagnostic data
-										markup: True
-										text: "CPU Temperature = " + app.CPUtempnow
-										font_size: 40
-										pos: 0, 30
-								Label: #label to display system diagnostic data
-										markup: True
-										text: "Core Voltage = " + app.corevoltagenow
-										font_size: 40
-										pos: 0, -30
-
 								Button: #return button
 										#text: "return to settings"
 										on_press: sm.current = 'settings'
@@ -1603,15 +1793,67 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+						FloatLayout:
+								Button:
+										size_hint: 1, .15
+										pos: 0, 344
+										background_normal: 'data/buttons/list/ListBar.png'
+										background_down: 'data/buttons/list/ListBar_pressed.png'
+										MDLabel:
+												text: "CPU Temperature:"
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(760), dp(48)
+										MDLabel:
+												text: app.CPUtempnow
+												center_x: self.parent.center_x+100
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(400), dp(48)
 
-								Button: #middle of screen button
-										#text: "return"
-										on_press: sm.current = 'settings'
-										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_message()
-										pos: 270, 30
-										size_hint: .325, .8
-										background_color:(0.9, 0.9, 0.9, 0.0)
+								Button:
+										size_hint: 1, .15
+										pos: 0, 272
+										background_normal: 'data/buttons/list/ListBar.png'
+										background_down: 'data/buttons/list/ListBar_pressed.png'
+										MDLabel:
+												text: "Core Voltage:"
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(760), dp(48)
+										MDLabel:
+												text: app.corevoltagenow
+												center_x: self.parent.center_x+100
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(400), dp(48)
+
+								Button:
+										size_hint: 1, .15
+										pos: 0, 200
+										background_normal: 'data/buttons/list/ListBar.png'
+										background_down: 'data/buttons/list/ListBar_pressed.png'
+										MDLabel:
+												text: "IP Address:"
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(760), dp(48)
+										MDLabel:
+												text: app.ip
+												center_x: self.parent.center_x+100
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(400), dp(48)
+
 
 				SystemDebugScreen:
 						name: "sysdebug"
@@ -1797,7 +2039,6 @@ AnchorLayout:
 										font_size: 30
 										halign: 'center'
 										on_press: sm.current = 'launchcontrol'
-										on_press: app.kill_clock()
 										on_press: app.add_launchanalog()
 										on_press: sm.transition.direction = 'left'
 										pos: 270, 120
@@ -1882,10 +2123,14 @@ AnchorLayout:
 												Image:
 														source: 'data/wallpapers/RT.png'
 
-                MaintenanceScreen:
+				MaintenanceScreen:
 						name: "maintenance"
 						FloatLayout:
 								size_hint: 1, 1
+								Image:
+										source: 'data/wallpapers/greyplain.png'
+										center_x: self.center_x
+										center_y: self.center_y
 								Toolbar:
 										id: toolbar
 										pos_hint: {"right": 1, 'top':1}
@@ -1917,20 +2162,107 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 						FloatLayout:
-								size_hint: 1, 1
-                                Label:
-										markup: True
-										text: '[size=25]Nothing here yet...[/size]'
-										pos: 0, 0
+								Button:
+										size_hint: 1, .15
+										pos: 0, 344
+										background_normal: 'data/buttons/list/ListBar.png'
+										background_down: 'data/buttons/list/ListBar_pressed.png'
+										MDLabel:
+												text: "Next oil change:"
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(760), dp(48)
+										MDLabel:
+												text: "130000 miles or 3/1/17"
+												center_x: self.parent.center_x+100
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(400), dp(48)
+
+								Button:
+										size_hint: 1, .15
+										pos: 0, 272
+										background_normal: 'data/buttons/list/ListBar.png'
+										background_down: 'data/buttons/list/ListBar_pressed.png'
+										MDLabel:
+												text: "Next light check:"
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(760), dp(48)
+										MDLabel:
+												text: "3/1/17"
+												center_x: self.parent.center_x+100
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(400), dp(48)
+
+								Button:
+										size_hint: 1, .15
+										pos: 0, 200
+										background_normal: 'data/buttons/list/ListBar.png'
+										background_down: 'data/buttons/list/ListBar_pressed.png'
+										MDLabel:
+												text: "Next maintenance due:"
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(760), dp(48)
+										MDLabel:
+												text: "3/1/17"
+												center_x: self.parent.center_x+100
+												center_y: self.parent.center_y
+												font_style: 'Title'
+												halign: 'left'
+												size: dp(400), dp(48)
 
 
 				TestAppScreen:
 						name: "testapp"
 						FloatLayout:
 								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
 
+								Label: #label to display screen name
+										markup: True
+										text: '[size=25]Test[/size]'
+										pos: 0, 210
+
+								Button: #return button
+										#text: "return to apps"
+										on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+						FloatLayout:
+								size_hint: 1, 1
 								Label:
-										text: "Nothing Here"
+										markup: True
+										text: '[size=25]This app is for testing purposes.[/size]'
+										pos: 0, 0
 
 
 
@@ -1967,7 +2299,7 @@ AnchorLayout:
 										on_press: app.add_OBDVAR_SPEED()
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
-										pos: 20, 310
+										pos: 20, 300
 										size_hint: .3, .2
 
 
@@ -1978,7 +2310,7 @@ AnchorLayout:
 										on_press: app.add_OBDVAR_RPM()
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
-										pos: 20, 200
+										pos: 20, 190
 										size_hint: .3, .2
 
 
@@ -1989,7 +2321,22 @@ AnchorLayout:
 										on_press: app.add_OBDVAR_GRAPHICAL_RPM()
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
-										pos: 20, 90
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_invisi_power)
+										pos: 20, 80
 										size_hint: .3, .2
 
 
@@ -2000,7 +2347,7 @@ AnchorLayout:
 										on_press: app.add_OBDVAR_COOLANT_TEMP()
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
-										pos: 540, 310
+										pos: 540, 300
 										size_hint: .3, .2
 
 
@@ -2011,7 +2358,7 @@ AnchorLayout:
 										on_press: app.add_OBDVAR_INTAKE_TEMP()
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
-										pos: 540, 200
+										pos: 540, 190
 										size_hint: .3, .2
 
 
@@ -2022,7 +2369,7 @@ AnchorLayout:
 										on_press: app.add_OBDVAR_LOAD()
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
-										pos: 540, 90
+										pos: 540, 80
 										size_hint: .3, .2
 
 
@@ -2146,8 +2493,19 @@ AnchorLayout:
 										pos_hint: {'center_x': 0.15, 'center_y': .250}
 										on_press: app.zero_RPMmax()
 
+								Button: #dismiss
+										id: dismissredlineslider
+										pos: 725, 70
+										size_hint: 0.1, 0.16666667 #80x80
+										background_normal: 'data/buttons/confirm_dismiss/dismiss.png'
+										background_down: 'data/buttons/confirm_dismiss/dismiss_pressed.png'
+										on_press: Animation(x=866, duration=0).start(redlineslider)
+										on_press: Animation(y = 70, duration=.2).start(dismissredlineslider)
+
 								MDRaisedButton:
-										text: "Log Max"
+										text: "Redline: "+str(int(redlineslider.value))+" rpm"
+										on_press: Animation(x=66, duration=0).start(redlineslider)
+										on_press: Animation(y = 164, duration=.2).start(dismissredlineslider)
 										elevation_normal: 3
 										size_hint: None, None
 										size: 3 * dp(70), dp(70)
@@ -2167,15 +2525,39 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+						FloatLayout:
+								size_hint: .8, 1
+								JZWideRedProgressBar:
+										pos: 80, -20
+										value: app.obdRPMval
+										orientation: "horizontal"
+										min: 0
+										max: 7000
+						FloatLayout:
+								size_hint: .835, .1
+								MDSlider:
+										pos: 866, 183
+										id: redlineslider
+										min:0
+										max:7000
+										value: 6500
+										on_value: app.redline_value(*args)
+
+
 				OBDGraphicTachScreen:
 						name: "racetach"
 						FloatLayout:
 								size_hint: 1, 1
 								Image:
+										source: 'data/wallpapers/greyplain.png'
+										center_x: self.center_x
+										center_y: self.center_y
+								Image:
 										source: 'data/gauges/tach.png'
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
+										pos: 0, -36
 
 								Label: #label to display current time
 										markup: True
@@ -2186,6 +2568,21 @@ AnchorLayout:
 										#text: "return to gauge select"
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
+										on_press: Animation(y=-10, duration=0).start(dock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_audio)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_perf)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_clock)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_apps)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_controls)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_brightness)
+										on_press: Animation(y=0, duration=0).start(dock_invisi_power)
 										on_press: app.kill_OBDVAR()
 										on_press: app.kill_analog()
 										pos: -365, 399
@@ -2376,7 +2773,7 @@ AnchorLayout:
 												row_default_width: dp(390)
 												row_force_default: True
 												size_hint_y: None
-												height: 14 * dp(100) # /1 * self.row_default_height
+												height: 30 * dp(100) # /1 * self.row_default_height
 												padding: dp(4), dp(4)
 												spacing: dp(4)
 												SmartTile:
@@ -2419,6 +2816,58 @@ AnchorLayout:
 														mipmap: True
 														source: './data/wallpapers/stopwatchblue.png'
 														on_release: app.setwallpaper9()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/polycube.png'
+														on_release: app.setwallpaper10()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/polyvalley.png'
+														on_release: app.setwallpaper11()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/purplebluematerial.png'
+														on_release: app.setwallpaper12()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/bluegreymaterial.png'
+														on_release: app.setwallpaper13()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/redpurplematerial.png'
+														on_release: app.setwallpaper14()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/CoPilot_Wallpaper_2.png'
+														on_release: app.setwallpaper15()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/blackredmaterial2.png'
+														on_release: app.setwallpaper16()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/androidauto.png'
+														on_release: app.setwallpaper17()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/tealmaterialdesign.png'
+														on_release: app.setwallpaper18()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/blueblackmaterial.png'
+														on_release: app.setwallpaper19()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/greenmaterial2.png'
+														on_release: app.setwallpaper20()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/redbluematerial.png'
+														on_release: app.setwallpaper21()
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/blueblackwhitematerial.png'
+														on_release: app.setwallpaper22()
 
 
 
@@ -2466,65 +2915,56 @@ AnchorLayout:
 								padding: 30
 								spacing: 5
 								size_hint: 1, .85
-								pos: 0, 30
+								pos: 0, -30
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_SeekUp()
 										text: "Seek Up"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_SeekDown()
 										text: "Seek Down"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_Garage()
 										text: "Garage"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_Radar()
 										text: "Radar"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_CupLights()
 										text: "Cup Lights"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_WindowsUp()
 										text: "Windows Up"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_WindowsDown()
 										text: "Windows Down"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_ScreenToggle()
 										text: "Screen\nToggle"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey1_None()
@@ -2582,66 +3022,57 @@ AnchorLayout:
 								rows: 4
 								padding: 30
 								spacing: 5
-								pos: 0, 30
+								pos: 0, -30
 								size_hint: 1, .85
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_SeekUp()
 										text: "Seek Up"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_SeekDown()
 										text: "Seek Down"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_Garage()
 										text: "Garage"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_Radar()
 										text: "Radar"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_CupLights()
 										text: "Cup Lights"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_WindowsUp()
 										text: "Windows Up"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_WindowsDown()
 										text: "Windows Down"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_ScreenToggle()
 										text: "Screen\nToggle"
 										font_size: 20
 								MDRaisedButton:
-										background_color:(0.9, 0.9, 0.9, 0.5)
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.sethotkey2_None()
@@ -2677,19 +3108,11 @@ AnchorLayout:
 						anchor_y: 'bottom'
 						FloatLayout:
 								size_hint: 1, 1
-								#Image:
-										#source: 'data/elements/dock_shadow.png'
-										#opacity: .5
-									    #center_x: self.center_x
-										#center_y: self.center_y
-									    #pos: 0, -200
-										#allow_stretch: True
-										##if this is used - make quickkeys size .165
-								Image: #pixel style dock - test ## on_press: Animation(y=-100, duration=.2).start(dock)
-								        id: dock
-									    source: 'data/elements/pixeldock.png'
-									    opacity: .3
-									    center_x: self.center_x
+								Image: #pixel style dock
+										id: dock
+										source: 'data/elements/pixeldock.png'
+										opacity: .3
+										center_x: self.center_x
 										center_y: self.center_y
 										pos: 0, -10
 										allow_stretch: True
@@ -2737,6 +3160,8 @@ AnchorLayout:
 										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
 
+										on_press: app.BrightnessSet1()
+
 										Image:
 
 												source: 'data/icons/brightness1.png'
@@ -2758,6 +3183,9 @@ AnchorLayout:
 										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+
+										on_press: app.BrightnessSet2()
+
 										Image:
 
 												source: 'data/icons/brightness2.png'
@@ -2779,6 +3207,9 @@ AnchorLayout:
 										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+
+										on_press: app.BrightnessSet3()
+
 										Image:
 
 												source: 'data/icons/brightness3.png'
@@ -2800,6 +3231,9 @@ AnchorLayout:
 										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+
+										on_press: app.BrightnessSet4()
+
 										Image:
 
 												source: 'data/icons/brightness4.png'
@@ -2821,6 +3255,9 @@ AnchorLayout:
 										on_press: Animation(y=530, duration=.2).start(brightness_3_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_4_button)
 										on_press: Animation(y=530, duration=.2).start(brightness_5_button)
+
+										on_press: app.BrightnessSet5()
+
 										Image:
 
 												source: 'data/icons/brightness5.png'
@@ -2833,7 +3270,7 @@ AnchorLayout:
 								orientation: 'horizontal'
 								size_hint: 1, 1 #define percentage of screen for quickeys width,height
 								Button:
-								        id: dock_normal_audio
+										id: dock_normal_audio
 										size_hint_y: .13
 										on_press: sm.current = 'audio'
 
@@ -2852,9 +3289,7 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
@@ -2870,7 +3305,7 @@ AnchorLayout:
 
 
 								Button:
-								        id: dock_normal_perf
+										id: dock_normal_perf
 										size_hint_y: .13
 										on_press: sm.current = 'performance'
 
@@ -2888,9 +3323,7 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
@@ -2903,7 +3336,7 @@ AnchorLayout:
 												size: 70, 70
 												allow_stretch: True
 								Button:
-								        id: dock_normal_clock
+										id: dock_normal_clock
 										size_hint_y: .13
 										on_press: sm.current = 'clockchooser'
 
@@ -2921,9 +3354,7 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
@@ -2936,7 +3367,7 @@ AnchorLayout:
 												size: 70, 70
 												allow_stretch: True
 								Button:
-								        id: dock_normal_apps
+										id: dock_normal_apps
 										size_hint_y: .13
 										on_press: sm.current = 'apps'
 
@@ -2954,9 +3385,7 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
@@ -2969,7 +3398,7 @@ AnchorLayout:
 												size: 80, 80
 												allow_stretch: True
 								Button:
-								        id: dock_normal_controls
+										id: dock_normal_controls
 										size_hint_y: .13
 										on_press: sm.current = 'controls'
 
@@ -2987,9 +3416,7 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
@@ -3003,8 +3430,11 @@ AnchorLayout:
 												allow_stretch: True
 
 								Button:
-								        id: dock_normal_brightness
+										id: dock_normal_brightness
 										size_hint_y: .13
+
+										on_press: app.killtemp()
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: Animation(y=0, duration=.2).start(brightnessbar)
 										on_press: Animation(y=90, duration=.2).start(brightnessbarreturnbutton)
@@ -3024,7 +3454,7 @@ AnchorLayout:
 												allow_stretch: True
 
 								Button:
-								        id: dock_normal_power
+										id: dock_normal_power
 										size_hint_y: .13
 
 										on_press: app.kill_message()
@@ -3041,9 +3471,7 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_release: app.shutdown() #only until new power supply is installed
 
@@ -3067,7 +3495,7 @@ AnchorLayout:
 								spacing: 50.286
 								padding: 44, 0
 								JZInvisiButton:
-								        id: dock_invisi_audio
+										id: dock_invisi_audio
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3087,14 +3515,12 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
-								        id: dock_invisi_perf
+										id: dock_invisi_perf
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3114,14 +3540,12 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
-								        id: dock_invisi_clock
+										id: dock_invisi_clock
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3141,14 +3565,12 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
-								        id: dock_invisi_apps
+										id: dock_invisi_apps
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3168,14 +3590,12 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
-								        id: dock_invisi_controls
+										id: dock_invisi_controls
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
@@ -3195,17 +3615,18 @@ AnchorLayout:
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
-										on_press: Animation(x=1000, duration=.1).start(TempBubble) #moves button off screen
-										on_press: Animation(x=1354, duration=.1).start(Temp) #moves temp label off screen
-										on_press: Animation(x=1200, duration=.1).start(movingtempbutt) #moves moving button off screen
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: sm.transition.direction = 'left'
 
 								JZInvisiButton:
-								        id: dock_invisi_brightness
+										id: dock_invisi_brightness
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)
+
+										on_press: app.killtemp()
+										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
 										on_press: Animation(y=0, duration=.2).start(brightnessbar)
 										on_press: Animation(y=90, duration=.2).start(brightnessbarreturnbutton)
@@ -3216,7 +3637,7 @@ AnchorLayout:
 										on_press: Animation(y=380, duration=.4).start(brightness_5_button)
 
 								JZInvisiButton:
-								        id: dock_invisi_power
+										id: dock_invisi_power
 										elevation_normal: 3
 										size_hint: None, None
 										size: dp(64), dp(64)

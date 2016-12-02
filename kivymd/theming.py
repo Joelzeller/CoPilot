@@ -66,7 +66,7 @@ class ThemeManager(Widget):
                                  bind=('primary_palette', 'primary_dark_hue'))
 
     accent_palette = OptionProperty(
-        'Amber',
+        'Red',
         options=['Pink', 'Blue', 'Indigo', 'BlueGrey', 'Brown',
                  'LightBlue',
                  'Purple', 'Grey', 'Yellow', 'LightGreen', 'DeepOrange',

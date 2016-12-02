@@ -181,6 +181,35 @@ Builder.load_string('''
         disabled:            root.disabled
         halign:                'center'
         valign:                'middle'
+<MDFloatingTempActionButton>:
+    canvas:
+        Clear
+        Color:
+            rgba: self.background_color_disabled if self.disabled else \
+            (self.background_color if self.state == 'normal' else self.background_color_down)
+        Ellipse:
+            size: self.size
+            pos: self.pos
+
+    anchor_x:            'center'
+    anchor_y:            'center'
+    background_color: root.theme_cls.primary_color
+    background_color_down: root.theme_cls.primary_dark
+    background_color_disabled: root.theme_cls.divider_color
+    theme_text_color: 'Primary'
+    MDLabel:
+        id: label
+        font_style:         'Display1'
+        text:                 app.tempnow
+        size_hint:            None, None
+        size:                dp(70), dp(48)
+        text_size:            self.size
+        theme_text_color:    root.theme_text_color
+        text_color:         root.text_color
+        opposite_colors:    root.opposite_colors
+        disabled:            root.disabled
+        halign:                'center'
+        valign:                'middle'
 ''')
 
 
@@ -618,6 +647,135 @@ class MDFloatingActionButton(ThemableBehavior, CircularRippleBehavior,
             self.elevation_release_anim.stop(self)
             self.elevation_release_anim.start(self)
         return super(MDFloatingActionButton, self).on_touch_up(touch)
+
+    def on_elevation_normal(self, instance, value):
+        self.elevation = value
+
+    def on_elevation_raised(self, instance, value):
+        if self.elevation_raised == 0 and self.elevation_normal + 6 <= 12:
+            self.elevation_raised = self.elevation_normal + 6
+        elif self.elevation_raised == 0:
+            self.elevation_raised = 12
+
+class MDFloatingTempActionButton(ThemableBehavior, CircularRippleBehavior,
+                             RoundElevationBehavior, ButtonBehavior,
+                             AnchorLayout):
+    _bg_color_down = ListProperty([])
+    background_color = ListProperty()
+    background_color_down = ListProperty()
+    background_color_disabled = ListProperty()
+    theme_text_color = OptionProperty(None, allownone=True,
+                                      options=['Primary', 'Secondary', 'Hint',
+                                               'Error', 'Custom'])
+    text_color = ListProperty(None, allownone=True)
+
+    def _get_bg_color_down(self):
+        return self._bg_color_down
+
+    def _set_bg_color_down(self, color, alpha=None):
+        if len(color) == 2:
+            self._bg_color_down = get_color_from_hex(
+                colors[color[0]][color[1]])
+            if alpha:
+                self._bg_color_down[3] = alpha
+        elif len(color) == 4:
+            self._bg_color_down = color
+
+    background_color_down = AliasProperty(_get_bg_color_down,
+                                          _set_bg_color_down,
+                                          bind=('_bg_color_down',))
+
+    _bg_color_disabled = ListProperty([])
+
+    def _get_bg_color_disabled(self):
+        return self._bg_color_disabled
+
+    def _set_bg_color_disabled(self, color, alpha=None):
+        if len(color) == 2:
+            self._bg_color_disabled = get_color_from_hex(
+                colors[color[0]][color[1]])
+            if alpha:
+                self._bg_color_disabled[3] = alpha
+        elif len(color) == 4:
+            self._bg_color_disabled = color
+
+    background_color_disabled = AliasProperty(_get_bg_color_disabled,
+                                              _set_bg_color_disabled,
+                                              bind=('_bg_color_disabled',))
+    icon = StringProperty('android')
+
+    _elev_norm = NumericProperty(6)
+
+    def _get_elev_norm(self):
+        return self._elev_norm
+
+    def _set_elev_norm(self, value):
+        self._elev_norm = value if value <= 12 else 12
+        self._elev_raised = (value + 6) if value + 6 <= 12 else 12
+        self.elevation = self._elev_norm
+
+    elevation_normal = AliasProperty(_get_elev_norm, _set_elev_norm,
+                                     bind=('_elev_norm',))
+
+    # _elev_raised = NumericProperty(12)
+    _elev_raised = NumericProperty(6)
+
+    def _get_elev_raised(self):
+        return self._elev_raised
+
+    def _set_elev_raised(self, value):
+        self._elev_raised = value if value + self._elev_norm <= 12 else 12
+
+    elevation_raised = AliasProperty(_get_elev_raised, _set_elev_raised,
+                                     bind=('_elev_raised',))
+
+    def __init__(self, **kwargs):
+        if self.elevation_raised == 0 and self.elevation_normal + 6 <= 12:
+            self.elevation_raised = self.elevation_normal + 6
+        elif self.elevation_raised == 0:
+            self.elevation_raised = 12
+
+        super(MDFloatingTempActionButton, self).__init__(**kwargs)
+
+        self.elevation_press_anim = Animation(elevation=self.elevation_raised,
+                                              duration=.2, t='out_quad')
+        self.elevation_release_anim = Animation(
+            elevation=self.elevation_normal, duration=.2, t='out_quad')
+
+    def _set_ellipse(self, instance, value):
+        ellipse = self.ellipse
+        ripple_rad = self.ripple_rad
+
+        ellipse.size = (ripple_rad, ripple_rad)
+        ellipse.pos = (self.center_x - ripple_rad / 2.,
+                       self.center_y - ripple_rad / 2.)
+
+    def on_disabled(self, instance, value):
+        super(MDFloatingTempActionButton, self).on_disabled(instance, value)
+        if self.disabled:
+            self.elevation = 0
+        else:
+            self.elevation = self.elevation_normal
+
+    def on_touch_down(self, touch):
+        if not self.disabled:
+            if touch.is_mouse_scrolling:
+                return False
+            if not self.collide_point(touch.x, touch.y):
+                return False
+            if self in touch.ud:
+                return False
+            self.elevation_press_anim.stop(self)
+            self.elevation_press_anim.start(self)
+        return super(MDFloatingTempActionButton, self).on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        if not self.disabled:
+            if touch.grab_current is not self:
+                return super(ButtonBehavior, self).on_touch_up(touch)
+            self.elevation_release_anim.stop(self)
+            self.elevation_release_anim.start(self)
+        return super(MDFloatingTempActionButton, self).on_touch_up(touch)
 
     def on_elevation_normal(self, instance, value):
         self.elevation = value

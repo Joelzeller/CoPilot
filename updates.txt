@@ -1,28 +1,35 @@
-CoPilot V2.0
+CoPilot V2.1.0
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 DONE IN THIS VERSION:
 
-Started work on Maintenance App
-Started work on GPS app - need to test further on actual raspberry pi
-Started working on redesigned audio screen
-
-Dimmed lockscreen time a little 
-New kill screen
-darken dock and mainscreen toolbar
+some varibles are now saved so settings will load on boot - wallpaper, theme, and hotkey settings - more to come
+added brightness support for raspberry pi screen (V1.1 and up)
+minor UI tweaks
+new logo - material design
+temp bubble updated to match system theme
+clocks and RPM gauge now hide dock and icons - come back on exit
+new diagnostics screen - will soon include IP address - doesnt work when no internet connection
+more work on maintenance app
+tap on settings page label 5 times to enter dev mode - button will appear in system to go back 
+some work on clocks
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 NEXT TO COME:
 
-implement dimming functions - need screen v1.1
 - look at kivymd card for how to use a line in canvas in KV
-
+- create new progress bar to make stopwatch bar red always
+- new clock screen based off of google daydream clock screenshot
+- add redline limit to graphical tach
+- implement new kivymd buttons (or atleast make flat buttons white)
+- tap version (or button in version dialog) that allows user to enter developer mode (disable all gpio stuff and obd)
+- add temp map picture to GPS screen... for fun
+- maybe a full screen slider to control brightness?
+- controls screen looks weird - consider an update
+- new clock based on screenshot on phone
 
 OBDII-
-add reset max speed
-make sure reset buttons work
-add set button for redline and speeding warning
-save button - save to log
+add set button for speeding warning
 OBD Graphical Tach - take old measurements and shift them over to make a graph over time - maybe show last minute?
 
 
@@ -32,7 +39,6 @@ design tutorial - time is always 3:14 - describe what toggle switches and button
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 POSSIBLE ADDITIONS:
-be able to save values so they will load on launch - colors - hotkey settings - switch settings - wallpapers (PICKLE)
 other info on infoclockscreen
 Calender app? Google calender integration??
 startup animation??
@@ -56,7 +62,7 @@ ISSUES:
 Hot keys interfereing with one another..fixed for now by disabling the second key - possible fix - add physical pulldown-up resistors - look at tutorial
 Mausberry broke!
 
-Figure out better power supply..need 3 amps to run pi 3 and screen..
+Figure out better power supply..need 3 amps to run pi 3 and screen?
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 LINKS:
@@ -69,7 +75,8 @@ http://bitdroid.de/Android-Material-Icon-Generator/
 flaticon.com
 
 icon creator
-https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.5&foreColor=fff%2C100&crop=0&backgroundShape=circle&backColor=009688%2C100&effects=none
+https://romannurik.github.io/AndroidAssetStudio/index.html
+-30% padding for round icons
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 REMINDERS:

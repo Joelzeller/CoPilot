@@ -19,45 +19,37 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.properties import NumericProperty, StringProperty, BooleanProperty, ListProperty, ObjectProperty
 from kivy.uix.label import Label
-from kivy.uix.settings import SettingsWithTabbedPanel
-from kivy.uix.settings import SettingsWithSidebar
 from kivy.logger import Logger
-from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition, SlideTransition, SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition
-from time import time
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition, SlideTransition
 from kivy.animation import Animation
 from kivy.core.window import Window
 from kivy.uix.scatter import Scatter
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.carousel import Carousel
 from kivy.uix.image import AsyncImage
-
-import kivymd.snackbar as Snackbar
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty
 from kivy.uix.image import Image
-from kivymd.bottomsheet import MDListBottomSheet, MDGridBottomSheet
 from kivymd.button import MDIconButton
 from kivymd.label import MDLabel
 from kivymd.list import ILeftBody, ILeftBodyTouch, IRightBodyTouch
-from kivymd.navigationdrawer import NavigationDrawer
-from kivymd.selectioncontrols import MDCheckbox
 from kivymd.theming import ThemeManager
 from kivymd.dialog import MDDialog
-from kivymd.time_picker import MDTimePicker
-from kivymd.date_picker import MDDatePicker
+import kivymd.snackbar as Snackbar
 #from kivy.garden.mapview import MapView
-#import pygame
 
 #I know global variables are the devil....but they are so easy
 
 #set to 1 to disable all GPIO, temp probe, and obd stuff
 global developermode
 developermode = 1
+global devtaps #used to keep track of taps on settings label - 5 will force devmode
+devtaps = 0
+
 global version
-version = "V2.0.1"
-#11/8/2016
+version = "V2.1.0"
+#12/2/2016
 #Created by Joel Zeller
 
 # For PC dev work -----------------------
@@ -81,6 +73,16 @@ import os
 import subprocess
 import glob
 import math
+import socket
+import pickle
+
+cmd = "ip addr show wlan0 | grep inet | awk '{print $2}' | cut -d/ -f1"
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
+global ip
+#ip = get_ip_address()
 
 #_____________________________________________________________
         #GPIO SETUP
@@ -116,8 +118,9 @@ if developermode == 0:
     GPIO.setup(driverwindowupPin, GPIO.OUT)
     GPIO.setup(passwindowdownPin, GPIO.OUT)
     GPIO.setup(passwindowupPin, GPIO.OUT)
-    GPIO.setup(HotKey1Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(HotKey2Pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+    GPIO.setup(HotKey1Pin, GPIO.IN)
+    GPIO.setup(HotKey2Pin, GPIO.IN)
 
 #initial state of GPIO
 
@@ -187,6 +190,22 @@ def read_temp():
 #_________________________________________________________________
         #VARIABLES
 
+#varibles from text file:
+global theme
+global wallpaper
+global hotkey1string
+global hotkey2string
+
+f = open('savedata.txt', 'r+') # read from text file
+theme = f.readline()
+theme = theme.rstrip() #to remove \n from string
+wallpaper = int(f.readline())
+hotkey1string = f.readline()
+hotkey1string = hotkey1string.rstrip()
+hotkey2string = f.readline()
+hotkey2string = hotkey2string.rstrip()
+f.close()
+
 global SEEKUPON 
 SEEKUPON = 0
 
@@ -254,11 +273,11 @@ testvar = 0
 global testvar2
 testvar2 = 0
 
-global hotkey1string
-hotkey1string = "Seek Up"
+#global hotkey1string
+#hotkey1string = "Seek Up"
 
-global hotkey2string
-hotkey2string = "None"
+#global hotkey2string
+#hotkey2string = "None"
 
 global screenon
 screenon = 1
@@ -281,8 +300,8 @@ animation_start_time = 0
 global time_second_mod
 time_second_mod = 0
 
-global wallpaper
-wallpaper = 3
+#global wallpaper
+#wallpaper = 20
 
 #OBD Global vars
 global OBDconnection
@@ -301,6 +320,9 @@ global devobd
 devobd = 0
 global incobd
 incobd = 1
+
+global rpmredline #inital redline
+rpmredline = 6500
 
 #__________________________________________________________________
         #GPIOIN STUFFS
@@ -540,7 +562,10 @@ class Ticks(Widget):
         with self.canvas:
             time = datetime.datetime.now()
             x = self.center_x
-            y = self.center_y + 36 # to move the clock on x and y axis -  36 is middle if .85 is screen percentage
+            y = self.center_y
+            x_left = self.center_x-200
+            y_up = self.center_y+36
+            #y = self.center_y + 36 # to move the clock on x and y axis -  36 is middle if .85 is screen percentage
             if analog == 0: #no analog
                 Color(0.2, 0.5, 0.0, 0.0)
                 Line(points=[self.center_x, self.center_y, self.center_x+0.8*self.r*sin(pi/30*time.second), self.center_y+0.8*self.r*cos(pi/30*time.second)], width=1, cap="round")
@@ -550,7 +575,7 @@ class Ticks(Widget):
                 th = time.hour*60 + time.minute
                 Line(points=[self.center_x, self.center_y, self.center_x+0.5*self.r*sin(pi/360*th), self.center_y+0.5*self.r*cos(pi/360*th)], width=3, cap="round")
 
-            if analog == 1: #stock Red analog clock on mainscreen(default), theme can be changed by tapping clock 
+            if analog == 1:
                 if clocktheme == 1: #Red
                     Color(0.714, 0.11, 0.11) #seconds
                     Line(points=[self.center_x, self.center_y, self.center_x+0.8*self.r*sin(pi/30*time.second), self.center_y+0.8*self.r*cos(pi/30*time.second)], width=1, cap="round")
@@ -712,6 +737,15 @@ class Ticks(Widget):
                         Color(0.8, 0.0, 0.0)
                         Line(circle=[x-300, y, 0, 0, 0], width=50)
 
+            if analog == 9:    #white hands to the left for info clock screen
+                Color(1.0, 1.0, 1.0, 0.9)
+                Line(points=[x_left, y_up, x_left+0.8*self.r*sin(pi/30*time.second), y_up+0.8*self.r*cos(pi/30*time.second)], width=1, cap="round")
+                Color(1.0, 1.0, 1.0, 1)
+                Line(points=[x_left, y_up, x_left+0.7*self.r*sin(pi/30*time.minute), y_up+0.7*self.r*cos(pi/30*time.minute)], width=2, cap="round")
+                Color(1.0, 1.0, 1.0, 1)
+                th = time.hour*60 + time.minute
+                Line(points=[x_left, y_up, x_left+0.5*self.r*sin(pi/360*th), y_up+0.5*self.r*cos(pi/360*th)], width=3, cap="round")
+
 class MyClockWidget(FloatLayout):
     Ticks = Ticks()
     pass
@@ -734,6 +768,8 @@ class MainApp(App):
     timenow = StringProperty()
     datenow = StringProperty()
     daynow = StringProperty()
+    yearnow = StringProperty()
+    ampm = StringProperty()
     tempnow = StringProperty()
     CPUtempnow = StringProperty()
     corevoltagenow = StringProperty()
@@ -748,16 +784,21 @@ class MainApp(App):
     obdspeed = StringProperty()
     obdspeedmax = StringProperty()
     obdRPM = StringProperty()
+    obdRPMval = ObjectProperty()
     obdRPMmax = StringProperty()
     maxRPMvar = ObjectProperty()
+    obdRPMredline = ObjectProperty()
     obdcoolanttemp = StringProperty()
     obdintaketemp = StringProperty()
     obdengineload = StringProperty()
     obdengineloadval = ObjectProperty()
     oildate = StringProperty()
+    ip = StringProperty()
 
     theme_cls.theme_style = "Dark"
-    theme_cls.primary_palette = "DeepOrange"
+    #theme_cls.primary_palette = "Indigo"
+    global theme
+    theme_cls.primary_palette = theme
 
     def updatetime(self, *args):
         time_hour = time.strftime("%I")  # time_hour
@@ -776,12 +817,15 @@ class MainApp(App):
         day = time.strftime("%A") #current day of week
         month = time.strftime("%B") #current month
         date = time.strftime("%d")  #current day of month
+        year = time.strftime("%Y")  #current year
+        ampm = time.strftime("%p")  #AM or PM
         if date[0] == "0":  # one digit format for day of month
             date = " " + date[1]
         datenow = month + " " + date
-        daynow = day
         self.datenow = datenow
-        self.daynow = daynow
+        self.daynow = day
+        self.yearnow = year
+        self.ampm = ampm
 
     def updatetemp(self, *args):
         temp_f_string = str(temp_f)
@@ -790,11 +834,15 @@ class MainApp(App):
         if TEMPON == 1:
             if TempProbePresent == 1:
                     read_temp()
-                    tempnow = temp_f_string + u'\N{DEGREE SIGN}'
+                    tempnow = " " + temp_f_string + u'\N{DEGREE SIGN}'
             if TempProbePresent == 0:
-                    tempnow = "--" + u'\N{DEGREE SIGN}'
+                    tempnow = " " + "72" + u'\N{DEGREE SIGN}'
         if TEMPON == 0:
-            tempnow = " "
+            if TempProbePresent == 1:
+                    tempnow = " " + temp_f_string + u'\N{DEGREE SIGN}'
+            if TempProbePresent == 0:
+                    tempnow = " " + "72" + u'\N{DEGREE SIGN}'
+
         self.tempnow = tempnow
 
     def updatevariables(self, *args):
@@ -806,6 +854,7 @@ class MainApp(App):
         global swminutestring
         global swsecondstring
         global version
+        global devtaps
         if swactive == 1:
             swtenth += 1
             if swtenth == 10:
@@ -831,6 +880,11 @@ class MainApp(App):
         self.HKonenow = hotkey1string
         self.HKtwonow = hotkey2string
         self.version = version
+        #self.ip = ip
+        self.ip = "test ip"
+        self.devtaps = devtaps
+        global theme
+        theme = self.theme_cls.primary_palette
         if RADARON == 1:
             self.radariconsource = 'data/icons/radarindicator.png'
         if RADARON == 0:
@@ -860,18 +914,50 @@ class MainApp(App):
             self.wallpapernow = 'data/wallpapers/greyplain.png'
         if wallpaper == 9:
             self.wallpapernow = 'data/wallpapers/stopwatchblue.png'
+        if wallpaper == 10:
+            self.wallpapernow = 'data/wallpapers/polycube.png'
+        if wallpaper == 11:
+            self.wallpapernow = 'data/wallpapers/polyvalley.png'
+        if wallpaper == 12:
+            self.wallpapernow = 'data/wallpapers/purplebluematerial.png'
+        if wallpaper == 13:
+            self.wallpapernow = 'data/wallpapers/bluegreymaterial.png'
+        if wallpaper == 14:
+            self.wallpapernow = 'data/wallpapers/redpurplematerial.png'
+        if wallpaper == 15:
+            self.wallpapernow = 'data/wallpapers/CoPilot_Wallpaper_2.png'
+        if wallpaper == 16:
+            self.wallpapernow = 'data/wallpapers/blackredmaterial2.png'
+        if wallpaper == 17:
+            self.wallpapernow = 'data/wallpapers/androidauto.png'
+        if wallpaper == 18:
+            self.wallpapernow = 'data/wallpapers/tealmaterialdesign.png'
+        if wallpaper == 19:
+            self.wallpapernow = 'data/wallpapers/blueblackmaterial.png'
+        if wallpaper == 20:
+            self.wallpapernow = 'data/wallpapers/greenmaterial2.png'
+        if wallpaper == 21:
+            self.wallpapernow = 'data/wallpapers/redbluematerial.png'
+        if wallpaper == 22:
+            self.wallpapernow = 'data/wallpapers/blueblackwhitematerial.png'
+
+
 
     def updatemessage(self, *args):
         # the logic for what the message says
         if message == 0:
             self.text = " "
         if message == 1:  # used for displaying the CPU temp
-            temperaturestring = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
-            corevoltagestring = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_volts core"])
-            temperature = (temperaturestring.split('=')[1][:-3])
-            corevoltage = (corevoltagestring.split('=')[1][:-3])
-            CPUtempnow = temperature + " " + u'\N{DEGREE SIGN}' + "C\n"
-            corevoltagenow = corevoltage + " V"
+            if developermode == 0:
+                temperaturestring = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_temp"])
+                corevoltagestring = subprocess.check_output(["/opt/vc/bin/vcgencmd", "measure_volts core"])
+                temperature = (temperaturestring.split('=')[1][:-3])
+                corevoltage = (corevoltagestring.split('=')[1][:-3])
+                CPUtempnow = temperature + u'\N{DEGREE SIGN}' + "C"
+                corevoltagenow = corevoltage + " V"
+            if developermode == 1:
+                CPUtempnow = "40" + u'\N{DEGREE SIGN}' + "C"
+                corevoltagenow = "3.14" + " V"
             self.CPUtempnow = CPUtempnow
             self.corevoltagenow = corevoltagenow
 
@@ -884,6 +970,7 @@ class MainApp(App):
         global incobd
         global maxRPM
         global animation_time_start
+        global rpmredline
         # _____________________________________________________________________________________
         if int(float(animation_start_time)) + 5 <= int(float(time_second_mod)):  # animation is delayed for better asthetics
             if OBDVAR == 0:  # code for no OBD stuff
@@ -944,6 +1031,8 @@ class MainApp(App):
                         maxRPM = devobd
                     self.obdRPMmax = str(maxRPM)
                     self.obdRPM = str(devobd)
+                    self.obdRPMval = devobd
+                    self.obdRPMredline = rpmredline
                 else:
                     if OBDconnection == 1:
                         response_RPM = connection.query(cmd_RPM)  # send the command, and parse the response
@@ -963,6 +1052,8 @@ class MainApp(App):
                             response_RPM_string = response_RPM_string.strip()[:-2]  # strip .0 at the end of string
                             self.obdRPM = response_RPM_string
                             self.obdRPMmax = maxRPM_string
+                            self.obdRPMval = response_RPM_int
+                            self.obdRPMredline = rpmredline
 
             if OBDVAR == 3:  # code for OBD graphical Tach
                 self.obdspeed = "0"
@@ -1139,6 +1230,18 @@ class MainApp(App):
                                       action=lambda *x: self.dialog.dismiss())
         self.dialog.open()
 
+    def show_example_snackbar(self, snack_type):
+        if devtaps == 4:
+            if snack_type == 'enabledev':
+                Snackbar.make("Developer Mode Enabled")
+        # elif snack_type == 'button':
+        #     Snackbar.make("This is a snackbar", button_text="with a button!",
+        #                   button_callback=lambda *args: 2)
+        # elif snack_type == 'verylong':
+        #     Snackbar.make("This is a very very very very very very very long "
+        #                   "snackbar!",
+        #                   button_text="Hello world")
+
 #SCHEDUALING
 
         #AUDIO
@@ -1208,12 +1311,6 @@ class MainApp(App):
 
 #VARIBLE SETTINGS
      #clock stuff
-    def kill_clock(obj): #use on_release: app.kill_clock() to call
-        global clock
-        clock = 0
-    def add_clock(obj): #use on_release: app.add_clock() to call
-        global clock
-        clock = 1
     def kill_analog(obj): #use on_release: app.kill_analog() to call
         global analog
         analog = 0
@@ -1245,6 +1342,10 @@ class MainApp(App):
         analog = 7
         launch_start_time = int(float(time_second_mod)) #sets a reference time for launch control timing
 
+    def add_leftanalog(obj):
+        global analog
+        analog = 9
+
     #OBD themes
     def add_graphicaltach(obj): #use on_release
         global analog
@@ -1255,7 +1356,7 @@ class MainApp(App):
         global message
         message = 0
         
-    def add_message_temp(obj): #use on_release: app.add_message_temp() to call
+    def add_message(obj): #use on_release: app.add_message() to call
         global message
         message = 1
 
@@ -1280,7 +1381,6 @@ class MainApp(App):
     def sethotkey1_SeekUp(obj):
         global hotkey1string
         hotkey1string = "Seek Up"
-        #SettingsScreen.hotkey1label.text = "hello"
     def sethotkey1_SeekDown(obj):
         global hotkey1string
         hotkey1string = "Seek Down"
@@ -1382,12 +1482,112 @@ class MainApp(App):
         global wallpaper
         wallpaper = 9
 
+    def setwallpaper10(obj):
+        global wallpaper
+        wallpaper = 10
+
+    def setwallpaper11(obj):
+        global wallpaper
+        wallpaper = 11
+
+    def setwallpaper12(obj):
+        global wallpaper
+        wallpaper = 12
+
+    def setwallpaper13(obj):
+        global wallpaper
+        wallpaper = 13
+
+    def setwallpaper14(obj):
+        global wallpaper
+        wallpaper = 14
+
+    def setwallpaper15(obj):
+        global wallpaper
+        wallpaper = 15
+
+    def setwallpaper16(obj):
+        global wallpaper
+        wallpaper = 16
+
+    def setwallpaper17(obj):
+        global wallpaper
+        wallpaper = 17
+
+    def setwallpaper18(obj):
+        global wallpaper
+        wallpaper = 18
+
+    def setwallpaper19(obj):
+        global wallpaper
+        wallpaper = 19
+
+    def setwallpaper20(obj):
+        global wallpaper
+        wallpaper = 20
+
+    def setwallpaper21(obj):
+        global wallpaper
+        wallpaper = 21
+
+    def setwallpaper22(obj):
+        global wallpaper
+        wallpaper = 22
+
+    def devtap(obj):
+        global devtaps
+        global developermode
+        if devtaps < 4:
+            devtaps = devtaps + 1
+        if devtaps == 5:            # five taps on the settings title will enter dev mode
+            developermode = 1
+
+    def killdev(obj):
+        global devtaps
+        global developermode
+        developermode = 0
+        devtaps = 0
+
+    def save(obj):
+        # save new varibles for next boot
+        global theme
+        global wallpaper
+        global hotkey1string
+        global hotkey2string
+        wallpaper = str(wallpaper)
+        f = open('savedata.txt', 'r+')
+        f.truncate() # wipe everything
+        f.write(theme + "\n" + wallpaper + "\n" + hotkey1string + "\n" + hotkey2string)
+        f.close()
 
     def shutdown(obj):
+        # save new varibles for next boot
+        global theme
+        global wallpaper
+        global hotkey1string
+        global hotkey2string
+        wallpaper = str(wallpaper)
+        f = open('savedata.txt', 'r+')
+        f.truncate()
+        f.write(theme + "\n" + wallpaper + "\n" + hotkey1string + "\n" + hotkey2string)
+        f.close()
+
+        # turn off screen and shutdown
         os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #turns screen off
         os.system("sudo shutdown -h now")
 
     def reboot(obj):
+        # save new varibles for next boot
+        global theme
+        global wallpaper
+        global hotkey1string
+        global hotkey2string
+        wallpaper = str(wallpaper)
+        f = open('savedata.txt', 'r+')
+        f.truncate()
+        f.write(theme + "\n" + wallpaper + "\n" + hotkey1string + "\n" + hotkey2string)
+        f.close()
+
         os.system("sudo reboot")
 
     def TurnScreenOn(obj):
@@ -1402,18 +1602,18 @@ class MainApp(App):
 
 
     #brightness control functions
-    # def BrightnessSet1(obj): #only for lockscreen
-    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 1%
-    # def BrightnessSet10(obj):
-    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 10%
-    # def BrightnessSet25(obj):
-    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 25%
-    # def BrightnessSet50(obj):
-    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 50%
-    # def BrightnessSet75(obj):
-    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 75%
-    # def BrightnessSet100(obj):
-    #     os.system("sudo echo 1 > /sys/class/backlight/rpi_backlight/bl_power") #sets screen brightness to 100%
+    def BrightnessSetLock(obj): #only for lockscreen - not used yet
+        os.system("sudo echo 15 > /sys/class/backlight/rpi_backlight/brightness") #sets screen brightness to ~ 1%
+    def BrightnessSet1(obj):
+        os.system("sudo echo 15 > /sys/class/backlight/rpi_backlight/brightness") #sets screen brightness to ~ 10%
+    def BrightnessSet2(obj):
+        os.system("sudo echo 60 > /sys/class/backlight/rpi_backlight/brightness") #sets screen brightness to ~ 25%
+    def BrightnessSet3(obj):
+        os.system("sudo echo 80 > /sys/class/backlight/rpi_backlight/brightness") #sets screen brightness to ~ 50%
+    def BrightnessSet4(obj):
+        os.system("sudo echo 120 > /sys/class/backlight/rpi_backlight/brightness") #sets screen brightness to ~ 75%
+    def BrightnessSet5(obj):
+        os.system("sudo echo 175 > /sys/class/backlight/rpi_backlight/brightness") #sets screen brightness to ~ 100%
 
     def killtemp(obj): #used to kill the temp label when on screens other than main
         global TEMPON
@@ -1453,6 +1653,10 @@ class MainApp(App):
     def zero_RPMmax(obj): #zeros out RPM max
         global maxRPM
         maxRPM = 0
+
+    def redline_value(self, instance, value): #function that is updated when redline slider is moved
+        global rpmredline
+        rpmredline = value
 
     def add_OBDVAR_GRAPHICAL_RPM(obj): #used to change the OBD label to other types of data
         global OBDVAR
@@ -1700,6 +1904,7 @@ def passengerdown_callback(obj): #logic for passenger down gpio
     global PASSENGERDOWNON
     if PASSENGERDOWNON == 0:
         if developermode == 0:
+            GPIO.output(passwindowdownPin, GPIO.LOW)
             GPIO.output(passwindowdownPin, GPIO.LOW)
         PASSENGERDOWNON = 1
     else:

@@ -11,12 +11,12 @@ class CommonRipple(object):
     ripple_rad_default = NumericProperty(1)
     ripple_post = ListProperty()
     ripple_color = ListProperty()
-    ripple_alpha = NumericProperty(.5)
+    ripple_alpha = NumericProperty(.3)
     ripple_scale = NumericProperty(None)
-    ripple_duration_in_fast = NumericProperty(.3)
+    ripple_duration_in_fast = NumericProperty(.2)
     # FIXME: These speeds should be calculated based on widget size in dp
-    ripple_duration_in_slow = NumericProperty(2)
-    ripple_duration_out = NumericProperty(.3)
+    ripple_duration_in_slow = NumericProperty(1)
+    ripple_duration_out = NumericProperty(.2)
     ripple_func_in = StringProperty('out_quad')
     ripple_func_out = StringProperty('out_quad')
 
@@ -44,8 +44,8 @@ class CommonRipple(object):
                 self.ripple_color = self.theme_cls.ripple_color
             else:
                 # If no theme, set Grey 300
-                self.ripple_color = [0.8784313725490196, 0.8784313725490196,
-                                     0.8784313725490196, self.ripple_alpha]
+                self.ripple_color = [0.6784313725490196, 0.6784313725490196,
+                                     0.6784313725490196, self.ripple_alpha]
             self.ripple_color[3] = self.ripple_alpha
 
             self.lay_canvas_instructions()

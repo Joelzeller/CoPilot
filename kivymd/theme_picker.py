@@ -42,7 +42,7 @@ Builder.load_string("""
         text: "      Change CoPilot Theme"
         size_hint: (None, None)
         size: dp(320), dp(60)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.85}
     MDTabbedPanel:
         size_hint: (None, None)
         size: dp(320), root.height-dp(135)
@@ -50,338 +50,289 @@ Builder.load_string("""
         id: tab_panel
         tab_display_mode:'text'
 
-        MDTab:
-            name: 'color'
-            text: "Theme Color"
-            BoxLayout:
-                spacing: dp(4)
-                size_hint: (None, None)
-                size: dp(270), root.height  # -dp(120)
-                pos_hint: {'center_x': 0.532, 'center_y': 0.89}
-                orientation: 'vertical'
-                BoxLayout:
-                    size_hint: (None, None)
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    size: dp(230), dp(40)
-                    pos: self.pos
-                    halign: 'center'
-                    orientation: 'horizontal'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Red')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Red'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Pink')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Pink'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Purple')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Purple'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('DeepPurple')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'DeepPurple'
-                BoxLayout:
-                    size_hint: (None, None)
-                    pos_hint: {'center_x': .5, 'center_y': 0.5}
-                    size: dp(230), dp(40)
-                    pos: self.pos
-                    halign: 'center'
-                    orientation: 'horizontal'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Indigo')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Indigo'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Blue')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Blue'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('LightBlue')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'LightBlue'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Cyan')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Cyan'
-                BoxLayout:
-                    size_hint: (None, None)
-                    pos_hint: {'center_x': .5, 'center_y': 0.5}
-                    size: dp(230), dp(40)
-                    pos: self.pos
-                    halign: 'center'
-                    orientation: 'horizontal'
-                    padding: 0, 0, 0, dp(1)
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Teal')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Teal'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Green')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Green'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('LightGreen')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'LightGreen'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Lime')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Lime'
-                BoxLayout:
-                    size_hint: (None, None)
-                    pos_hint: {'center_x': .5, 'center_y': 0.5}
-                    size: dp(230), dp(40)
-                    pos: self.pos
-                    orientation: 'horizontal'
-                    halign: 'center'
-                    padding: 0, 0, 0, dp(1)
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Yellow')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Yellow'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Amber')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Amber'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Orange')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Orange'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('DeepOrange')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'DeepOrange'
-                BoxLayout:
-                    size_hint: (None, None)
-                    pos_hint: {'center_x': .5, 'center_y': 0.5}
-                    size: dp(230), dp(40)
-                    #pos: self.pos
-                    orientation: 'horizontal'
-                    padding: 0, 0, 0, dp(1)
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Brown')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Brown'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('Grey')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'Grey'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            #pos: self.pos
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: root.rgb_hex('BlueGrey')
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            on_release: app.theme_cls.primary_palette = 'BlueGrey'
-                    BoxLayout:
-                        MDIconButton:
-                            size: dp(40), dp(40)
-                            size_hint: (None, None)
-                            canvas:
-                                Color:
-                                    rgba: app.theme_cls.bg_normal
-                                Ellipse:
-                                    size: self.size
-                                    pos: self.pos
-                            disabled: True
-
-        MDTab:
-            name: 'style'
-            text: "Theme Style"
+        BoxLayout:
+            spacing: dp(4)
+            size_hint: (None, None)
+            size: dp(270), root.height  # -dp(120)
+            pos_hint: {'center_x': 0.532, 'center_y': 0.89}
+            orientation: 'vertical'
             BoxLayout:
                 size_hint: (None, None)
-                pos_hint: {'center_x': .36, 'center_y': 0.5}
-                size: self.size
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(230), dp(40)
                 pos: self.pos
                 halign: 'center'
-                spacing: dp(10)
+                orientation: 'horizontal'
                 BoxLayout:
-                    halign: 'center'
-                    size_hint: (None, None)
-                    size: dp(100), dp(100)
-                    pos: self.pos
-                    pos_hint: {'center_x': .3, 'center_y': 0.5}
                     MDIconButton:
-                        size: dp(100), dp(100)
+                        size: dp(40), dp(40)
                         pos: self.pos
                         size_hint: (None, None)
                         canvas:
                             Color:
-                                rgba: 1, 1, 1, 1
+                                rgba: root.rgb_hex('Red')
                             Ellipse:
                                 size: self.size
                                 pos: self.pos
-                            Color:
-                                rgba: 0, 0, 0, 1
-                            Line:
-                                width: 1.
-                                circle: (self.center_x, self.center_y, 50)
-                        on_release: app.theme_cls.theme_style = 'Light'
+                        on_release: app.theme_cls.primary_palette = 'Red'
                 BoxLayout:
-                    halign: 'center'
-                    size_hint: (None, None)
-                    size: dp(100), dp(100)
                     MDIconButton:
-                        size: dp(100), dp(100)
+                        size: dp(40), dp(40)
                         pos: self.pos
                         size_hint: (None, None)
                         canvas:
                             Color:
-                                rgba: 0, 0, 0, 1
+                                rgba: root.rgb_hex('Pink')
                             Ellipse:
                                 size: self.size
                                 pos: self.pos
-                        on_release: app.theme_cls.theme_style = 'Dark'
+                        on_release: app.theme_cls.primary_palette = 'Pink'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Purple')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Purple'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('DeepPurple')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'DeepPurple'
+            BoxLayout:
+                size_hint: (None, None)
+                pos_hint: {'center_x': .5, 'center_y': 0.5}
+                size: dp(230), dp(40)
+                pos: self.pos
+                halign: 'center'
+                orientation: 'horizontal'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Indigo')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Indigo'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Blue')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Blue'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('LightBlue')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'LightBlue'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Cyan')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Cyan'
+            BoxLayout:
+                size_hint: (None, None)
+                pos_hint: {'center_x': .5, 'center_y': 0.5}
+                size: dp(230), dp(40)
+                pos: self.pos
+                halign: 'center'
+                orientation: 'horizontal'
+                padding: 0, 0, 0, dp(1)
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Teal')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Teal'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Green')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Green'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('LightGreen')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'LightGreen'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Lime')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Lime'
+            BoxLayout:
+                size_hint: (None, None)
+                pos_hint: {'center_x': .5, 'center_y': 0.5}
+                size: dp(230), dp(40)
+                pos: self.pos
+                orientation: 'horizontal'
+                halign: 'center'
+                padding: 0, 0, 0, dp(1)
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Yellow')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Yellow'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Amber')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Amber'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Orange')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Orange'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('DeepOrange')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'DeepOrange'
+            BoxLayout:
+                size_hint: (None, None)
+                pos_hint: {'center_x': .5, 'center_y': 0.5}
+                size: dp(230), dp(40)
+                #pos: self.pos
+                orientation: 'horizontal'
+                padding: 0, 0, 0, dp(1)
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Brown')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Brown'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('Grey')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'Grey'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        #pos: self.pos
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: root.rgb_hex('BlueGrey')
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        on_release: app.theme_cls.primary_palette = 'BlueGrey'
+                BoxLayout:
+                    MDIconButton:
+                        size: dp(40), dp(40)
+                        size_hint: (None, None)
+                        canvas:
+                            Color:
+                                rgba: app.theme_cls.bg_normal
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                        disabled: True
+
+
 """)
 
 
