@@ -19,6 +19,12 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 
 -	Python Version 2.7.0 is recommended
 
+**New setup required!**
+For mapview to work, one program of kivy must be changed to handle an error.
+-	sudo nano /usr/local/lib/python2.7/dist-packages/kivy/core/image/img_pygame.py
+-	scroll down to find "image loader work only with rgb/rgba image"
+-	delete the except statement that starts with Logger.warning('Image: Unable to convert.......') and ends with "raise"
+
 **You will need main.kv, main.py, and the data folder placed in a directory on your pi - mine are located at /home/pi/CoPilot**
 
 -	Setup to autorun on boot like I do or just run main.py
