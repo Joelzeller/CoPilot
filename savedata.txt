@@ -1,4 +1,11 @@
-Green
-20
+DarkBlue
+26
 Seek Up
 None
+6
+1
+2017
+135000
+1
+80
+6500

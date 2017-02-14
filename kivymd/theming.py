@@ -20,10 +20,10 @@ for font in FONTS:
 class ThemeManager(Widget):
     primary_palette = OptionProperty(
         'Blue',
-        options=['Pink', 'Blue', 'Indigo', 'BlueGrey', 'Brown',
+        options=['DarkRed', 'DarkBlue', 'Indigo', 'BlueGrey', 'Black',
                  'LightBlue',
                  'Purple', 'Grey', 'Yellow', 'LightGreen', 'DeepOrange',
-                 'Green', 'Red', 'Teal', 'Orange', 'Cyan', 'Amber',
+                 'DarkGreen', 'Red', 'Teal', 'Orange', 'Cyan', 'Amber',
                  'DeepPurple', 'Lime'])
 
     primary_hue = OptionProperty(
@@ -67,10 +67,10 @@ class ThemeManager(Widget):
 
     accent_palette = OptionProperty(
         'Red',
-        options=['Pink', 'Blue', 'Indigo', 'BlueGrey', 'Brown',
+        options=['DarkRed', 'DarkBlue', 'Indigo', 'BlueGrey', 'Black',
                  'LightBlue',
                  'Purple', 'Grey', 'Yellow', 'LightGreen', 'DeepOrange',
-                 'Green', 'Red', 'Teal', 'Orange', 'Cyan', 'Amber',
+                 'DarkGreen', 'Red', 'Teal', 'Orange', 'Cyan', 'Amber',
                  'DeepPurple', 'Lime'])
 
     accent_hue = OptionProperty(
