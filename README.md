@@ -8,6 +8,7 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 -	Get Kivy Garden: https://kivy.org/docs/api-kivy.garden.html 
 		 	 https://kivy-garden.github.io/
 -	Get KivyMD: https://gitlab.com/kivymd/KivyMD
+-       Get Mapview: https://github.com/kivy-garden/garden.mapview
 -	Get python-OBD: https://github.com/brendan-w/python-OBD
 
 -	This should install garden and then recycleview, and that should be enough to get it working
@@ -18,7 +19,7 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 
 -	Python Version 2.7.0 is recommended
 
-**You will need clock.kv, main.kv, main.py, and the data folder placed in a directory on your pi - mine are located at /home/pi/CoPilot**
+**You will need main.kv, main.py, and the data folder placed in a directory on your pi - mine are located at /home/pi/CoPilot**
 
 -	Setup to autorun on boot like I do or just run main.py
 
@@ -37,11 +38,17 @@ Check out my website for more info: http://joelzeller.wixsite.com/copilot
 **How to use:**
  
 To use developer mode:
-- This turns off things like GPIO, temp probe, and OBD stuff as it doesn’t place nice on a computer other than the Pi.
--  Change the “developermode” var to 1.  Change this to 0 if you’d like to use all of CoPilot’s features.
+- Changing the “developermode” var to 1 turns off things like GPIO, temp probe, and OBD stuff as it doesn’t place nice on a computer other than the Pi.
+-  Change this var to 0 if you’d like to use all of CoPilot’s features.
 
 **To view current temp:**
 - Make sure "TempProbePresent" variable in code is set to 1 - if not, temp will be "--"
 - Tap under time on home screen and bubble will float unto screen showing temp - tap again to hide
+
+**To use bluetooth audio:**
+- Chnage the MAC address in the code to the MAC address of your device
+- Pair your device with the raspberry pi
+- It works best if you start audio first and then tap the bluetooth button on the audio screen
+- Track data and a progress bar should appear and the play/pause and seek buttons should work
  
 **Email me at joelzeller25@hotmail.com with any questions :)
