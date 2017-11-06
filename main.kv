@@ -34,7 +34,7 @@
 
 
 
-#V2.2.0
+#V2.3.0
 
 AnchorLayout:
 		anchor_x: 'center'
@@ -50,18 +50,10 @@ AnchorLayout:
 								size_hint: 1, 1
 								Image:
 										id: mainwallpaper
-										#source: 'data/wallpapers/blackredmaterial2.png'
 										source: app.wallpapernow
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-
-								Image:
-										source: 'data/elements/AppBar_menu_KivyMD.png'
-										center_x: self.center_x
-										center_y: self.center_y
-										allow_stretch: True
-										opacity: .3
 
 								Image:
 										source: 'data/elements/AppBar_menu_button_KivyMD.png'
@@ -156,7 +148,7 @@ AnchorLayout:
 										on_press: Animation(x=0, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=0, duration=.2).start(SCD_SettingsButton)
 										on_press: Animation(x=0, duration=.2).start(SCD_GarageButton)
-										on_press: Animation(x=0, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=0, duration=.2).start(SCD_RadarButton)
 										on_press: Animation(x=0, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-223, duration=.2).start(SCD_Date)
 										on_press: Animation(x=320, duration=.1).start(ShortcutDrawerReturnButton)
@@ -179,7 +171,7 @@ AnchorLayout:
 										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -196,7 +188,7 @@ AnchorLayout:
 										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -211,22 +203,12 @@ AnchorLayout:
 										on_release: app.garage_callback_schedge() #only on when button is pressed
 
 								Button:
-										id: SCD_OBDButton
+										id: SCD_RadarButton
 										pos: -340, 192
 										size_hint: .4, .15
-										background_normal: 'data/buttons/shortcutdrawer/SD_gauges.png'
-										background_down: 'data/buttons/shortcutdrawer/SD_gauges_pressed.png'
-										on_press: sm.current = 'gaugeselect'
-										on_press: sm.transition.direction = 'left'
-										on_press: app.setup_OBD() #set up obd stuff
-										on_press: Animation(x=-340, duration=.2).start(ShortcutDrawerBG)
-										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
-										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
-										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
+										background_normal: 'data/buttons/shortcutdrawer/SD_radar.png'
+										background_down: 'data/buttons/shortcutdrawer/SD_radar_pressed.png'
+										on_press: app.radar_callback_schedge()
 
 								Button:
 										id: SCD_StopwatchButton
@@ -240,7 +222,7 @@ AnchorLayout:
 										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -258,7 +240,7 @@ AnchorLayout:
 										on_press: Animation(x=-340, duration=.2).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.2).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.2).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.2).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -275,6 +257,48 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
+
+                                Button: #Source Bar - press to return
+                                        id: sourcebar
+										background_normal: 'data/icons/audio/audiocontrol.png'
+										background_down: 'data/icons/audio/audiocontrol.png'
+										background_color: app.theme_cls.primary_color
+										size_hint: 1.1, .4
+										pos: -6, 450
+										allow_stretch: True
+
+								Button:
+										id: audio_aux
+										on_press: app.aux_callback_schedge()
+										on_release: Animation(y = 500, duration=.2).start(audio_aux)
+										on_release: Animation(y = 500, duration=.2).start(audio_amfm)
+										on_release: Animation(y = 450, duration=.2).start(sourcebar)
+										on_release: Animation(x = 1000, duration=0).start(audio_sourcereturn)
+										on_release: app.displaybtdata()
+										background_normal: 'data/icons/audio/auxin.png'
+										background_down: 'data/icons/audio/auxin_pressed.png'
+                                        pos: 486, 500
+										size_hint: None, None
+										height: 140
+										width: 140
+
+
+								Button:
+										id: audio_amfm
+										on_press: app.amfm_callback_schedge()
+										on_release: Animation(y = 500, duration=.2).start(audio_aux)
+										on_release: Animation(y = 500, duration=.2).start(audio_amfm)
+										on_release: Animation(y = 450, duration=.2).start(sourcebar)
+										on_release: Animation(x = 1000, duration=0).start(audio_sourcereturn)
+										on_release: app.disablebluetooth()
+										on_release: Animation(x = 48, duration=0).start(bluetooth_enable)
+										on_release: Animation(x = 1000, duration=0).start(bluetooth_enablereturn)
+										background_normal: 'data/icons/audio/amfm.png'
+										background_down: 'data/icons/audio/amfm_pressed.png'
+                                        size_hint: None, None
+										height: 140
+										width: 140
+										pos: 146, 500
 
 								Toolbar:
 										id: toolbar
@@ -297,9 +321,7 @@ AnchorLayout:
 
 								Button: #return button
 										#text: "return to main"
-										#on_press: sm.current = 'main'
-										on_press: sm.current = sm.previous()
-
+										on_press: sm.current = 'main'
 										on_press: sm.transition.direction = 'right'
 										on_press: app.killbtdata()
 										pos: -365, 399
@@ -311,6 +333,14 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.killbtdata()
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 								MDLabel: #label to display Audio Track Name - pulled from bluetooth
 										text: app.bluetoothtitle
@@ -324,46 +354,6 @@ AnchorLayout:
 										opacity: .6
 										pos: 64, 42
 
-								Button:
-										id: audio_aux
-										on_press: app.aux_callback_schedge()
-										on_press: Animation(y = 120, duration=.2).start(audio_aux)
-										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
-										on_press: Animation(x = 1000, duration=0).start(audio_sourcereturn)
-										on_press: app.displaybtdata()
-										background_normal: 'data/icons/audio/audiocontrol.png'
-										background_down: 'data/icons/audio/audiocontrol_pressed.png'
-										background_color: app.theme_cls.primary_color
-										size_hint: .21, .2
-										pos: 486, 120
-										Image:
-												source: 'data/icons/auxin.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 100, 100
-												allow_stretch: True
-
-								Button:
-										id: audio_amfm
-										on_press: app.amfm_callback_schedge()
-										on_press: Animation(y = 120, duration=.2).start(audio_aux)
-										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
-										on_press: Animation(x = 1000, duration=0).start(audio_sourcereturn)
-										on_press: app.disablebluetooth()
-										on_press: Animation(x = 48, duration=0).start(bluetooth_enable)
-										on_press: Animation(x = 1000, duration=0).start(bluetooth_enablereturn)
-										background_normal: 'data/icons/audio/audiocontrol.png'
-										background_down: 'data/icons/audio/audiocontrol_pressed.png'
-										background_color: app.theme_cls.primary_color
-										size_hint: .21, .2
-										pos: 146, 120
-										Image:
-												source: 'data/icons/amfm.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 100, 100
-												allow_stretch: True
-
 								Image:
 										source: 'data/elements/audiobar.png'
 										center_x: self.center_x
@@ -374,24 +364,27 @@ AnchorLayout:
 										id: audio_source
 										elevation_normal: 3
 										size_hint: .125, .2083333 #100x100
-										background_normal: 'data/elements/more/more.png'
-										background_down: 'data/elements/more/more_pressed.png'
+										background_normal: 'data/icons/audio/more.png'
+										background_down: 'data/icons/audio/more_pressed.png'
 										pos: 654, 104
-										on_press: Animation(y = 250, duration=.2).start(audio_aux)
-										on_press: Animation(y = 250, duration=.2).start(audio_amfm)
-										on_press: Animation(x = 654, duration=0).start(audio_sourcereturn)
+										on_press: Animation(y = 286, duration=.2).start(audio_aux)
+										on_press: Animation(y = 286, duration=.2).start(audio_amfm)
+										on_press: Animation(y = 300, duration=.2).start(sourcebar)
+										on_release: Animation(x = 654, duration=0).start(audio_sourcereturn)
 										on_press: app.killbtdata()
+
 
 								Button:
 										id: audio_sourcereturn
 										elevation_normal: 3
 										size_hint: .125, .2083333 #100x100
-										background_normal: 'data/elements/more/more.png'
-										background_down: 'data/elements/more/more_pressed.png'
-										pos: 1000, 104
-										on_press: Animation(y = 120, duration=.2).start(audio_aux)
-										on_press: Animation(y = 120, duration=.2).start(audio_amfm)
-										on_release: Animation(x = 1000, duration=0).start(audio_sourcereturn)
+										background_normal: 'data/icons/audio/more.png'
+										background_down: 'data/icons/audio/more_pressed.png'
+										pos: 3000, 104
+										on_press: Animation(y = 500, duration=.2).start(audio_aux)
+										on_press: Animation(y = 500, duration=.2).start(audio_amfm)
+										on_press: Animation(y = 450, duration=.2).start(sourcebar)
+										on_press: Animation(x = 3000, duration=0).start(audio_sourcereturn)
 										on_press: app.displaybtdata()
 
 								Button:
@@ -401,23 +394,26 @@ AnchorLayout:
 										background_normal: 'data/icons/audio/bluetoothoff.png'
 										background_down: 'data/icons/audio/bluetoothoff_pressed.png'
 										pos: 48, 104
-										on_press: Animation(x = 1000, duration=0).start(bluetooth_enable)
+										#pos: 3000, 104
+										on_press: Animation(x = 3000, duration=0).start(bluetooth_enable)
 										on_press: Animation(x = 48, duration=0).start(bluetooth_enablereturn)
 										on_press: app.enablebluetooth()
+
 								Button:
 										id: bluetooth_enablereturn
 										elevation_normal: 3
 										size_hint: .125, .2083333 #100x100
 										background_normal: 'data/icons/audio/bluetoothon.png'
 										background_down: 'data/icons/audio/bluetoothon_pressed.png'
-										pos: 1000, 104
+										#pos: 3000, 104
+										pos: 48, 104
 										on_press: Animation(x = 48, duration=0).start(bluetooth_enable)
-										on_press: Animation(x = 1000, duration=0).start(bluetooth_enablereturn)
+										on_press: Animation(x = 3000, duration=0).start(bluetooth_enablereturn)
 										on_press: app.disablebluetooth()
 
 								Button: #play
 										id: audio_play
-										pos: 337, 92
+										pos: 337, -200
 										size_hint: .1575, .2625 #126x126
 										background_normal: 'data/icons/audio/play.png'
 										background_down: 'data/icons/audio/play_pressed.png'
@@ -427,7 +423,7 @@ AnchorLayout:
 										background_color: app.theme_cls.primary_color
 								Button: #pause
 										id: audio_pause
-										pos: 337, -200
+										pos: 337, 92
 										size_hint: .1575, .2625 #126x126
 										background_normal: 'data/icons/audio/pause.png'
 										background_down: 'data/icons/audio/pause_pressed.png'
@@ -466,7 +462,7 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								Image:
-										source: 'data/wallpapers/blackpoly.png'
+										source: 'data/wallpapers/darkgreyplain.png'
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
@@ -483,7 +479,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=.2).start(dock)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=.2).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_brightness)
@@ -522,67 +518,71 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 								Button:
 										text: "\n\n\n\n\nStopwatch"
-										font_size: 25
-										on_press: sm.current = 'stopwatch'
+										font_size: 20
+										on_release: sm.current = 'stopwatch'
 										on_press: sm.transition.direction = 'left'
-										pos: 6, 167
+										pos: 48, 180
 										size_hint: None, None
-										height: 176
-										width: 176
-										background_color:(1, 1, 1, 1)
+										height: 140
+										width: 140
 										background_normal: 'data/icons/app_icons/stopwatch_icon.png'
-										background_down: 'data/icons/app_icons/stopwatch_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										background_down: 'data/icons/app_icons/stopwatch_icon_pressed.png' #+14 in GIMP
 
 								Button:
 										text: "\n\n\n\n\nLaunch Control"
-										font_size: 25
-										on_press: sm.current = 'launchcontrolsetup'
+										font_size: 20
+										on_release: sm.current = 'launchcontrolsetup'
 										on_press: sm.transition.direction = 'left'
-										pos: 198, 155
+										pos: 236, 180
 										size_hint: None, None
-										height: 200
-										width: 200
-										background_color:(1, 1, 1, 1)
+										height: 140
+										width: 140
 										background_normal: 'data/icons/app_icons/launch_icon.png'
-										background_down: 'data/icons/app_icons/launch_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										background_down: 'data/icons/app_icons/launch_icon_pressed.png'
 
 								Button:
 										text: "\n\n\n\n\nAccelerometer"
-										font_size: 25
+										font_size: 20
 										on_release: sm.current = 'accelerometer'
 										on_release: sm.transition.direction = 'left'
 										on_press: Animation(y=-100, duration=.2).start(dock)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=.2).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_brightness)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_power)
 										on_press: app.addaccel()
-										pos: 412, 155
+										pos: 424, 180
 										size_hint: None, None
-										height: 200
-										width: 200
-										background_color:(1, 1, 1, 1)
+										height: 140
+										width: 140
 										background_normal: 'data/icons/app_icons/accel_icon.png'
-										background_down: 'data/icons/app_icons/accel_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										background_down: 'data/icons/app_icons/accel_icon_pressed.png'
 
 								Button:
 										text: "\n\n\n\n\nOBDII"
-										font_size: 25
+										font_size: 20
 										on_release: sm.current = 'gaugeselect'
 										on_release: sm.transition.direction = 'left'
 										on_release: app.setup_OBD() #set up obd stuff
-										pos: 610, 155
+										pos: 612, 180
 										size_hint: None, None
-										height: 200
-										width: 200
-										background_color:(1, 1, 1, 1)
+										height: 140
+										width: 140
 										background_normal: 'data/icons/app_icons/obdII_icon.png'
-										background_down: 'data/icons/app_icons/obdII_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										background_down: 'data/icons/app_icons/obdII_icon_pressed.png'
+
 
 
 				AppsScreen:
@@ -590,50 +590,17 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								Image:
-										source: 'data/wallpapers/darkgreymaterial2.png'
+										source: 'data/wallpapers/darkgreyplain.png'
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
-								Toolbar:
-										id: toolbar
-										pos_hint: {"right": 1, 'top':1}
-										#title: ''
-										background_color: (.33 ,.43 ,.48, 1)
-										opacity: 1.0
-
-								Label: #label to display current time
-										markup: True
-										text: app.timenow
-										font_size: 40
-										pos: 340, 210
-
-								Label: #label to display screen name
-										markup: True
-										text: '[size=30]Apps[/size]'
-										pos: 0, 210
-						FloatLayout:
-								size_hint: 1, 1
-
-								Button: #return button
-										#text: "return to main"
-										on_press: sm.current = 'main'
-										on_press: sm.transition.direction = 'right'
-										pos: -365, 399
-										size_hint: 1, .2
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												source: 'data/icons/arrow_back_white.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 50, 50
-												allow_stretch: True
 
 						GridLayout:
 								cols: 5
-								rows: 3
+								rows: 4
 								padding: 30
 								spacing: 50, 30
-								size_hint: 1, .9
+								size_hint: 1, 1
 								Button:
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: sm.current = 'paint'
@@ -641,7 +608,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -685,7 +652,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=.2).start(dock)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=.2).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=.2).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=.2).start(dock_normal_brightness)
@@ -792,7 +759,7 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								Image:
-										source: 'data/wallpapers/darkgreymaterial.png'
+										source: 'data/wallpapers/darkgreyplain.png'
 										center_x: self.center_x
 										center_y: self.center_y
 										allow_stretch: True
@@ -831,80 +798,61 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 								Button:
-										text: "\n\n\n\nGarage"
-										font_size: 25
+										text: "\n\n\n\n\nGarage"
+										font_size: 20
 										on_press: app.garage_callback_schedge()
 										on_release: app.garage_callback_schedge() #only on when button is pressed
-										pos: 60, 280
-										size_hint: None, None
-										height: 160
-										width: 150
-										background_color:(1, 1, 1, 1)
-										background_normal: 'data/icons/app_icons/garage_icon.png'
-										background_down: 'data/icons/app_icons/garage_icon_pressed.png' #blow up to 290 (scaled in gimp)
-
-								Button:
-										text: "\n\n\n\nRadar"
-										font_size: 25
-										on_press: app.radar_callback_schedge()
-										pos: 68, 110
+										pos: 48, 180
 										size_hint: None, None
 										height: 140
-										width: 135
-										background_color:(1, 1, 1, 1)
-										background_normal: 'data/icons/app_icons/radar_icon.png'
-										background_down: 'data/icons/app_icons/radar_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										width: 140
+										background_normal: 'data/icons/app_icons/garage_icon.png'
+										background_down: 'data/icons/app_icons/garage_icon_pressed.png' #+14 in GIMP
 
 								Button:
-										text: "\n\n\n\nScreen Off"
-										font_size: 25
+										text: "\n\n\n\n\nRadar"
+										font_size: 20
+										on_press: app.radar_callback_schedge()
+										pos: 236, 180
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/radar_icon.png'
+										background_down: 'data/icons/app_icons/radar_icon_pressed.png'
+
+								Button:
+										text: "\n\n\n\n\nScreen Off"
+										font_size: 20
 										on_press: app.TurnScreenOff()
 										on_press: sm.current = 'offscreen'
 										on_press: sm.transition.direction = 'left'
-										pos: 332, 290
+										pos: 424, 180
 										size_hint: None, None
 										height: 140
-										width: 135
-										background_color:(1, 1, 1, 1)
+										width: 140
 										background_normal: 'data/icons/app_icons/brightness_icon.png'
-										background_down: 'data/icons/app_icons/brightness_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										background_down: 'data/icons/app_icons/brightness_icon_pressed.png'
 
 								Button:
-										text: "\n\n\n\nCup Lights"
-										font_size: 25
+										text: "\n\n\n\n\nCup Lights"
+										font_size: 20
 										on_press: app.leds_callback_schedge()
-										pos: 332, 110
+										pos: 612, 180
 										size_hint: None, None
 										height: 140
-										width: 135
-										background_color:(1, 1, 1, 1)
+										width: 140
 										background_normal: app.lightsiconsource
-										background_down: 'data/icons/app_icons/lights_icon_pressed.png' #blow up to 290 (scaled in gimp)
+										background_down: 'data/icons/app_icons/lights_icon_pressed.png'
 
-								Button:
-										text: "\n\n\n\nWindows Up"
-										font_size: 25
-										on_press: app.windowsup_callback_schedge()
-										pos: 590, 280
-										size_hint: None, None
-										height: 160
-										width: 150
-										background_color:(1, 1, 1, 1)
-										background_normal: 'data/icons/app_icons/windowsup_icon.png'
-										background_down: 'data/icons/app_icons/windowsup_icon_pressed.png' #blow up to 290 (scaled in gimp)
 
-								Button:
-										text: "\n\n\n\nWindows Down"
-										font_size: 25
-										on_press: app.windowsdown_callback_schedge()
-										pos: 590, 100
-										size_hint: None, None
-										height: 160
-										width: 150
-										background_color:(1, 1, 1, 1)
-										background_normal: 'data/icons/app_icons/windowsdown_icon.png'
-										background_down: 'data/icons/app_icons/windowsdown_icon_pressed.png' #blow up to 290 (scaled in gimp)
 
 
 				SettingsScreen:
@@ -943,10 +891,17 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.save()
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 								Button: #enable dev button - tap 5 times to enable - will see snackbar on success
 										on_press: app.devtap()
 										on_press: app.show_example_snackbar('enabledev')
-										on_press: Animation(x=0, duration=.2).start(killdevbutton) if app.devtaps == 4 else Animation(x=1600, duration=0).start(killdevbutton)
+										on_press: Animation(x=0, duration=.2).start(killdevbutton) if app.devtaps >= 4 else Animation(x=1600, duration=0).start(killdevbutton)
 										size_hint: .2, .15
 										pos: 320, 400
 										opacity: 0
@@ -1040,7 +995,7 @@ AnchorLayout:
 																on_press: Animation(y=-100, duration=0).start(dock)
                                                                 on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
                                                                 on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-                                                                on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+                                                                on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
                                                                 on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
                                                                 on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
                                                                 on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1101,14 +1056,14 @@ AnchorLayout:
 										#text: "return to apps"
 										on_press: sm.current = 'apps'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										pos: -45, 399
 										size_hint: .2, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -1201,6 +1156,14 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
+								Button: #slide to return
+								        on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
+
 								Button: #middle of screen button
 										#text: "return"
 										on_press: sm.current = 'apps'
@@ -1249,6 +1212,13 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 						GridLayout:
 								cols: 4
 								rows: 3
@@ -1264,7 +1234,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1278,7 +1248,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1291,7 +1261,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1304,7 +1274,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1318,7 +1288,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1332,7 +1302,7 @@ AnchorLayout:
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -1402,14 +1372,14 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										on_press: self.canvas.clear
 										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -1451,14 +1421,14 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										on_press: self.canvas.clear
 										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -1499,14 +1469,14 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										on_press: self.canvas.clear
 										size_hint: 1, 1.5
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -1554,14 +1524,14 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										background_color:(0.9, 0.9, 0.9, 0.0)
 										on_press: self.canvas.clear
 
@@ -1611,14 +1581,14 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										on_press: self.canvas.clear
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Night Gauge Clock
@@ -1662,14 +1632,14 @@ AnchorLayout:
 										#text: "return"
 										on_press: sm.current = 'clockchooser'
 										on_press: sm.transition.direction = 'up'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										on_press: self.canvas.clear
 										background_color:(0.9, 0.9, 0.9, 0.0)
 					#Info Clock
@@ -1780,14 +1750,14 @@ AnchorLayout:
 										#text: "return to apps"
 										on_press: sm.current = 'apps'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=.2).start(dock)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										pos: -369, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -1834,6 +1804,12 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 						BoxLayout:
 								orientation:'vertical'
@@ -1954,6 +1930,12 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 						FloatLayout:
 								Button:
 										size_hint: 1, .15
@@ -2000,6 +1982,7 @@ AnchorLayout:
 										pos: 0, 200
 										background_normal: 'data/buttons/list/ListBar.png'
 										background_down: 'data/buttons/list/ListBar_pressed.png'
+										on_press: app.update_IP()
 										MDLabel:
 												text: "IP Address:"
 												center_x: self.parent.center_x
@@ -2052,6 +2035,12 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: sm.current = 'settings'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 								Button: #return button
 										#text: "return"
@@ -2194,6 +2183,12 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 								JZLargeButton:
 										text: "Start\nLaunch\nSequence"
@@ -2401,6 +2396,12 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: sm.current = 'apps'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 						FloatLayout:
 								Button:
 										size_hint: 1, .15
@@ -2797,15 +2798,15 @@ AnchorLayout:
 										pos: 0, 0
 
 
-
-
-
 				GaugeSelectScreen:
 						name: "gaugeselect"
-
 						FloatLayout:
 								size_hint: 1, 1
-
+								Image:
+										source: 'data/wallpapers/darkgreyplain.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
 								Toolbar:
 										id: toolbar
 										pos_hint: {"right": 1, 'top':1}
@@ -2823,37 +2824,8 @@ AnchorLayout:
 										text: '[size=30]OBDII[/size]'
 										pos: 0, 210
 
-								JZLargeButton:
-										text: "Speedometers"
-										font_size: 25
-										on_press: sm.current = 'speedoselect'
-										on_press: sm.transition.direction = 'left'
-										pos: 20, 300
-										size_hint: .3, .2
-
-								JZLargeButton:
-										text: "Tachometers"
-										font_size: 25
-										on_press: sm.current = 'tachselect'
-										on_press: sm.transition.direction = 'left'
-										pos: 20, 190
-										size_hint: .3, .2
-
-								JZLargeButton:
-										text: "Diagnostics"
-										font_size: 25
-										on_press: sm.current = 'diagnosticselect'
-										on_press: sm.transition.direction = 'left'
-										pos: 20, 80
-										size_hint: .3, .2
-
-							    JZLargeButton:
-							            text: "OBDII Settings"
-							            font_size: 25
-							            on_press: sm.current = 'obdsettings'
-							            on_press: sm.transition.direction = 'left'
-							            pos: 540, 80
-										size_hint: .3, .2
+						FloatLayout:
+								size_hint: 1, 1
 
 
 								Button: #return button
@@ -2870,7 +2842,129 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
-				OBDTachsScreen:
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
+								Button:
+										text: "\n\n\n\n\nSpeedometer"
+										font_size: 20
+										on_press: app.set_OBDpage(1) #set obd page - for quick jumping back to last gauge
+										#on_release: sm.current = 'speedoselect' # only one speedo for now
+										on_release: sm.current = 'digitalspeedo'
+										on_release: app.set_OBDVAR("SPEED")
+										on_release: app.connect_OBD()
+										on_release: sm.transition.direction = 'left'
+										pos: 48, 280
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/speedo_icon.png'
+										background_down: 'data/icons/app_icons/speedo_icon_pressed.png' #+14 in GIMP
+
+								Button:
+										text: "\n\n\n\n\nTachometers"
+										font_size: 20
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_release: sm.current = 'tachselect'
+										on_release: sm.transition.direction = 'left'
+										pos: 236, 280
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/tach_icon.png'
+										background_down: 'data/icons/app_icons/tach_icon_pressed.png'
+
+								Button:
+										text: "\n\n\n\n\nCoolant Temp"
+										font_size: 20
+										on_press: app.set_OBDpage(5) #set obd page - for quick jumping back to last gauge
+										on_release: sm.current = 'coolanttemp'
+										on_release: app.set_OBDVAR("COOLANT_TEMP")
+										on_release: app.connect_OBD()
+										on_release: sm.transition.direction = 'left'
+										pos: 424, 280
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/coolanttemp_icon.png'
+										background_down: 'data/icons/app_icons/coolanttemp_icon_pressed.png'
+
+								Button:
+										text: "\n\n\n\n\nThrottle Position"
+										font_size: 20
+										on_press: app.set_OBDpage(8) #set obd page - for quick jumping back to last gauge
+										on_release: sm.current = 'throttlepos'
+										on_release: app.set_OBDVAR("THROTTLE_POS")
+										on_release: app.connect_OBD()
+										on_release: sm.transition.direction = 'left'
+										pos: 612, 280
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/throttlepos_icon.png'
+										background_down: 'data/icons/app_icons/throttlepos_icon_pressed.png'
+
+								Button:
+										text: "\n\n\n\n\nIntake Pressure"
+										font_size: 20
+										on_press: app.set_OBDpage(9) #set obd page - for quick jumping back to last gauge
+										on_release: sm.current = 'intakepressure'
+										on_release: app.set_OBDVAR("INTAKE_PRESSURE")
+										on_release: app.connect_OBD()
+										on_release: sm.transition.direction = 'left'
+										pos: 48, 100
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/intakepress_icon.png'
+										background_down: 'data/icons/app_icons/intakepress_icon_pressed.png' #+14 in GIMP
+
+								Button:
+										text: "\n\n\n\n\nIntake Temp"
+										font_size: 20
+										on_press: app.set_OBDpage(6) #set obd page - for quick jumping back to last gauge
+										on_release: sm.current = 'intaketemp'
+										on_release: app.set_OBDVAR("INTAKE_TEMP")
+										on_release: app.connect_OBD()
+										on_release: sm.transition.direction = 'left'
+										pos: 236, 100
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/intaketemp_icon.png'
+										background_down: 'data/icons/app_icons/intaketemp_icon_pressed.png'
+
+								Button:
+										text: "\n\n\n\n\nDiagnostics"
+										font_size: 20
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_release: sm.current = 'diagnosticselect'
+										on_release: sm.transition.direction = 'left'
+										pos: 424, 100
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/diag_icon.png'
+										background_down: 'data/icons/app_icons/diag_icon_pressed.png'
+
+								Button:
+										text: "\n\n\n\n\nOBDII Settings"
+										font_size: 20
+										on_release: sm.current = 'obdsettings'
+							            on_release: sm.transition.direction = 'left'
+										pos: 612, 100
+										size_hint: None, None
+										height: 140
+										width: 140
+										background_normal: 'data/icons/app_icons/obdsettings_icon.png'
+										background_down: 'data/icons/app_icons/obdsettings_icon_pressed.png'
+
+
+			    OBDTachsScreen:
 						name: "tachselect"
 
 						FloatLayout:
@@ -2893,11 +2987,31 @@ AnchorLayout:
 										text: '[size=30]OBDII Tachometers[/size]'
 										pos: 0, 210
 
+							    JZLargeButton:
+										text: "LFA Tach"
+										font_size: 25
+										on_press: app.set_OBDpage(2) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'graphicaltach2'
+										on_press: app.set_OBDVAR("RPM")
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										on_press: Animation(y=-100, duration=0).start(dock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
+										pos: 20, 300
+										size_hint: .3, .2
+
 								JZLargeButton:
 										text: "Digital Tach"
 										font_size: 25
+										on_press: app.set_OBDpage(3) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'digitaltach'
-										on_press: app.add_OBDVAR_RPM()
+										on_press: app.set_OBDVAR("RPM")
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
 										pos: 20, 190
@@ -2907,14 +3021,15 @@ AnchorLayout:
 								JZLargeButton:
 										text: "Race Tach"
 										font_size: 25
+										on_press: app.set_OBDpage(4) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'racetach'
-										on_press: app.add_OBDVAR_RPM()
+										on_press: app.set_OBDVAR("RPM")
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
 										on_press: Animation(y=-100, duration=0).start(dock)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
+										on_press: Animation(y=-100, duration=0).start(dock_normal_obd)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
 										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
@@ -2922,26 +3037,11 @@ AnchorLayout:
 										pos: 20, 80
 										size_hint: .3, .2
 
-								JZLargeButton:
-										text: "LFA Tach"
-										font_size: 25
-										on_press: sm.current = 'graphicaltach2'
-										on_press: app.add_OBDVAR_RPM()
-										on_press: app.connect_OBD()
-										on_press: sm.transition.direction = 'left'
-										on_press: Animation(y=-100, duration=0).start(dock)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=-100, duration=0).start(dock_normal_power)
-										pos: 20, 300
-										size_hint: .3, .2
+
 
 
 								Button: #return button
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
 										pos: -365, 399
@@ -2953,8 +3053,15 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
-				OBDSpeedosScreen:
+			    OBDSpeedosScreen:
 						name: "speedoselect"
 
 						FloatLayout:
@@ -2982,7 +3089,7 @@ AnchorLayout:
 										text: "Digital Speedometer"
 										font_size: 25
 										on_press: sm.current = 'digitalspeedo'
-										on_press: app.add_OBDVAR_SPEED()
+										on_press: app.set_OBDVAR("SPEED")
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
 										pos: 20, 300
@@ -2990,6 +3097,7 @@ AnchorLayout:
 
 
 								Button: #return button
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
 										pos: -365, 399
@@ -3001,6 +3109,13 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 				OBDDiagnosticsScreen:
 						name: "diagnosticselect"
@@ -3028,8 +3143,9 @@ AnchorLayout:
 								JZLargeButton:
 										text: "Coolant Temp"
 										font_size: 25
+										on_press: app.set_OBDpage(5) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'coolanttemp'
-										on_press: app.add_OBDVAR_COOLANT_TEMP()
+										on_press: app.set_OBDVAR("COOLANT_TEMP")
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
 										pos: 20, 300
@@ -3039,8 +3155,9 @@ AnchorLayout:
 								JZLargeButton:
 										text: "Intake Temp"
 										font_size: 25
+										on_press: app.set_OBDpage(6) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'intaketemp'
-										on_press: app.add_OBDVAR_INTAKE_TEMP()
+										on_press: app.set_OBDVAR("INTAKE_TEMP")
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
 										pos: 20, 190
@@ -3050,14 +3167,39 @@ AnchorLayout:
 								JZLargeButton:
 										text: "Engine Load"
 										font_size: 25
+										on_press: app.set_OBDpage(7) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'engload'
-										on_press: app.add_OBDVAR_LOAD()
+										on_press: app.set_OBDVAR("LOAD")
 										on_press: app.connect_OBD()
 										on_press: sm.transition.direction = 'left'
 										pos: 20, 80
 										size_hint: .3, .2
 
+								JZLargeButton:
+										text: "Throttle Position"
+										font_size: 25
+										on_press: app.set_OBDpage(8) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'throttlepos'
+										on_press: app.set_OBDVAR("THROTTLE_POS")
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 280, 80
+										size_hint: .3, .2
+
+
+								JZLargeButton:
+										text: "Intake Pressure"
+										font_size: 25
+										on_press: app.set_OBDpage(9) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'intakepressure'
+										on_press: app.set_OBDVAR("INTAKE_PRESSURE")
+										on_press: app.connect_OBD()
+										on_press: sm.transition.direction = 'left'
+										pos: 280, 190
+										size_hint: .3, .2
+
 								Button: #return button
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
 										pos: -365, 399
@@ -3069,6 +3211,16 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
+
+
 
 				OBDDigitalSpeedoScreen:
 						name: "digitalspeedo"
@@ -3096,7 +3248,7 @@ AnchorLayout:
 										text: app.obdspeed
 										font_size: 100
 										pos: 0, 00
-										color: ((.8, 0, 0, 1) if app.obdspeedval > app.obdspeedlimitval else (1, 1, 1, 1))
+										color: ((.78, .31, .31, 1) if app.obdspeedval > app.obdspeedlimitval else (1, 1, 1, 1))
 
 								Image:
 										source: 'data/icons/warning.png'
@@ -3115,9 +3267,11 @@ AnchorLayout:
 
 								Button: #return button
 										#text: "return to gauge select"
-										on_press: sm.current = 'speedoselect'
+										#on_press: sm.current = 'speedoselect'
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3127,6 +3281,16 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 				OBDDigitalTachScreen:
 						name: "digitaltach"
 						FloatLayout:
@@ -3175,9 +3339,10 @@ AnchorLayout:
 
 								Button: #return button
 										#text: "return to gauge select"
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'tachselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3187,6 +3352,16 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'tachselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 						FloatLayout:
 								size_hint: .8, 1
 								JZWideRedProgressBar:
@@ -3235,15 +3410,15 @@ AnchorLayout:
 										#text: "return to gauge select"
 										on_press: sm.current = 'tachselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
-										on_press: app.kill_OBDVAR()
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
+										on_press: app.set_OBDVAR("NONE")
 										on_press: self.canvas.clear
 										pos: -365, 399
 										size_hint: 1, .2
@@ -3254,6 +3429,24 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: sm.current = 'tachselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
+										on_press: app.set_OBDVAR("NONE")
+										on_press: self.canvas.clear
+								        opacity: 0
+								        pos: 0, 0
+										size_hint: 1, 1
+
 				OBDGraphicTach2Screen:
 						name: "graphicaltach2"
 						FloatLayout:
@@ -3298,11 +3491,6 @@ AnchorLayout:
 												pos: 0, 0
 												size: 800, 480
 
-
-
-
-
-
 								Label: #label to display current time
 										markup: True
 										#text: app.timenow
@@ -3313,22 +3501,46 @@ AnchorLayout:
 										#text: "return to gauge select"
 										on_press: sm.current = 'tachselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
-										on_press: app.kill_OBDVAR()
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
+										on_press: app.set_OBDVAR("NONE")
 										on_press: self.canvas.clear
 										pos: 0,0
 										size_hint: 1, 1
 										background_color:(0.9, 0.9, 0.9, 0.0)
 
+								Button: #slide to return
+								        on_press: sm.current = 'tachselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
+										on_press: app.set_OBDVAR("NONE")
+										on_press: self.canvas.clear
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 				OBDCoolantScreen:
 						name: "coolanttemp"
+						FloatLayout:
+								Image:
+										source: 'data/gauges/CoolantGauge.png'
+										center_x: self.center_x
+										center_y: self.center_y
+										allow_stretch: True
+										pos: 0, 0
 						FloatLayout:
 								size_hint: 1, 1
 								Toolbar:
@@ -3352,13 +3564,14 @@ AnchorLayout:
 										markup: True
 										text: app.obdcoolanttemp
 										font_size: 100
-										pos: 0, 0
+										pos: 0, 50
 
 								Button: #return button
 										#text: "return to gauge select"
-										on_press: sm.current = 'diagnosticselect'
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3368,6 +3581,28 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
+						        FloatLayout:
+										size_hint: .8, 1
+										orientation: 'vertical'
+										padding: '130dp'
+										JZWideCoolantProgressBar:
+												pos: 80, -20
+												value: app.obdcoolanttempval
+												orientation:"horizontal"
+												min: 0
+												max: 250
+
+
 				OBDIntakeTempScreen:
 						name: "intaketemp"
 						FloatLayout:
@@ -3397,9 +3632,10 @@ AnchorLayout:
 
 								Button: #return button
 										#text: "return to gauge select"
-										on_press: sm.current = 'diagnosticselect'
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3409,6 +3645,15 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 				OBDLoadScreen:
 						name: "engload"
 						FloatLayout:
@@ -3438,9 +3683,10 @@ AnchorLayout:
 
 								Button: #return button
 										#text: "return to gauge select"
-										on_press: sm.current = 'diagnosticselect'
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3450,6 +3696,16 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 								FloatLayout:
 										size_hint: 1, .5
 										orientation:'vertical'
@@ -3460,6 +3716,127 @@ AnchorLayout:
 												orientation:"vertical"
 												min: 0
 												max: 100
+
+				OBDThrottlePosScreen:
+						name: "throttlepos"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Throttle Position[/size]'
+										pos: 0, 210
+
+								Label: #Label to display engine load
+										markup: True
+										text: app.obdthrottlepos
+										font_size: 100
+										pos: 0, 0
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
+								FloatLayout:
+										size_hint: 1, .5
+										orientation:'vertical'
+										padding: '130dp'
+										JZWideProgressBar:
+												pos: -300, 120
+												value: app.obdthrottleposval
+												orientation:"vertical"
+												min: 0
+												max: 100
+
+				OBDIntakePressureScreen:
+						name: "intakepressure"
+						FloatLayout:
+								size_hint: 1, 1
+								Toolbar:
+										id: toolbar
+										pos_hint: {"right": 1, 'top':1}
+										#title: ''
+										background_color: app.theme_cls.primary_color
+										opacity: 1.0
+								Label: #label to display current time
+										markup: True
+										text: app.timenow
+										font_size: 40
+										pos: 340, 210
+
+								Label: #label to display screen name
+										markup: True
+										text: '[size=30]Intake Pressure[/size]'
+										pos: 0, 210
+
+								Label: #Label to display intake temp
+										markup: True
+										text: app.obdintakepressure
+										font_size: 100
+										pos: 0, 0
+
+								Label: #Label to display units
+										markup: True
+										text: "psi"
+										font_size: 20
+										pos: 155, -35
+
+								Button: #return button
+										#text: "return to gauge select"
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+										on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+										pos: -365, 399
+										size_hint: 1, .2
+										background_color:(0.9, 0.9, 0.9, 0.0)
+										Image:
+												source: 'data/icons/arrow_back_white.png'
+												center_x: self.parent.center_x
+												center_y: self.parent.center_y
+												size: 50, 50
+												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.set_OBDVAR("NONE")
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 				OBDSettingsScreen:
 						name: "obdsettings"
@@ -3502,9 +3879,10 @@ AnchorLayout:
 
 								Button: #return button
 										#text: "return to gauge select"
+										on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
 										on_press: sm.current = 'gaugeselect'
 										on_press: sm.transition.direction = 'right'
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										on_press: app.save()
 										pos: -365, 399
 										size_hint: 1, .2
@@ -3515,6 +3893,14 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+								Button: #slide to return
+								        on_press: app.set_OBDpage(0) #set obd page - for quick jumping back to last gauge
+								        on_press: sm.current = 'gaugeselect'
+										on_press: sm.transition.direction = 'right'
+										on_press: app.save()
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 						FloatLayout:
 								size_hint: .835, .1
 								MDSlider:
@@ -3536,31 +3922,42 @@ AnchorLayout:
 						name: "accelerometer"
 						FloatLayout:
 								size_hint: 1, 1
-								Toolbar:
-										id: toolbar
-										pos_hint: {"right": 1, 'top':1}
-										#title: ''
-										background_color: app.theme_cls.primary_color
-										opacity: 1.0
+								Image:
+										source: 'data/wallpapers/accelerometer.png'
+										center_x: self.center_x
+										center_y: self.center_y
 								Label: #label to display current time
 										markup: True
 										text: app.timenow
 										font_size: 40
 										pos: 340, 210
-
-								Label: #label to display screen name
+								Label: #label to display max neg x
 										markup: True
-										text: '[size=30]Accelerometer[/size]'
-										pos: 0, 210
-								Image:
-										source: 'data/wallpapers/black.png'
-										center_x: self.center_x
-										center_y: self.center_y
+										text: str(app.accelxmaxneg)
+										font_size: 30
+										pos: -260, 0
+								Label: #label to display max pos x
+										markup: True
+										text: str(app.accelxmaxpos)
+										font_size: 30
+										pos: 260, 0
+								Label: #label to display max neg y
+										markup: True
+										text: str(app.accelymaxneg)
+										font_size: 30
+										pos: 80, -220
+								Label: #label to display max pos y
+										markup: True
+										text: str(app.accelymaxpos)
+										font_size: 30
+										pos: -80, 220
+
 
 						FloatLayout:
                                 canvas:
                                         Color:
-                                                rgba: 1, 0, 0, 1
+                                                #rgba: 1, 0, 0, 1
+                                                rgba: app.theme_cls.primary_color
                                         Line:
                                                 points: [400, 240, 400+(app.accelx*200), 240+(app.accely*200)]
                                                 width: 6
@@ -3568,18 +3965,24 @@ AnchorLayout:
 						FloatLayout:
 								size_hint: 1, 1
 								anchor_y: 'bottom'
+								MDRaisedButton: #reset all max values
+										text: "reset max values"
+										pos: 14, 14
+										size_hint: .2, .1
+										on_press: app.resetaccelmaxes()
+
 								Button: #return button
 										#text: "return to main"
 										on_press: sm.current = 'main'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=.2).start(dock)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										on_press: app.killaccel()
 										pos: -369, 399
 										size_hint: 1, .2
@@ -3591,6 +3994,21 @@ AnchorLayout:
 												size: 50, 50
 												allow_stretch: True
 
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
+										on_press: app.killaccel()
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
 
 
                 NOSScreen:
@@ -3607,14 +4025,14 @@ AnchorLayout:
 								Button: #return button
 										on_press: sm.current = 'performance'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=.2).start(dock)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=.2).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										pos: 0, 0
 										size_hint: 1, 1
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3644,14 +4062,14 @@ AnchorLayout:
 								Button: #return button
 										on_press: sm.current = 'settings'
 										on_press: sm.transition.direction = 'right'
-										on_press: Animation(y=-10, duration=0).start(dock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_audio)
-										on_press: Animation(y=0, duration=0).start(dock_normal_perf)
-										on_press: Animation(y=0, duration=0).start(dock_normal_clock)
-										on_press: Animation(y=0, duration=0).start(dock_normal_apps)
-										on_press: Animation(y=0, duration=0).start(dock_normal_controls)
-										on_press: Animation(y=0, duration=0).start(dock_normal_brightness)
-										on_press: Animation(y=0, duration=0).start(dock_normal_power)
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
 										pos: -365, 399
 										size_hint: 1, .2
 										background_color:(0.9, 0.9, 0.9, 0.0)
@@ -3661,6 +4079,22 @@ AnchorLayout:
 												center_y: self.parent.center_y
 												size: 50, 50
 												allow_stretch: True
+
+								Button: #slide to return
+								        on_press: sm.current = 'main'
+										on_press: sm.transition.direction = 'right'
+										on_press: Animation(y=0, duration=0).start(dock)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_audio)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_perf)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_obd)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_apps)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_controls)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_brightness)
+										on_press: Animation(y=-16, duration=0).start(dock_normal_power)
+								        opacity: 0
+								        pos: -15, -5
+										size_hint: .05, 1.1
+
 						FloatLayout:
 								size_hint: 1, .865
 								ScrollView:
@@ -3671,125 +4105,153 @@ AnchorLayout:
 												row_default_width: dp(260)
 												row_force_default: True
 												size_hint_y: None
-												height: 18 * dp(100) # /1 * self.row_default_height
+												height: 20 * dp(100) # /1 * self.row_default_height
 												padding: dp(4), dp(4)
 												spacing: dp(4)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/greenmaterial.png'
-														on_release: app.setwallpaper0()
+														on_release: app.setwallpaper(0)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blackgreenmaterial.png'
-														on_release: app.setwallpaper1()
+														on_release: app.setwallpaper(1)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/darkgreymaterial2.png'
-														on_release: app.setwallpaper2()
+														on_release: app.setwallpaper(2)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/polymountain.png'
-														on_release: app.setwallpaper3()
+														on_release: app.setwallpaper(3)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/trianglematerial.png'
-														on_release: app.setwallpaper4()
+														on_release: app.setwallpaper(4)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blackredmaterial.png'
-														on_release: app.setwallpaper5()
+														on_release: app.setwallpaper(5)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/greybluematerial.png'
-														on_release: app.setwallpaper6()
+														on_release: app.setwallpaper(6)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/lightblueblackmaterial.png'
-														on_release: app.setwallpaper7()
+														on_release: app.setwallpaper(7)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/greyplain.png'
-														on_release: app.setwallpaper8()
+														on_release: app.setwallpaper(8)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/stopwatchblue.png'
-														on_release: app.setwallpaper9()
+														on_release: app.setwallpaper(9)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/polycube.png'
-														on_release: app.setwallpaper10()
+														on_release: app.setwallpaper(10)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/polyvalley.png'
-														on_release: app.setwallpaper11()
+														on_release: app.setwallpaper(11)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/purplebluematerial.png'
-														on_release: app.setwallpaper12()
+														on_release: app.setwallpaper(12)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/bluegreymaterial.png'
-														on_release: app.setwallpaper13()
+														on_release: app.setwallpaper(13)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/redpurplematerial.png'
-														on_release: app.setwallpaper14()
+														on_release: app.setwallpaper(14)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/CoPilot_Wallpaper_2.png'
-														on_release: app.setwallpaper15()
+														on_release: app.setwallpaper(15)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blackredmaterial2.png'
-														on_release: app.setwallpaper16()
+														on_release: app.setwallpaper(16)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/androidauto.png'
-														on_release: app.setwallpaper17()
+														on_release: app.setwallpaper(17)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/tealmaterialdesign.png'
-														on_release: app.setwallpaper18()
+														on_release: app.setwallpaper(18)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blueblackmaterial.png'
-														on_release: app.setwallpaper19()
+														on_release: app.setwallpaper(19)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/greenmaterial2.png'
-														on_release: app.setwallpaper20()
+														on_release: app.setwallpaper(20)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/redbluematerial.png'
-														on_release: app.setwallpaper21()
+														on_release: app.setwallpaper(21)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blueblackwhitematerial.png'
-														on_release: app.setwallpaper22()
+														on_release: app.setwallpaper(22)
 											    SmartTile:
 														mipmap: True
 														source: './data/wallpapers/polymountain2.png'
-														on_release: app.setwallpaper23()
+														on_release: app.setwallpaper(23)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blackpoly.png'
-														on_release: app.setwallpaper24()
+														on_release: app.setwallpaper(24)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blackredlacematerial.png'
-														on_release: app.setwallpaper25()
+														on_release: app.setwallpaper(25)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/blueredpoly.png'
-														on_release: app.setwallpaper26()
+														on_release: app.setwallpaper2(26)
 												SmartTile:
 														mipmap: True
 														source: './data/wallpapers/firewaterpoly.png'
-														on_release: app.setwallpaper27()
+														on_release: app.setwallpaper(27)
 											    SmartTile:
 														mipmap: True
 														source: './data/wallpapers/tanbluepoly.png'
-														on_release: app.setwallpaper28()
+														on_release: app.setwallpaper(28)
+											    SmartTile:
+														mipmap: True
+														source: './data/wallpapers/road.png'
+														on_release: app.setwallpaper(29)
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/road2.png'
+														on_release: app.setwallpaper(30)
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/pixel.png'
+														on_release: app.setwallpaper(31)
+											    SmartTile:
+														mipmap: True
+														source: './data/wallpapers/pixel2.png'
+														on_release: app.setwallpaper(32)
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/darkgreyplain.png'
+														on_release: app.setwallpaper(33)
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/city.png'
+														on_release: app.setwallpaper(34)
+												SmartTile:
+														mipmap: True
+														source: './data/wallpapers/cincy.png'
+														on_release: app.setwallpaper(35)
 
 
 
@@ -4033,10 +4495,10 @@ AnchorLayout:
 								Image: #pixel style dock
 										id: dock
 										source: 'data/elements/pixeldock.png'
-										opacity: .3
+										opacity: 1
 										center_x: self.center_x
 										center_y: self.center_y
-										pos: 0, -10
+										pos: 0, 0
 										allow_stretch: True
 
 
@@ -4048,7 +4510,7 @@ AnchorLayout:
 										center_x: self.center_x
 										center_y: self.center_y
 										pos: 0, 150
-										opacity: .9
+										opacity: 1
 										allow_stretch: True
 								Button:                             #cancel button
 										id: brightnessbarreturnbutton
@@ -4188,25 +4650,29 @@ AnchorLayout:
 												size: 70, 70
 												allow_stretch: True
 
-						BoxLayout:
+						FloatLayout:
 								orientation: 'horizontal'
 								size_hint: 1, 1 #define percentage of screen for quickeys width,height
 								Button:
 										id: dock_normal_audio
-										size_hint_y: .13
-										on_press: sm.current = 'audio'
 
+										height: 96
+										width: 96
+										pos: 16, -16
+										size_hint: None, None
+
+										on_press: sm.current = 'audio'
 
 										on_press: app.kill_message()
 										on_press: app.killtemp()
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										on_press: app.displaybtdata()
 
 										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -4215,32 +4681,31 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
+										background_normal: 'data/icons/audio.png'
+										background_down: 'data/icons/audio_pressed.png'
 
-										Image:
-												id: audioimage
-												source: 'data/icons/audio.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 70, 70
-												allow_stretch: True
 
 
 								Button:
 										id: dock_normal_perf
-										size_hint_y: .13
+
+										height: 96
+										width: 96
+										pos: 128, -16
+										size_hint: None, None
+
 										on_press: sm.current = 'performance'
 
 										on_press: app.kill_message()
 										on_press: app.killtemp()
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										on_press: app.killbtdata()
 
 										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -4249,29 +4714,74 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												id: perfimage
-												source: 'data/icons/perf.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 70, 70
-												allow_stretch: True
+										background_normal: 'data/icons/perf.png'
+										background_down: 'data/icons/perf_pressed.png'
+
 								Button:
-										id: dock_normal_clock
-										size_hint_y: .13
-										on_press: sm.current = 'clockchooser'
+										id: dock_normal_obd
+
+										height: 96
+										width: 96
+										pos: 240, -16
+										size_hint: None, None
+
+										on_release:
+										        if app.OBDpage == 0: sm.current = 'gaugeselect'
+
+										        if app.OBDpage == 1: sm.current = 'digitalspeedo'
+										        if app.OBDpage == 1: app.set_OBDVAR("SPEED")
+
+										        if app.OBDpage == 2: sm.current = 'graphicaltach2'
+										        if app.OBDpage == 2: app.set_OBDVAR("RPM")
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_audio)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_perf)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_obd)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_apps)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_controls)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_brightness)
+                                                if app.OBDpage == 2: Animation(y=-100, duration=0).start(dock_normal_power)
+
+										        if app.OBDpage == 3: sm.current = 'digitaltach'
+										        if app.OBDpage == 3: app.set_OBDVAR("RPM")
+
+										        if app.OBDpage == 4: sm.current = 'racetach'
+										        if app.OBDpage == 4: app.set_OBDVAR("RPM")
+										        if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_audio)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_perf)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_obd)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_apps)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_controls)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_brightness)
+                                                if app.OBDpage == 4: Animation(y=-100, duration=0).start(dock_normal_power)
+
+										        if app.OBDpage == 5: sm.current = 'coolanttemp'
+										        if app.OBDpage == 5: app.set_OBDVAR("COOLANT_TEMP")
+
+										        if app.OBDpage == 6: sm.current = 'intaketemp'
+										        if app.OBDpage == 6: app.set_OBDVAR("INTAKE_TEMP")
+
+										        if app.OBDpage == 7: sm.current = 'engload'
+										        if app.OBDpage == 7: app.set_OBDVAR("LOAD")
+
+										        if app.OBDpage == 8: sm.current = 'throttlepos'
+										        if app.OBDpage == 8: app.set_OBDVAR("THROTTLE_POS")
+
+										        if app.OBDpage == 9: sm.current = 'intakepressure'
+										        if app.OBDpage == 9: app.set_OBDVAR("INTAKE_PRESSURE")
 
 										on_press: app.kill_message()
 										on_press: app.killtemp()
-										on_press: app.kill_OBDVAR()
 										on_press: app.killbtdata()
+
+										on_press: app.setup_OBD() #set up obd stuff
 
 										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -4280,60 +4790,65 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												id: clocksimage
-												source: 'data/icons/clocks.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 70, 70
-												allow_stretch: True
+										background_normal: 'data/icons/obdii.png'
+										background_down: 'data/icons/obdii_pressed.png'
+
 								Button:
 										id: dock_normal_apps
-										size_hint_y: .13
-										on_press: sm.current = 'apps'
+
+										height: 96
+										width: 96
+										pos: 352, -16
+										size_hint: None, None
+
+										on_press:
+										        if sm.current == 'main': sm.current = 'apps'
+										        else: sm.current = 'main'
 
 										on_press: app.kill_message()
 										on_press: app.killtemp()
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										on_press: app.killbtdata()
 
 										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
 
 										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
 
-										on_press: sm.transition.direction = 'left'
+										on_press:
+										        if sm.current == 'main': sm.transition.direction = 'up'
+										        else: sm.transition.direction = 'right'
+										        if sm.current == 'apps': sm.transition.direction = 'down'
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												id: appsimage
-												source: 'data/icons/apps.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 80, 80
-												allow_stretch: True
+										background_normal: 'data/icons/apps.png'
+										background_down: 'data/icons/apps_pressed.png'
+
 								Button:
 										id: dock_normal_controls
-										size_hint_y: .13
+
+										height: 96
+										width: 96
+										pos: 464, -16
+										size_hint: None, None
+
 										on_press: sm.current = 'controls'
 
 										on_press: app.kill_message()
 										on_press: app.killtemp()
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										on_press: app.killbtdata()
 
 										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -4342,18 +4857,16 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												id: controlsimage
-												source: 'data/icons/controls.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 70, 70
-												allow_stretch: True
+										background_normal: 'data/icons/controls.png'
+										background_down: 'data/icons/controls_pressed.png'
 
 								Button:
 										id: dock_normal_brightness
-										size_hint_y: .13
+
+										height: 96
+										width: 96
+										pos: 576, -16
+										size_hint: None, None
 
 										on_press: app.killtemp()
 										on_press: Animation(x=1800, duration=.1).start(TempBubble) #moves button off screen
@@ -4366,29 +4879,27 @@ AnchorLayout:
 										on_press: Animation(y=380, duration=.35).start(brightness_4_button)
 										on_press: Animation(y=380, duration=.4).start(brightness_5_button)
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												id: brightnessimage
-												source: 'data/icons/brightness.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 65, 65
-												allow_stretch: True
+										background_normal: 'data/icons/brightness.png'
+										background_down: 'data/icons/brightness_pressed.png'
 
 								Button:
 										id: dock_normal_power
-										size_hint_y: .13
+
+										height: 96
+										width: 96
+										pos: 688, -16
+										size_hint: None, None
 
 										on_press: app.kill_message()
 										on_press: app.killtemp()
-										on_press: app.kill_OBDVAR()
+										on_press: app.set_OBDVAR("NONE")
 										on_press: app.killbtdata()
 
 										on_press: Animation(x=-340, duration=.1).start(ShortcutDrawerBG)
 										on_press: Animation(x=-340, duration=.1).start(SCD_DateButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_SettingsButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_GarageButton)
-										on_press: Animation(x=-340, duration=.1).start(SCD_OBDButton)
+										on_press: Animation(x=-340, duration=.1).start(SCD_RadarButton)
 										on_press: Animation(x=-340, duration=.1).start(SCD_StopwatchButton)
 										on_press: Animation(x=-543, duration=.2).start(SCD_Date)
 										on_press: Animation(x=820, duration=.1).start(ShortcutDrawerReturnButton)
@@ -4402,14 +4913,8 @@ AnchorLayout:
 
 										on_press: sm.transition.direction = 'left'
 
-										background_color:(0.9, 0.9, 0.9, 0.0)
-										Image:
-												id: displayimage
-												source: 'data/icons/display.png'
-												center_x: self.parent.center_x
-												center_y: self.parent.center_y
-												size: 70, 70
-												allow_stretch: True
+										background_normal: 'data/icons/display.png'
+										background_down: 'data/icons/display.png' #doesnt need animation because it turns off screen
 
 						FloatLayout: #LockScreenStuff
 								Image:

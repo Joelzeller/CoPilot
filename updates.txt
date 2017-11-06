@@ -1,58 +1,81 @@
-CoPilot V2.2.0
+CoPilot V2.3.0
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 DONE IN THIS VERSION:
 
-- got rid of clock.kv completely - utilized kivy canvas instead (broke worm clock for now - disabled) - SO MUCH FASTER!
-- More work on GPS app. Just a map viewer for now. 
-	- Needs to connected to the internet to download images for the maps - images are saved for offline use
-	- going to work on getting a UBS GPS dongle and getting screen to follow when driving
-	- a few work arounds to get Mapview working on RPi - took screenshots - need to mod some files
-- Bluetooth device can now be controlled from audio page - play/pause/next/previous - shows current track name and artist - progress bar with track progress
-	- Press bluetooth button in audio page to enable
-	- Pair your device and enter your device's MAC address in main.py for this to work
-- Added Accelerometer app in performance - more to come
-- new gauge - Lexus LFA style
-- new theme colors - darker - look better on RPi screen
-- new Info Clock - Pretty
-- New OBDII gauge pages
-- some work on gauges - new OBDII settings button to change speed limit and redline
-- got rid of InvisiButtons on the dock - they looked cool, but slowed down the system a bit
-- wallpaper select changes
-- new performance wallpaper - red was getting old
-- new system wallpapers
-- Maintenance app tweaks - tap on oil change and you can set date and mileage of next change
-- Enable Oil notification on boot - if date is past specified, button will be placed on main screen until cleared
-- Added speeding warning to digital speedo page
-- new fast and furious NOS easter egg
-- some new theme colors
-- added erase button to paint app
-- misc small tweaks
+MAJOR UPDATES
+- Slightly updated design for dock and apps page
+- can now use circle "home" to go back to main screen - tap at main screen for apps page like before
+- new performance screen
+- new controls screen
+- new OBD selection screen
+- updated ShortcutDrawer
+- some cool new icon animations while being tapped
+- autobrightness added - times can be edited in code
+- save "last gauge" - useful for tapping music to change song then tapping back to gauge (no more menu hunting) - useful
+- added intake pressure - shows relative manifold pressure - vacuum in N/A cars... like mine :(
+- added throttle position
+- added coolant bar gauge - shows optimum values
+
+MINOR UPDATES
+- no more dbus error messages in the terminal if no device connected
+- IP address fixed - View in System Diagnostics - if none shown, tap on IP button
+- fix source buttons in audio app from accidentally being tapped while hidden behind bar - new design
+- bluetooth is now on by default when entering audio screen - this can be disabled if you dont use it...
+- pulseaudio is needed to control an android audio device
+- went from wrong estimate formula to convert speed to correct kph to mph conversion
+- try and except statements added to temp and accel initialization code - will turn off if no sensor connected
+- shortened debounce time - for quicker hotkey track changes
+- speeding color (digital speedo) is a little lighter - works better with wallpaper
+- revamped OBD code for simplicity and ability to add more parameters
+- take out step to get to speedo - only one for now
+- cleaned up wallpaper code a little (passing vars)
+- max brightness increase
+- some new wallpapers
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 NEXT TO COME:
 
-- Add more GUI to accelerometer app
+- try to get updated interior temp on main screen without delaying animations?
+- fix blanking audio info
+- add other maintenance items and use arguments to make changing dates and mileage easier
 - USB GPS module to take lat and long data - use this data to move map to current location
 - create new progress bar to make stopwatch bar red always
-- controls screen looks weird - consider an update
 - new launch control graphics
 - add shift light - set by user in OBD settings - green notification
-- more gauges - fuel level? intake pressure? 
 - more than one gauge per screen
 - add more try/except statements to handle nonexistant hardware (sensors/bluetooth/obd)
-- add bluetooth audio control to hotkeys
-- Tap bluetooth when radio on will enable aux and turn on bluetooth
 - combine some if statements for less code
 - add & to os.system commands - maybe allow to be run in background?
+- look into subprocess.call ?
 - rpm/speedo combo screen
 - auto turn on radar when speeding - setting in obd page
 - add shortcut to obd settings in settings page
 - get city name based on GPS coords
+- Add themed clock - use theme color
+- grid display to show multiple info at one time
+- timing advance
+- short term and long term fuel trim - view all 4 on one screen with pos/neg sliders
+- add try statements to obd, temp
+- update stopwatch screen
+- darken settings
+- darken maintenance
+- fix engine animation
+- change all icon animations to stay the same size and just move like dock ones do
+- revise home button animation
+- revise stopwatch screen
+- add build pics to photos app?
+
+http://www.ctheroux.com/a-step-by-step-guide-to-setup-a-bluetooth-keyboard-and-mouse-on-the-raspberry-pi/
+https://www.raspberrypi.org/forums/viewtopic.php?t=68779
+
+- look at async connection for obd - watch data instead of calling for it over and over again
+	- could be used to constantly monitor speed and maybe another critical metric
 
 
 OBDII-
 OBD Graphical Tach - take old measurements and shift them over to make a graph over time - maybe show last minute?
 New Arc gauge - like s2000
+gear guessing - will guess current gear based on user inputted gear ratios
 
 
 
@@ -65,9 +88,8 @@ POSSIBLE ADDITIONS:
 other info on infoclockscreen
 Calender app? Google calender integration??
 startup animation??
-Auto Brightness - display brightness based on time of day
-click main app icon to go back to main
 hotkey functionality to go to specific screen? maybe a scollable menu if selecting a screen
+- google assistant???
 
 "MapMarker(lon=lon, lat=lat, source="mymarkerL.png")"
 

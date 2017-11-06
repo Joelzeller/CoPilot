@@ -4,5 +4,5 @@
 
 cd /
 cd home/pi/CoPilot
-#sudo python main.py
+sudo python main.py
 cd /
