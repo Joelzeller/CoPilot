@@ -957,6 +957,12 @@ class MainApp(App):
             self.wallpapernow = 'data/wallpapers/city.png'
         if wallpaper == 35:
             self.wallpapernow = 'data/wallpapers/cincy.png'
+        if wallpaper == 36:
+            self.wallpapernow = 'data/wallpapers/grad1.png'
+        if wallpaper == 37:
+            self.wallpapernow = 'data/wallpapers/grad2.png'
+        if wallpaper == 38:
+            self.wallpapernow = 'data/wallpapers/smoke.png'
 
     def updatemessage(self, *args):
         # the logic for what the message says

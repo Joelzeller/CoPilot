@@ -2,61 +2,140 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8bafbc36-2b8b-447b-9edc-fa4122511962" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/elements/dock_shadow.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/elements/more/more.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/elements/more/more_pressed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/icons/amfm.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/icons/auxin.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/icons/clocks.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/data/icons/settings.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_date.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_date.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_date_pressed.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_date_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_garage.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_garage.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_garage_pressed.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_garage_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_gauges.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_gauges.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_gauges_pressed.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_gauges_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_settings.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_settings.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_settings_pressed.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_settings_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_stopwatch.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_stopwatch.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_stopwatch_pressed.png" afterPath="$PROJECT_DIR$/data/buttons/shortcutdrawer/SD_stopwatch_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/elements/GPS_Toolbar.png" afterPath="$PROJECT_DIR$/data/elements/GPS_Toolbar.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/elements/ShortcutDrawer.png" afterPath="$PROJECT_DIR$/data/elements/ShortcutDrawer.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/elements/pixeldock.png" afterPath="$PROJECT_DIR$/data/elements/pixeldock.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/accel_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/accel_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/accel_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/accel_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/brightness_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/brightness_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/brightness_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/brightness_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/garage_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/garage_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/garage_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/garage_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/launch_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/launch_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/launch_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/launch_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/lights_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/lights_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/lights_icon_on.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/lights_icon_on.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/lights_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/lights_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/obdII_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/obdII_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/obdII_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/obdII_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/radar_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/radar_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/radar_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/radar_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/stopwatch_icon.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/stopwatch_icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/app_icons/stopwatch_icon_pressed.png" afterPath="$PROJECT_DIR$/data/icons/app_icons/stopwatch_icon_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/apps.png" afterPath="$PROJECT_DIR$/data/icons/apps.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/audio.png" afterPath="$PROJECT_DIR$/data/icons/audio.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/audio/audiocontrol.png" afterPath="$PROJECT_DIR$/data/icons/audio/audiocontrol.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/audio/more_pressed.png" afterPath="$PROJECT_DIR$/data/icons/audio/more_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/audio/next_pressed.png" afterPath="$PROJECT_DIR$/data/icons/audio/next_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/audio/prev_pressed.png" afterPath="$PROJECT_DIR$/data/icons/audio/prev_pressed.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/brightness.png" afterPath="$PROJECT_DIR$/data/icons/brightness.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/controls.png" afterPath="$PROJECT_DIR$/data/icons/controls.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/display.png" afterPath="$PROJECT_DIR$/data/icons/display.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/perf.png" afterPath="$PROJECT_DIR$/data/icons/perf.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/icons/radarindicator.png" afterPath="$PROJECT_DIR$/data/icons/radarindicator.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/screenshots/audio.png" afterPath="$PROJECT_DIR$/screenshots/audio.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/kivymd/progressbar.py" afterPath="$PROJECT_DIR$/kivymd/progressbar.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/launcher.sh" afterPath="$PROJECT_DIR$/launcher.sh" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_270_632.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_270_633.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_270_634.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_271_632.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_271_633.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_271_634.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_272_632.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_272_633.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_272_634.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_273_632.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_273_633.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_10_273_634.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_542_1266.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_542_1267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_542_1268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_543_1266.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_543_1267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_543_1268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_544_1266.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_544_1267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_544_1268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_545_1266.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_545_1267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_11_545_1268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1084_2531.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1084_2532.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1085_2531.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1085_2532.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1085_2533.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1085_2534.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1086_2531.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1086_2532.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1086_2533.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1086_2534.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1087_2531.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1087_2532.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1087_2533.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1087_2534.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1088_2532.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1088_2533.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_12_1088_2534.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2170_5064.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2170_5065.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2171_5064.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2171_5065.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2172_5064.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2172_5065.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2172_5066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2172_5067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2172_5068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2173_5064.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2173_5065.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2173_5066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2173_5067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2173_5068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2174_5066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2174_5067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2174_5068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2175_5066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2175_5067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2175_5068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2176_5066.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2176_5067.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_13_2176_5068.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4343_10129.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4343_10130.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4343_10131.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4344_10129.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4344_10130.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4344_10131.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4345_10129.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4345_10130.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4345_10131.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4346_10129.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4346_10130.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4346_10131.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4346_10133.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4346_10134.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4346_10135.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4347_10129.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4347_10130.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4347_10131.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4347_10133.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4347_10134.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4347_10135.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4348_10133.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4348_10134.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4348_10135.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4349_10133.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4349_10134.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_14_4349_10135.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8688_20259.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8688_20260.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8688_20261.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8689_20259.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8689_20260.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8689_20261.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8689_20262.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8690_20259.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8690_20260.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8690_20261.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8690_20262.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8691_20259.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8691_20260.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8691_20261.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8691_20262.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8692_20260.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8692_20261.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8692_20262.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8693_20267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8693_20268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8693_20269.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8694_20267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8694_20268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8694_20269.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8695_20267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8696_20268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8696_20269.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8697_20267.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8697_20268.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_15_8697_20269.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_16_17378_40520.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_16_17378_40521.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_16_17379_40520.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_16_17379_40521.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cache/26a7511794_16_17380_40520.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/26a7511794_17_34759_81042.png" afterPath="$PROJECT_DIR$/cache/26a7511794_17_34759_81042.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/26a7511794_17_34759_81043.png" afterPath="$PROJECT_DIR$/cache/26a7511794_17_34759_81043.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/26a7511794_17_34760_81042.png" afterPath="$PROJECT_DIR$/cache/26a7511794_17_34760_81042.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cache/26a7511794_17_34760_81043.png" afterPath="$PROJECT_DIR$/cache/26a7511794_17_34760_81043.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.kv" afterPath="$PROJECT_DIR$/main.kv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savedata.txt" afterPath="$PROJECT_DIR$/savedata.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/updates.txt" afterPath="$PROJECT_DIR$/updates.txt" />
     </list>
     <ignored path="CoPilot.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,8 +158,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+            <state relative-caret-position="237">
+              <caret line="752" column="9" selection-start-line="752" selection-start-column="9" selection-end-line="752" selection-end-column="9" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -91,8 +170,8 @@
       <file leaf-file-name="main.kv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.kv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+            <state relative-caret-position="747">
+              <caret line="4107" column="58" selection-start-line="4107" selection-start-column="58" selection-end-line="4107" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -109,6 +188,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/main.kv" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -328,7 +408,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -369,16 +449,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.kv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+        <state relative-caret-position="747">
+          <caret line="4107" column="58" selection-start-line="4107" selection-start-column="58" selection-end-line="4107" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+        <state relative-caret-position="237">
+          <caret line="752" column="9" selection-start-line="752" selection-start-column="9" selection-end-line="752" selection-end-column="9" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
