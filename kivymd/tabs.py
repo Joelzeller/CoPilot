@@ -98,7 +98,7 @@ class MDTabBar(ThemableBehavior, BackgroundColorBehavior, BoxLayout):
 class MDTabHeader(MDFlatButton):
     """ Internal widget for headers based on MDFlatButton"""
     
-    width = BoundedNumericProperty(dp(None), min=dp(72), max=dp(264), errorhandler=lambda x: dp(72))
+    width = BoundedNumericProperty(dp(0), min=dp(72), max=dp(264), errorhandler=lambda x: dp(72))
     tab = ObjectProperty(None)
     panel = ObjectProperty(None)
 
